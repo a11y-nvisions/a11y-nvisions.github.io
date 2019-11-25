@@ -213,7 +213,7 @@ class Tab{
 			root.setTabhelperState=false;//포커스 잃으면 말풍선 접기
 		})
 		/*btnTabHelper.addEventListener('focusout',function(){
-			root.setTabhelperState=false;//포커스 잃으면 말풍선 접기
+			root.setTabhelperState=false;//포커스 잃으면 말풍선 접기 취소처리됨
 		})*/
 	}
 }
