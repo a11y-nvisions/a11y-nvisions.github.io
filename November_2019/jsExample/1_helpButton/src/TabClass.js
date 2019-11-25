@@ -210,7 +210,7 @@ class Tab{
 		})
 		
 		btnTabHelper.addEventListener('focusout',function(){
-			root.setTabhelperState=false;
+			root.setTabhelperState=false;//포커스 잃으면 말풍선 접기
 		})
 	}
 }
