@@ -9,10 +9,15 @@ html{
 	height:100vh;
 }
 
+body{
+	height:100%;
+	overflow-y:scroll;
+}
+
 fieldset{
 	box-sizing:border-box;
 	position:relative;
-	width:49%; height:25vh;
+	width:49%; height:40vh;
 	margin:1% 0.25%;
 	float:left;
 }
