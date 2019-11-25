@@ -12,8 +12,7 @@ html{
 
 body{
 	height:100%;
-	overflow-y:scroll;
-	overflow-x:none;
+	overflow:hidden;
 }
 
 fieldset{
@@ -85,7 +84,7 @@ input[type="radio"]{
 
 #form_ex2 input[type="radio"]+label{
 	font-family: 'Nanum Pen Script', cursive;
-	font-size:2em; display:inline-block;
+	font-size:1.6em; display:inline-block;
 	font-weight:bold;
 	margin-right:1%;
 }
