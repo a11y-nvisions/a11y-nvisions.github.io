@@ -1,8 +1,7 @@
 .Toggle-HintBox-MouseTracking{
 	display:block;
-	position:fixed;
-	width:2em;
-	height:2em;
+	position:absolute;
+	width:2em; height:2em;
 	border-radius:50%;
 	background:linear-gradient(to Top, #35a,#17a,#58a, #49e);
 	border:solid 1px #cff;
@@ -120,14 +119,14 @@
 @media screen and (max-width:768px){
 	.Toggle-HintBox-MouseTracking{
 		display:block;
-		position:fixed;
+		position:absolute;
 		width:2em;
 		height:2em;
 		top:11.5%;
 	}
 	
 	.Tab-Wrapper{
-		width:100%;
+		width:82.5%;
 		height:60vh;
 		margin:1% auto;
 		border-radius:1rem;
