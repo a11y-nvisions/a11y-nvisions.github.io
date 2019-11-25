@@ -209,12 +209,11 @@ class Tab{
 			}
 		})
 		
-		btnTabHelper.addEventListener('focusout',function(){
+		TabHelperWrap.addEventListener('focusout',function(){
 			root.setTabhelperState=false;//포커스 잃으면 말풍선 접기
 		})
-		
-		$('.ShowHide-TabControlHelper').on('blur',function(e){
-			e.stopPropagation();
-		})
+		/*btnTabHelper.addEventListener('focusout',function(){
+			root.setTabhelperState=false;//포커스 잃으면 말풍선 접기
+		})*/
 	}
 }
