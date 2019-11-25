@@ -72,6 +72,10 @@ input[type="radio"]{
 }
 
 /*예제2*/
+#form_ex2 input[type="radio"]+label>span{
+	display:inline-block;
+}
+
 #form_ex2 table{
 	width:90%;
 	background-color:#fff;
