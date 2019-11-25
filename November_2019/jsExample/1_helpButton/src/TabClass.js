@@ -209,7 +209,7 @@ class Tab{
 			}
 		})
 		
-		btnTabHelper.addEventListener('blur',function(){
+		btnTabHelper.addEventListener('focusout',function(){
 			root.setTabhelperState=false;
 		})
 	}
