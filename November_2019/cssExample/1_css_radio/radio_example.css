@@ -78,7 +78,7 @@ input[type="radio"]{
 
 #form_ex2 input[type="radio"]+label{
 	font-family: 'Nanum Pen Script', cursive;
-	font-size:2em;
+	font-size:2em; display:inline-block;
 	font-weight:bold;
 	margin-right:1%;
 }
@@ -135,5 +135,10 @@ input[type="radio"]{
 @media screen and (max-width:768px){
 	fieldset{
 		width:100%;
+	}
+	#form_ex2 input[type="radio"]+label{
+		font-family: 'Nanum Pen Script', cursive;
+		font-size:1.4rem; font-weight:bold;
+		margin-right:1%;
 	}
 }
