@@ -88,7 +88,7 @@ input[type="radio"]{
 
 #form_ex2 input[type="radio"]+label{
 	font-family: 'Nanum Pen Script', cursive;
-	font-size:1.6em; display:inline-block;
+	font-size:1.4em; display:inline-block;
 	font-weight:bold;
 	margin-right:1%;
 }
@@ -148,7 +148,7 @@ input[type="radio"]{
 	}
 	#form_ex2 input[type="radio"]+label{
 		font-family: 'Nanum Pen Script', cursive;
-		font-size:1.4rem; font-weight:bold;
+		font-size:1.2rem; font-weight:bold;
 		margin-right:1%;
 	}
 }
