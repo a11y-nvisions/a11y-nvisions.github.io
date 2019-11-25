@@ -177,6 +177,9 @@ class Tab{
 					root.setIndex=root.index;
 				}
 			})//Event Ends
+			TabItems[i].addEventListener('focusin',function(){
+				root.setTabhelperState=false;//탭 요소에 포커스되면 말풍선 접기
+			})
 			btnToggleTheme[i].addEventListener('click',function(){//Toggle Event for Dark and Light Theme Mode
 				for(let t=0; t<btnToggleTheme.length; t++){
 					if(btnToggleTheme[t].getAttribute('aria-label') == 'Turn Dark Mode'){
@@ -208,12 +211,5 @@ class Tab{
 				root.setTabhelperState=true;
 			}
 		})
-		
-		TabHelperWrap.addEventListener('focusout',function(){
-			root.setTabhelperState=false;//포커스 잃으면 말풍선 접기
-		})
-		/*btnTabHelper.addEventListener('focusout',function(){
-			root.setTabhelperState=false;//포커스 잃으면 말풍선 접기 취소처리됨
-		})*/
 	}
 }
