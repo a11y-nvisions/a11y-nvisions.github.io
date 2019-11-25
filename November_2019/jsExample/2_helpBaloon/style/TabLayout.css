@@ -64,7 +64,7 @@
 }
 
 .HintBaloon#KeyboardControlHint{
-	position:absolute; z-index:99;
+	position:absolute; z-index:999;
 	width:30%;
 	font-size:1em;
 	background-color:#ff7;

@@ -93,7 +93,7 @@ class Tab{
 			if(isPCDevice() == false){
 				if(val == true){
 					HelpBaloon.style.marginLeft=(t.offsetLeft)+'px';
-					HelpBaloon.style.top=(t.offsetTop+25)+'px';
+					HelpBaloon.style.top=(t.offsetTop-85)+'px';
 					HelpBaloon.style.display='block';
 				}else if(val == false){
 					HelpBaloon.style.display='none';
