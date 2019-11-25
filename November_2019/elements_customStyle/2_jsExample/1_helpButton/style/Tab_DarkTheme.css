@@ -1,0 +1,28 @@
+.Tab-Wrapper{
+	color:#fff;
+	background:linear-gradient(#225,#114);
+}
+
+.Turn-mode{
+	color:#fff;
+	border-radius:1rem;
+	border:solid 0.1rem #fff;
+}
+
+.TabItems-List [role="tab"]:focus{
+	outline:none;
+	text-shadow:0 0 3px #9ff,
+				0 0 3px #0df;
+	box-shadow:0 0 1px 1px #000;
+}
+
+.TabItems-List [role="tab"][aria-selected="false"]{
+	color:rgba(255,255,255,0.7);
+	background:rgba(0,0,0,0.2);
+}
+
+.TabItems-List [role="tab"][aria-selected="true"]{
+	color:rgba(255,255,255,1);
+	background:linear-gradient(rgba(150,255,255,0.2),rgba(255,255,255,0) 90%);
+	font-weight:bold;
+}

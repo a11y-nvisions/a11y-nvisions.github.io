@@ -1,0 +1,88 @@
+.show-toggle-msg{
+	user-select:none;
+	z-index:-1;
+	font-size:1;
+	color:transparent;
+	width:1px;
+	height:1px;
+	overflow:hidden;
+}
+
+.Tab-Wrapper{
+	width:60%;
+	height:60vh;
+	margin:3% auto 1%;
+	border-radius:1rem;
+	overflow:hidden;
+}
+
+.Turn-mode{
+	display:block;
+	width:30%;
+	appearance:none;
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	background:transparent;
+	border:none;
+	float:right;
+}
+
+.Turn-mode~*{
+	content:'';
+	display:block;
+	clear:both;
+}
+
+.TabItems-List{
+	margin-bottom:1%;
+}
+
+.TabItems-List [role="tab"]{
+	padding:1% 0;
+	width:25%;
+	height:10%;
+	display:block;
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	background:transparent;
+	border:none;
+	float:left;
+}
+
+.PanelItems-List [role="tabpanel"]{
+	width:90%;
+	height:90%;
+	font-size:1.2rem;
+	margin:0 auto;
+}
+
+.TabItems-List:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+
+.HintBaloon#KeyboardControlHint{
+	position:absolute;
+	width:30%;
+	font-size:1em;
+	background-color:#ff7;
+	border:solid 1px #000;
+}
+
+.punc_blind{
+	font-size:1;
+	color:transparent;
+	user-select:none;
+}
+
+@media screen and (max-width:768px){
+	.Tab-Wrapper{
+		width:82.5%;
+		height:60vh;
+		margin:1% auto;
+		border-radius:1rem;
+		overflow:hidden;
+	}
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>포커스 시 힌트 말풍선 제공하기</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="maximum-scale=1, minimum-scale=1, initial-scale=1, user-scalable=no">
+		<script src="src/TabClass.js"></script>
+		<link rel="stylesheet" type="textcss" href="./src/malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.css" />
+		<link rel="stylesheet" type="text/css" href="style/main.css" />
+		<link rel="stylesheet" type="text/css" href="style/TabLayout.css" />
+		<link id="Theme" rel="stylesheet" type="text/css" href="style/Tab_DefaultTheme.css" />
+	</head>
+	<body>
+		<!--The New HTML File that main contents're empty is created.-->
+		<h1>Tab Test</h1>
+		<div id="my_tab">
+		</div>
+		<script>
+			let my_tab=new Tab(
+					'testing',
+					'#my_tab',
+					[`Apple`,`Banana`,`Watermelon`,`pear`],
+					[
+					`
+						<p>
+							사과 탭 페이지
+						</p>
+					`,
+					`	<p>
+							바나나 탭 페이지
+						</p>
+					`,
+					`
+						<p>
+							수박 탭 페이지
+						</p>
+						`,
+						`
+						<p>
+							배 탭 페이지
+						</p>
+						`
+					]
+				)
+		</script>
+	</body>
+</html> 

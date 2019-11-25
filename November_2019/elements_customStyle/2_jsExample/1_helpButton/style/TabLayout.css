@@ -1,0 +1,116 @@
+.Tab-Wrapper{
+	width:60%; min-height:50vh;
+	margin:1% auto;
+	border-radius:1rem;
+	overflow:hidden;
+}
+
+.Turn-mode{
+	display:block;
+	width:30%;
+	appearance:none;
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	background:transparent;
+	border:none;
+	float:right;
+}
+
+.Turn-mode~*{
+	content:'';
+	display:block;
+	clear:both;
+}
+
+.TabItems-List{
+	margin-bottom:1%;
+}
+
+.TabItems-List [role="tab"]{
+	padding:1% 0;
+	width:25%;
+	height:10%;
+	display:block;
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	background:transparent;
+	border:none;
+	float:left;
+}
+
+.PanelItems-List [role="tabpanel"]{
+	width:90%;
+	height:90%;
+	font-size:1.2rem;
+	margin:0 auto;
+}
+
+.TabItems-List:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+
+.TabControl-Helper{
+	position:fixed;
+	margin-left:15.5%;
+	z-index:999;
+}
+
+.ShowHide-TabControlHelper{
+	display:block;
+	width:2em;
+	height:2em;
+	border:solid 1px #000;
+	border-radius:50%;
+	background-color:transparent;
+}
+
+.TabControl-Helper-Content{
+	position:relative;
+	width:40%;
+	background-color:#ff8;
+	padding:2% 3%;
+	border-radius:2rem;
+	box-shadow:2px 2px 2px 1px rgba(0,0,0,0.7);
+}
+
+@media screen and (max-width:450px){
+	.TabControl-Helper{
+		position:fixed;
+		z-index:999;
+	}
+}
+
+@media screen and (max-width:768px){
+	.Tab-Wrapper{
+		width:82.5%;
+		height:60vh;
+		margin:1% auto;
+		border-radius:1rem;
+		overflow:hidden;
+	}
+	.TabControl-Helper{
+		position:fixed;
+		margin-left:2%;
+		z-index:999;
+	}
+	.TabControl-Helper-Content{
+		position:relative;
+		width:70%;
+		background-color:#ff8;
+		padding:2% 3%;
+		border-radius:2rem;
+		box-shadow:2px 2px 2px 1px rgba(0,0,0,0.7);
+	}
+	
+	.ShowHide-TabControlHelper{
+		display:block;
+		width:1.5em;
+		height:1.5em;
+		border:solid 1px #000;
+		border-radius:50%;
+		background-color:transparent;
+	}
+}

@@ -1,0 +1,34 @@
+.Tab-Wrapper{
+	color:#000;
+	background:linear-gradient(#acf,#7bf);
+	box-shadow:0 0 1px 1px #000;
+}
+
+.Turn-mode{
+	color:#000;
+	float:right;
+	border-radius:1rem;
+	border:solid 0.1rem #000;
+}
+
+.TabItems-List [role="tab"]:focus{
+	outline:none;
+	text-shadow:-1px 0 1px #00f,
+				-1.5px 0 1px #0af;
+	box-shadow:0 0 1px 1px #000;
+}
+
+.TabItems-List [role="tab"][aria-selected="false"]{
+	color:rgba(0,0,0,0.6);
+	background:rgba(0,0,0,0.2);
+}
+
+.TabItems-List [role="tab"][aria-selected="true"]{
+	color:rgba(0,0,0,1);
+	background:linear-gradient(rgba(255,255,255,0.5),rgba(255,255,255,0)) ;
+	font-weight:bold;
+}
+
+.btn_tabContents{
+	
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>체크박스 예제</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, height=device-height, maximum-scale=1, minimum-scale=1, initial-scale=1, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="checkbox_example.css" />
+	</head>
+	<body>
+		<div>
+			<form>
+				<fieldset id="agr_field1">
+					<legend>예제 1(권장 체크박스 디자인)</legend>
+					<table role="none">
+						<colgroup>
+							<col width="60%" />
+							<col />
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>
+									<strong id="agr_desc1">개인정보 수집 및 활용</strong>
+								</td>
+								<td role="region" aria-labelledby="agr_desc1">
+									<input type="checkbox" name="agreement" id="agr" checked />
+									<label for="agr">위 내용에 동의하시겠습니까?</label>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</fieldset>
+				<fieldset id="agr_field2">
+					<legend>예제 2(버튼모양 체크박스)</legend>
+					<table role="none">
+						<colgroup>
+							<col width="60%" />
+							<col />
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>
+									<p><strong>부적합한 예제 1</strong></p>
+									<input type="checkbox" name="agr2-1" id="agr2-1_c" class="type1" checked />
+									<label for="agr2-1_c"><strong>SMS 수신동의</strong></label>
+									<input type="checkbox" name="agr2-1" id="agr2-1" class="agr2-1" />
+									<label for="agr2-1"><strong>이메일 수신동의</strong></label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p><strong>부적합한 예제 2</strong></p>
+									<input type="checkbox" name="agr2-2" id="agr2-2_c" class="check-type v2_1" checked />
+									<label for="agr2-2_c"><strong>SMS 수신동의</strong></label>
+									<input type="checkbox" name="agr2-2" id="agr2-2" class="check-type v2_1" />
+									<label for="agr2-2"><strong>이메일 수신동의</strong></label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p><strong>부적합한 예제 3</strong></p>
+									<input type="checkbox" name="agr2-3" id="agr2-3_c" class="check-type v2_2" checked />
+									<label for="agr2-3_c"><strong>SMS 수신동의</strong></label>
+									<input type="checkbox" name="agr2-3" id="agr2-3" class="check-type v2_2" />
+									<label for="agr2-3"><strong>이메일 수신동의</strong></label>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<p><strong>적합한 예제</strong></p>
+									<input type="checkbox" name="agr2-4" id="agr2-4_c" class="check-type v3" checked />
+									<label for="agr2-4_c"><strong>SMS 수신동의</strong></label>
+									<input type="checkbox" name="agr2-4" id="agr2-4" class="check-type v3" />
+									<label for="agr2-4"><strong>이메일 수신동의</strong></label>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</fieldset>
+			</form>
+		</div>
+	</body>
+</html>
