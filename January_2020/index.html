@@ -4,7 +4,7 @@
 	<title>2020년 1월 아티클</title>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" type="text/css" href="style/main.css" />
-	<meta name="viewport" name="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 </head>
 <body>
 	<header>
@@ -203,7 +203,7 @@
 		index_nav.addEventListener('mouseleave',showHandler);
 		document.addEventListener('focusin',setCollapse);
 		document.addEventListener('mouseover',setCollapse);
-		index_nav.style.left='-37.5%';
+		index_nav.style.left='-35.5%';
 		}else{
 		index_nav.removeEventListener('focusin',showHandler);
 		index_nav.removeEventListener('focusout',showHandler);
@@ -267,7 +267,7 @@
 		
 		function setLeft(){
 				if( checkMedia() === true){
-					index_nav.style.left='-37.5%';
+					index_nav.style.left='-35.5%';
 				}else{
 					index_nav.style.left='-12%';
 				}
