@@ -1,0 +1,63 @@
+/*Common*/
+*{margin:0;padding:0;}
+body{font-size:1.5em;}
+ul{list-style:none;}
+li{margin:1% 0;}
+p{margin:0.75% 0;}
+a{font-weight:bold; text-decoration:none; display:inline-block;}
+
+a:link{color:#5c3;}a:visited{color:#289;}
+header{padding:2% 0;}
+.index_nav{
+	transition:left 1s, max-height 0.2s;
+	background-color:rgba(200,255,200,0.9);
+	position:fixed; top:50%;  left:0.25%;  transform:translateY(-50%); width:15%; font-size:80%;
+	margin:0 auto;  padding:1%;
+	border-radius:1.5em; left:-12%;
+}
+.btn_show_index{color:inherit; border:none; background:transparent; font-size:inherit; width:100%;}
+h1{text-align:center; width:65%; margin:0 auto;}
+h2,h3,h4{margin-bottom:2%; border-bottom:solid 1px; }
+a.sec:link,a.sec:visited{color:inherit; cursor:default;}
+a.sec:before,.index_nav a:before{width:1.25em; height:1.25em;
+content:"";display:inline-block; background:url('../image/bookmark.png');
+background-size:cover; background-repeat:no-repeat; vertical-align:text-top;}
+.main_wrap{width:65%;margin:0 auto;}
+.main_wrap section,.main_wrap aisde{margin:2% 0;}
+	
+	.btn_show_index{
+		display:inline-block;
+	}
+	
+	.btn_show_index.collapsed:after{
+		content:"보기";
+		display:block;
+		float:right;
+	}
+	
+	.index_nav .btn_show_index.expanded:after{
+		content:"접기";
+		display:block;
+		float:right;
+	}
+	
+	.btn_show_index.collapsed+ul{display:none;}
+
+@media screen and (max-width:1024px){
+	.main_wrap{ width:90%; }
+	.index_nav { left:-37.5%;width:40%;margin-bottom:5%; max-height:1.5em;}
+}
+
+@media (prefers-color-scheme:dark){
+	html{background-color:#222;}
+	a:link{color:#0cf;}a:visited{color:#fa0;}
+	body{color:#fff;border-color:#fff;}
+	.index_nav { background-color:rgba(0,0,0,0.6);}
+}
+
+@media (prefers-contrast:high){
+	html{
+		background:#000;
+		color:#fff;
+	}
+}

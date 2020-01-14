@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>2020년 1월 아티클</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="style/main.css" />
+</head>
+<body>
+	<header>
+	<h1>미래의 CSS - 시스템 환경에 반응하는 미디어 쿼리 소개</h1>
+	</header>
+	<div class="main_wrap">
+	<nav class="index_nav" aria-label="목차">
+		<button class="btn_show_index collapsed" aria-label="목차 보기">목차</button>
+		<ul class="index_nav-d1">
+			<li><a href="#sec_h3-1">애니메이션 효과를 축소하거나 없애주는 prefers-reduced-motion</a></li>
+			<li><a href="#sec_h3-2">어두운 테마와 미디어쿼리: prefers-color-scheme</a></li>
+			<li><a href="#sec_h3-3">더 다양한 환경설정에 따른 미디어쿼리 지원예정</a>
+				<ul class="index_nav-d2">
+					<li><a href="#sec_h4-1">1.	다양한 디바이스에 적용되는 고대비 미디어쿼리</a></li>
+					<li><a href="#sec_h4-2">2.	운영체제의 투명 테마 설정에 따라 반응하는 미디어쿼리</a></li>
+					<li><a href="#sec_h4-3">3.	화면 밝기에 따라 반응하는 미디어쿼리</a></li>
+					<li><a href="#sec_h4-4">4. 시스템 색상 제한 모드에 반응하는 미디어 쿼리</a></li>
+				</ul>
+				<li><a href="#supplements">부록</a></li>
+			</li>
+		</ul>
+	</nav>
+	<main>
+	<article>
+	<h2>미래의 CSS - 시스템 환경에 반응하는 미디어 쿼리 소개</h2>
+	<p>안녕하세요. <a href="https://www.dialogueinthedark.co.kr/index.nhn">엔비전스</a>입니다.</p>
+	<p>
+		CSS는 지루하고 딱딱한 웹사이트를 아름답고 부드럽게 만들어주는 역할을 수행하는 스타일링 언어입니다.
+		우리는 색을 칠하고, 건물 단면도를 그리듯 레이아웃을 만들고, 가구와 소품을 배치하듯
+		원하는 요소를 배치하는 일에 CSS를 사용합니다.
+	</p>
+	<p>
+		CSS는 단순히 웹을 꾸미는 용도로 사용되는 것에 그치지 않고, 웹 제작에 일조하는 많은 사람들의 아이디어에 의해 꾸미는 용도 외의 접근성을 향상시키는 용도로도 사용되기 시작했습니다.
+	</p>
+	<p>
+		가장 와 닿는 예를 들자면 CSS의 IR(Image Replacement) 기법이 있습니다.
+		스크린 리더 사용자를 위한 숨김 대체 텍스트를 제공하는 방법을 고안한 것이 바로 IR기법이라고 할 수 있습니다.
+	</p>
+	<p>
+		웹 브라우저 개발자들 또한 이러한 CSS의 가능성을 배제하지 않고, 접근성을 향상시키는 기능에 도전하기 시작했습니다. 
+		지난 해 4월부터 5월, 두 번을 거쳐 소개해드린 -ms-high-contrast 미디어 쿼리부터 6월달에 소개해드린 prefers-reduced-motion까지,
+		접근성을 향상시키는 CSS의 미디어쿼리 기술을 많이 만들어왔습니다.
+	</p>
+	<p>
+		이번 아티클의 주제 키워드는 디바이스 기본 설정(Device Preferences)으로,
+		여러 디바이스 환경의 설정 값에 따라 반응하는 미디어 쿼리 레벨 5 섹션 중
+		사용자 선호 환경 미디어 속성(User Preference Media Features)의
+		현재 적용된 속성, 미래에 적용될 prefers 접두사 미디어 쿼리 속성들을 소개할 것입니다.
+	</p>
+	<h3><a href="#sec_h3-1" id="sec_h3-1" class="sec h3 no1">애니메이션 효과를 축소하거나 없애주는 prefers-reduced-motion</a></h3>
+	<p>
+		미디어 쿼리 레벨 5의 유저 선호환경 미디어 속성 중 가장 먼저 적용된 속성으로,
+		지난 2019년 7월의 아티클을 통해 먼저 소개해 드렸습니다.
+	</p>
+	<p>
+		이는 사용자의 운영체제가 애니메이션을 표시할 것인가에 대한 설정 여부를 브라우저가 인식하고,
+		웹 개발자가 애니메이션 효과를 줄이거나, 제거한 웹사이트를 사용자에게 제공할 수 있도록 돕는 속성이었습니다.
+	</p>
+	<p>
+		자세한 사항은 지난 2019년 7월의 아티클인
+		<a href="https://nuli.navercorp.com/sharing/blog/post/1132982">저사양 디바이스와 웹접근성을 위한 애니메이션 동작 줄이기 미디어쿼리 사용하기: prefers-reduced-motion 소개</a>
+		를 참고해주시기 바랍니다.
+	</p>
+	<section>
+		<h3><a href="#sec_h3-2" id="sec_h3-2" class="sec h3 no2">어두운 테마와 미디어쿼리: prefers-color-scheme</a></h3>
+		<p>
+			2019년, 운영체제나 브라우저 등에서 굉장히 활발하게 작업된 분야가 있습니다. 바로 테마입니다. PC 운영체제는
+			Windows 10의 1809 업데이트, MacOS는 모하비부터 어두운 테마를 지원하기 시작하였으며,
+			Chrome이나 FireFox등 브라우저 자체의 어두운 테마를 개발하기 시작했습니다.
+		</p>
+		<p>
+			또한 Android 10, iOS 13부터 모바일에서도 어두운 테마 환경을 정식적으로 지원하기 시작하였습니다.
+			이로 인해 어두운 테마의 수요가 늘어났다는 것을 직∙간접적으로 체감할 수 있습니다. 
+			따라서 브라우저에서는 OS 테마가 어두운 테마를 사용 중인가 밝은 테마를 사용 중인가에 따라
+			반응하는 미디어쿼리가 개발되었습니다.
+		</p>
+		<p>
+			prefers-color-scheme은 light와 dark를 값으로 제공하여, 운영체제의 설정에 따라 웹 페이지를 변형시키는 것이 가능하며,
+			현재 최신의 Chrome, FireFox, Safari 등에서 사용할 수 있습니다.
+			이 기능을 적절하게 적용시킨다면 야간에 눈부심을 호소하는 사용자가 많이 감소할 것으로 기대되며,
+			현재 최신 브라우저에서 체험하실 수 있습니다.
+		</p>
+	</section>
+	<section>
+		<h3><a href="#sec_h3-3" id="sec_h3-3" class="sec h3 no3">더 다양한 환경설정에 따른 미디어쿼리 지원예정</a></h3>
+			<aside>
+				<strong>※ 주의(CAUTION)</strong>
+				<p> 아직 적용되지 않은 미디어 쿼리 기술에 대한 설명입니다. </p>
+			</aside>
+			<section>
+				<h4><a href="#sec_h4-1" id="sec_h4-1" class="sec h4 no1"></a>1.	다양한 디바이스에 적용되는 고대비 미디어쿼리</a></h4>
+				<p>
+				지난 4월부터 5월까지 두 달에 거처 소개되었던 -ms-high-contrast의 경우,
+				ms의 브라우저에 한정되어 있다는 점이 아쉬운 부분이었습니다. 이러한 부분을 고려하여,
+				고대비 모드를 지원하는 많은 디바이스를 지원하는 고대비 사용자를 위한 미디어쿼리
+				prefers-contrast가 준비중에 있습니다.
+				이 미디어쿼리를 많은 브라우저에서 지원한다면 고대비 모드 사용자의 접근성이 향상될 것으로 보입니다.
+				</p>
+			</section>
+			<section>
+				<h4><a href="#sec_h4-2" id="sec_h4-2" class="sec h4 no2">2.	운영체제의 투명 테마 설정에 따라 반응하는 미디어쿼리</a></h4>
+				<p>
+					prefers-reduced-transparency는 사용자가 투명한 UI를 선호하지 않아 불투명한 UI 테마를 사용할 경우,
+					웹 개발자가 투명한 요소의 투명도를 줄이거나, 불투명한 색상으로 웹페이지를 제공할 수 있도록 도와줄 예정입니다.
+				</p>
+				<p>
+					속성 값은 no-preference와 reduce로 구성되어 있으며,
+					투명도 관련 설정 사용 유무에 따라 반투명한 요소의 투명도를 조절해줄 수 있습니다.
+				</p>
+			</section>
+			<section>
+				<h4><a href="#sec_h4-3" id="sec_h4-3" class="sec h4 no3">3.	화면 밝기에 따라 반응하는 미디어쿼리</a></h4>
+				<p>
+					light-level은 디바이스 주변 광량에 따른 자동 밝기설정에 반응하여 웹사이트가 사용자에게 보여줄 CSS 스타일을 
+					결정할 수 있게 됩니다. light-level은 다음 3 개의 속성값을 지원할 예정입니다.
+				</p>
+				<dl>
+					<dt>
+					</dt>
+					<dd>
+						<p>dim은 사용자가 디바이스를 어두운 환경에서 사용할 때에 대한 스타일을 설정하는 값입니다.</p>
+						<p>야간, 희미한 실내조명에 따라 변동된 화면 밝기를 감지하여 스타일을 제공합니다.</p>
+					</dd>
+					<dt>
+						<h5>normal</h5>
+					</dt>
+					<dd>
+						<p>normal은 적당한 광량이 있는 환경에서 사용할 때 조절된 밝기에 따라 변경되는 스타일 설정 값입니다. </p>
+						<p>햇빛이 강하지 않고 적당히 들어오는 실내 환경이 이에 해당합니다.</p>
+					</dd>
+					<dt>
+						<h5>washed</h5>
+					</dt>
+					<dd>
+						<p>washed는 광량이 밝은 곳에서의 디바이스 밝기에 따라 변경될 스타일 설정 값입니다. </p>
+						<p>햇빛이 강한 야외 환경이 이에 해당합니다.</p>
+					</dd>
+				</dl>
+			</section>
+			<section>
+				<h4><a href="#sec_h4-4" id="sec_h4-4" class="sec h4 no4">4. 시스템 색상 제한 모드에 반응하는 미디어 쿼리 </a></h4>
+				<p>
+					사용자의 디바이스 환경이나 사용자의 신체적 특징으로 인해 특정 색상을 화면에서 제외시키거나 대체하는 모드 사용 시, 이를 브라우저에서 인식하여
+					웹 개발자가 웹에서도 제한된 색상 모드를 지원할 수 있도록 돕는 속성입니다.
+					속성값은 총 두 가지로, 색상 제한 모드가 꺼진 상태인 none(기본값)과 켜진 상태인 active 값이 있습니다.
+				</p>
+			</section>
+			<section class="sec end">
+				<p>
+				지금까지 현재 적용가능하거나, 머지 않아 추가될 사용자 선호환경에 따라
+				반응하는 미디어 쿼리에 대해 알아 보았습니다. 이러한 반응형 웹이	많은 사이트에 적용된다면앞으로의
+				지금보다 더 사용자 친화적인 웹 환경이 조성되어 정보접근성이 향상될 것으로 보여 매우 기대됩니다.
+				앞으로도 더 좋은 내용의 아티클로 찾아뵙도록 노력하겠습니다. 읽어주셔서 감사합니다. 
+				</p>
+			</section>
+			<aside>
+				<h3><a href="#supplements" id="supplements" class="sec supplements">부록</a></h3>
+				<p>부록 1): <a href="https://drafts.csswg.org/mediaqueries-5/">CSSWG Media Queries Level 5</a></p>
+			</aside>
+		</section>
+		</article>
+	</main>
+	</div>
+	<script type="text/javascript">
+		const index_nav=document.querySelector('.index_nav');
+		const btn_showIndex=document.querySelector('.btn_show_index');
+		const container=btn_showIndex.nextElementSibling;
+		btn_showIndex.addEventListener('click',showAndHideContainer);
+		index_nav.addEventListener('focusin',showHandler);
+		index_nav.addEventListener('focusout',showHandler);
+		index_nav.addEventListener('mouseover',showHandler);
+		index_nav.addEventListener('mouseleave',showHandler);
+		document.addEventListener('focusin',setCollapse);
+		document.addEventListener('mouseover',setCollapse);
+		function showAndHideContainer(e){
+			const state=e.target.getAttribute('aria-label');
+			if(state === '목차 보기'){
+			e.target.setAttribute('aria-label','목차 접기');
+			e.target.classList.add('expanded');
+			e.target.classList.remove('collapsed');
+			index_nav.style.maxHeight='100%';
+			}else if( state === '목차 접기' ){
+			e.target.setAttribute('aria-label','목차 보기');
+			e.target.classList.add('collapsed');
+			e.target.classList.remove('expanded');
+			index_nav.style.maxHeight='1.5em';
+			}
+		}
+		
+		function setCollapse(e){
+			const btn=btn_showIndex;
+			const btn_state=btn.getAttribute('aria-label')
+			const isContain=index_nav.contains(e.target);
+			if(isContain === false  && btn_state === '목차 접기'){
+				btn.setAttribute('aria-label','목차 보기');
+				btn.classList.add('collapsed');
+				btn.classList.remove('expanded');
+				index_nav.style.maxHeight='1.5em';
+			}
+		}
+		
+		function showHandler(e){
+			if(e.type ==='focusin' || e.type === 'mouseover'){
+				index_nav.style.left='0em';
+			}else if(e.type==='focusout' || e.type === 'mouseleave'){
+				if(window.matchMedia('screen and (max-width:1024px)') == true){
+				index_nav.style.left='-37.5%';
+				}else{
+				index_nav.style.left='-12%';
+				}
+			}
+		}
+	</script>
+</body>
+</html>
