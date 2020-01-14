@@ -4,6 +4,7 @@
 	<title>2020년 1월 아티클</title>
 	<meta charset="utf-8" />
 	<link rel="stylesheet" type="text/css" href="style/main.css" />
+	<meta name="viewport" name="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 </head>
 <body>
 	<header>
@@ -171,13 +172,48 @@
 		const index_nav=document.querySelector('.index_nav');
 		const btn_showIndex=document.querySelector('.btn_show_index');
 		const container=btn_showIndex.nextElementSibling;
+		const MediaDetector={}
+			Object.defineProperty(MediaDetector,'_mediaState',{
+				get:function(){
+					return  this._MediaState=checkMedia(),eventLoader(this._MediaState);
+				},
+				set:function(val){
+					if(val===true){
+						this._MediaState=val;
+						return eventLoader(this._MediaState);
+					}else{
+						this._MediaState=val;
+						return eventLoader(this._MediaState);
+					}
+				}
+			});
+		window.addEventListener('DOMContentLoaded',function(){
+			MediaDetector._mediaState;
+		})
+		window.addEventListener('resize',function(){
+			MediaDetector._mediaState;
+		})
 		btn_showIndex.addEventListener('click',showAndHideContainer);
+		
+		function eventLoader(Load){
+		if(Load==true){
 		index_nav.addEventListener('focusin',showHandler);
 		index_nav.addEventListener('focusout',showHandler);
 		index_nav.addEventListener('mouseover',showHandler);
 		index_nav.addEventListener('mouseleave',showHandler);
 		document.addEventListener('focusin',setCollapse);
 		document.addEventListener('mouseover',setCollapse);
+		index_nav.style.left='-37.5%';
+		}else{
+		index_nav.removeEventListener('focusin',showHandler);
+		index_nav.removeEventListener('focusout',showHandler);
+		index_nav.removeEventListener('mouseover',showHandler);
+		index_nav.removeEventListener('mouseleave',showHandler);
+		document.removeEventListener('focusin',setCollapse);
+		document.removeEventListener('mouseover',setCollapse);
+		index_nav.style.left='0';
+		}}
+		
 		function showAndHideContainer(e){
 			const state=e.target.getAttribute('aria-label');
 			if(state === '목차 보기'){
@@ -189,7 +225,7 @@
 			e.target.setAttribute('aria-label','목차 보기');
 			e.target.classList.add('collapsed');
 			e.target.classList.remove('expanded');
-			index_nav.style.maxHeight='1.5em';
+			setMaxHeight();
 			}
 		}
 		
@@ -201,7 +237,7 @@
 				btn.setAttribute('aria-label','목차 보기');
 				btn.classList.add('collapsed');
 				btn.classList.remove('expanded');
-				index_nav.style.maxHeight='1.5em';
+				setMaxHeight();
 			}
 		}
 		
@@ -209,12 +245,32 @@
 			if(e.type ==='focusin' || e.type === 'mouseover'){
 				index_nav.style.left='0em';
 			}else if(e.type==='focusout' || e.type === 'mouseleave'){
-				if(window.matchMedia('screen and (max-width:1024px)') == true){
-				index_nav.style.left='-37.5%';
-				}else{
-				index_nav.style.left='-12%';
-				}
+				setLeft();
 			}
+		}
+		
+		function checkMedia(){
+			if(window.matchMedia('screen and (max-width:1024px)').matches === true){
+				return true
+			}else{
+				return false;
+			}
+		}
+		
+		function setMaxHeight(){
+			if( checkMedia() === true){
+					index_nav.style.maxHeight='1.5em';
+				}else{
+					index_nav.style.maxHeight='3em';
+				}
+		}
+		
+		function setLeft(){
+				if( checkMedia() === true){
+					index_nav.style.left='-37.5%';
+				}else{
+					index_nav.style.left='-12%';
+				}
 		}
 	</script>
 </body>
