@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>동적 알림</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	</head>
+	<body>
+		<table>
+			<tbody class="dyn-table">
+				<tr>
+					<th colspan="3">전화번호</th>
+				</tr>
+			</tbody>
+		</table>
+		<div aria-live="polite">
+			<span class="blind live-text"></span>
+		</div>
+		<script type="text/javascript">
+			var TellTable=new Tell();
+			tr=TellTable.elements.row;
+			function Tell(){
+				var root=this;//Object root.
+				root.elements={
+					tableRoot:document.querySelector('.dyn-table'),
+					btnAdd:document.createElement('button'),
+					row:[],
+					notificationText:document.querySelector('.live-text')
+				}//Elements end
+				
+				var elements=root.elements//elements Object root.
+				elements.btnAdd.innerHTML='전화번호 추가';
+				
+				root.announceNotification=function(Text){
+					elements.notificationText.innerHTML=Text;
+					var clear=setTimeout(function(){
+						elements.notificationText.innerHTML='';
+						clearTimeout(clear);
+					},100);
+				}
+				
+				root.addNumber=function(){
+					elements.row[elements.row.length]={
+						rowTag:document.createElement('tr'),
+						col:[],
+						inputs:[],
+						maxlength:[3,4,4],
+						label:['국번','가운대 자리','끝자리'],
+						btnDelete:null,
+					};
+					elements.row[elements.row.length-1].rowTag.className='dyn-row';
+					elements.row[elements.row.length-1].rowTag.setAttribute('role','group');
+					elements.row[elements.row.length-1].rowTag.setAttribute('aria-label','line'+((elements.row.length-1)+1));
+					elements.row[elements.row.length-1].no=elements.row.length-1;
+					elements.tableRoot.appendChild(elements.row[elements.row.length-1].rowTag);
+					for(var i = 0; i<4; i++){
+						var addedRow=elements.row[elements.row.length-1];
+						var prevRow=elements.row[elements.row.length-2]
+						if(i === 3){
+							addedRow.col[i]=document.createElement('td');
+							addedRow.rowTag.appendChild(addedRow.col[i]);
+							addedRow.col[i].appendChild(elements.btnAdd);
+							if( prevRow !== undefined ){
+								prevRow.btnDelete=document.createElement('button')
+								prevRow.btnDelete.innerHTML='전화번호 삭제';
+								prevRow.col[3].appendChild(prevRow.btnDelete)
+								prevRow.btnDelete.addEventListener('click',function(){
+									root.deleteNumber(elements.row.length-1)
+								})
+							}
+						}else{
+							addedRow.col[i]=document.createElement('td');
+							addedRow.inputs[i]=document.createElement('input');
+							addedRow.inputs[i].setAttribute('type','text');
+							(function(c){
+								addedRow.inputs[c].setAttribute('id','row'+(elements.row[elements.row.length-1].no+1)+'-input'+(c+1));
+							})(i)
+							addedRow.inputs[i].setAttribute('class','tell-input');
+							addedRow.inputs[i].setAttribute('aria-label',addedRow.label[i]);
+							addedRow.inputs[i].setAttribute('placeholder',addedRow.label[i]);
+							addedRow.inputs[i].setAttribute('maxlength',addedRow.maxlength[i]);
+							addedRow.rowTag.appendChild(addedRow.col[i]);
+							addedRow.col[i].appendChild(addedRow.inputs[i]);
+						}
+					}
+				}
+				
+				root.deleteNumber=function(idx){
+					var tr=elements.row;
+					root.announceNotification('전화번호 작성폼 제거됨(A form line for write the Mobile Phone Number is removed');
+					elements.tableRoot.removeChild(tr[idx-1].rowTag)
+					tr.splice( idx-1,2, tr[idx] );
+					tr[idx-1].no-=1;
+					if(tr[idx-2] !== undefined){
+						tr[idx-2].btnDelete.focus();
+					}else{
+						elements.btnAdd.focus();
+					}
+					for(var i=0; i<tr[idx-1] .col.length; i++){
+						tr[idx-1].col[i].id='row'+ (tr[idx-1].no+1) +'-input'+(i+1);
+					}
+				}
+				
+				root.addNumber();
+				
+				elements.btnAdd.addEventListener('click',function(){
+					root.addNumber();
+					elements.btnAdd.focus();
+					root.announceNotification('전화번호 작성폼 추가됨(A form line for write the Mobile Phone Number is added');
+					setTimeout(function(){
+					root.announceNotification('추가된 입력폼으로 이동하려면 Shift + Tab을 누르세요.(Press Shift + Tab to Move focus to the Added input form)');
+					},100)
+				})
+			}
+		</script>
+	</body>
+</html>

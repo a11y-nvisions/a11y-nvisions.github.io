@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<title>예제 페이지</title>
+		<meta charset="utf-8" />
+		<style>
+			*{margin:0; padding:0;}
+			button,span{display:inline-block;}
+			
+			.pressingButton{
+				font-size:4rem;
+				width:40%;
+				text-align:left;
+				margin:1% 1%;
+				background-color:transparent;
+				border:solid 2px #000;
+				padding:2%;
+			}
+			
+			.my-icon{width:4rem; height:4rem; margin-right:5%;}
+			
+			.shape{border:solid 2px #000; box-sizing:border-box;}
+			.pressingButton[aria-pressed="true"] 	.shape{
+				border:solid 2px #0af;
+			}
+			
+			.pressingButton[aria-pressed="true"] .text{
+				color:#0af;
+				filter:drop-shadow(1px 0 1px #000);
+			}
+			
+			
+			.sq1{
+				position:relative;
+				width:4rem; height:4rem; background-color:#fff;
+			}
+			.sq2{
+				position:absolute;
+				width:4rem; height:4rem;
+				top:50%; left:50%; transform:translateY(-50%) translateX(-50%) rotate(45deg);
+				background-color:transparent;
+			}
+		</style>
+	</head>
+	<body>
+		<button class="pressingButton" aria-label="푸른색으로 표시">
+		<span class="my-icon">
+			<span class="shape sq1">
+				<span class="shape sq2"></span>
+			</span>
+		</span>
+		<span class="text">푸른 색으로 표시</span>
+		</button>
+	</body>
+	<script>
+		t1=new ToggleButton(document.querySelector('.pressingButton'));
+		function ToggleButton(Target,Default=false){
+			var root=this;
+			root.target=Target;
+			root.state={
+				pressed:Default
+			}
+			Object.defineProperty(root.state,'setPressed',{
+				get:function(){
+					return this.setPressed=root.state.pressed;
+				},
+				set:function(val){
+					if( typeof val === 'boolean' ){
+						root.state.pressed=val;
+						root.target.setAttribute('aria-pressed',val);
+					}
+				}
+			})
+			this.state.setPressed=Default;
+			
+			this.pressHadler=function(e){
+				var state=root.state;
+				var pressed=state.pressed;
+				var setPressed=state.setPressed;
+				if(pressed == false){root.state.setPressed=true}
+				else if(pressed == true){root.state.setPressed=false}
+				else{root.state.setPressed=false}
+			}
+			
+			this.target.addEventListener('click',this.pressHadler);
+		}
+	</script>
+</html>
