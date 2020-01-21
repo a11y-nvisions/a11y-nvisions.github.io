@@ -15,12 +15,12 @@
 		<button class="btn_show_index collapsed" aria-label="목차 보기">목차</button>
 		<ul class="index_nav-d1">
 			<li><a href="#sec_h3-1">애니메이션 효과를 축소하거나 없애주는 prefers-reduced-motion</a></li>
-			<li><a href="#sec_h3-2">어두운 테마와 미디어쿼리: prefers-color-scheme</a></li>
-			<li><a href="#sec_h3-3">더 다양한 환경설정에 따른 미디어쿼리 지원예정</a>
+			<li><a href="#sec_h3-2">어두운 테마와 미디어 쿼리: prefers-color-scheme</a></li>
+			<li><a href="#sec_h3-3">더 다양한 환경설정에 따른 미디어 쿼리 지원 예정</a>
 				<ul class="index_nav-d2">
-					<li><a href="#sec_h4-1">1.	다양한 디바이스에 적용되는 고대비 미디어쿼리</a></li>
-					<li><a href="#sec_h4-2">2.	운영체제의 투명 테마 설정에 따라 반응하는 미디어쿼리</a></li>
-					<li><a href="#sec_h4-3">3.	화면 밝기에 따라 반응하는 미디어쿼리</a></li>
+					<li><a href="#sec_h4-1">1.	다양한 디바이스에 적용되는 고대비 미디어 쿼리</a></li>
+					<li><a href="#sec_h4-2">2.	운영체제의 투명 테마 설정에 따라 반응하는 미디어 쿼리</a></li>
+					<li><a href="#sec_h4-3">3.	화면 밝기에 따라 반응하는 미디어 쿼리</a></li>
 					<li><a href="#sec_h4-4">4. 시스템 색상 제한 모드에 반응하는 미디어 쿼리</a></li>
 				</ul>
 				<li><a href="#supplements">부록</a></li>
@@ -33,24 +33,27 @@
 	<p>안녕하세요. <a href="https://www.dialogueinthedark.co.kr/index.nhn">엔비전스</a>입니다.</p>
 	<p>
 		CSS는 지루하고 딱딱한 웹사이트를 아름답고 부드럽게 만들어주는 역할을 수행하는 스타일링 언어입니다.
+	</p>
+	<p>	
 		우리는 색을 칠하고, 건물 단면도를 그리듯 레이아웃을 만들고, 가구와 소품을 배치하듯
 		원하는 요소를 배치하는 일에 CSS를 사용합니다.
 	</p>
 	<p>
-		CSS는 단순히 웹을 꾸미는 용도로 사용되는 것에 그치지 않고, 웹 제작에 일조하는 많은 사람들의 아이디어에 의해 꾸미는 용도 외의 접근성을 향상시키는 용도로도 사용되기 시작했습니다.
-	</p>
-	<p>
+		CSS는 단순히 웹을 꾸미는 용도로 사용되는 것에 그치지 않고,
+		웹 제작에 일조하는 많은 사람의 아이디어에 의해 꾸미는 용도 외의 접근성을 개선하는 용도로도 사용하기 시작했습니다.
+		<p>
 		가장 와 닿는 예를 들자면 CSS의 IR(Image Replacement) 기법이 있습니다.
-		스크린 리더 사용자를 위한 숨김 대체 텍스트를 제공하는 방법을 고안한 것이 바로 IR기법이라고 할 수 있습니다.
+		스크린 리더 사용자를 위해 숨김 대체 텍스트를 제공하는 방법을 고안한 것이 바로 IR 기법이라고 할 수 있습니다.
+		웹 브라우저 개발자 또한 이러한 CSS의 가능성을 배제하지 않고, 접근성 향상을 위한 기능을 만들고자 노력하고 있습니다.
 	</p>
 	<p>
-		웹 브라우저 개발자들 또한 이러한 CSS의 가능성을 배제하지 않고, 접근성을 향상시키는 기능에 도전하기 시작했습니다. 
-		지난 해 4월부터 5월, 두 번을 거쳐 소개해드린 -ms-high-contrast 미디어 쿼리부터 6월달에 소개해드린 prefers-reduced-motion까지,
-		접근성을 향상시키는 CSS의 미디어쿼리 기술을 많이 만들어왔습니다.
+		지난해 4월부터 5월, 두 번을 거쳐 소개해드린 -ms-high-contrast 미디어 쿼리부터
+		6월에 소개해드린 prefers-reduced-motion까지
+		개발자의 수고로 만들어진 접근성을 위한 결과물입니다.
 	</p>
 	<p>
 		이번 아티클의 주제 키워드는 디바이스 기본 설정(Device Preferences)으로,
-		여러 디바이스 환경의 설정 값에 따라 반응하는 미디어 쿼리 레벨 5 섹션 중
+		여러 디바이스 환경의 설정값에 따라 반응하는 미디어 쿼리 레벨 5 섹션 중
 		사용자 선호 환경 미디어 속성(User Preference Media Features)의
 		현재 적용된 속성, 미래에 적용될 prefers 접두사 미디어 쿼리 속성들을 소개할 것입니다.
 	</p>
@@ -64,82 +67,413 @@
 		웹 개발자가 애니메이션 효과를 줄이거나, 제거한 웹사이트를 사용자에게 제공할 수 있도록 돕는 속성이었습니다.
 	</p>
 	<p>
-		자세한 사항은 지난 2019년 7월의 아티클인
-		<a href="https://nuli.navercorp.com/sharing/blog/post/1132982">저사양 디바이스와 웹접근성을 위한 애니메이션 동작 줄이기 미디어쿼리 사용하기: prefers-reduced-motion 소개</a>
+		자세한 사항은 지난 2019년 7월의 아티클인 <a href="https://nuli.navercorp.com/sharing/blog/post/1132982">저사양 디바이스와 웹 접금성을 위한 애니메이션 동작 줄이기 미디어 쿼리 사용하기: prefers-reduced-motion 소개</a>
 		를 참고해주시기 바랍니다.
 	</p>
 	<section>
-		<h3><a href="#sec_h3-2" id="sec_h3-2" class="sec h3 no2">어두운 테마와 미디어쿼리: prefers-color-scheme</a></h3>
+		<h3><a href="#sec_h3-2" id="sec_h3-2" class="sec h3 no2">어두운 테마와 미디어 쿼리: prefers-color-scheme</a></h3>
 		<p>
-			2019년, 운영체제나 브라우저 등에서 굉장히 활발하게 작업된 분야가 있습니다. 바로 테마입니다. PC 운영체제는
+			2019년, 운영체제나 브라우저 등에서 굉장히 활발하게 작업 된 분야가 있습니다. 바로 테마입니다. PC 운영체제는
 			Windows 10의 1809 업데이트, MacOS는 모하비부터 어두운 테마를 지원하기 시작하였으며,
-			Chrome이나 FireFox등 브라우저 자체의 어두운 테마를 개발하기 시작했습니다.
+			Chrome이나 FireFox 등 브라우저 자체에서 어두운 테마를 개발하기 시작했습니다.
 		</p>
 		<p>
 			또한 Android 10, iOS 13부터 모바일에서도 어두운 테마 환경을 정식적으로 지원하기 시작하였습니다.
 			이로 인해 어두운 테마의 수요가 늘어났다는 것을 직∙간접적으로 체감할 수 있습니다. 
 			따라서 브라우저에서는 OS 테마가 어두운 테마를 사용 중인가 밝은 테마를 사용 중인가에 따라
-			반응하는 미디어쿼리가 개발되었습니다.
+			반응하는 미디어 쿼리가 개발되었습니다.
 		</p>
 		<p>
-			prefers-color-scheme은 light와 dark를 값으로 제공하여, 운영체제의 설정에 따라 웹 페이지를 변형시키는 것이 가능하며,
+			prefers-color-scheme은 light와 dark를 값으로 제공하여, 운영체제의 설정에 따라 웹 페이지를 변형하는 것이 가능하며,
 			현재 최신의 Chrome, FireFox, Safari 등에서 사용할 수 있습니다.
-			이 기능을 적절하게 적용시킨다면 야간에 눈부심을 호소하는 사용자가 많이 감소할 것으로 기대되며,
+			이 기능을 적절하게 적용한다면 야간에 눈부심을 호소하는 사용자가 많이 감소할 것으로 기대되며,
 			현재 최신 브라우저에서 체험하실 수 있습니다.
 		</p>
+		<aside class="SettingManual" aria-labelledby="SettingDarkMode_SECTION_LABEL">
+			<button  class="btn_accordion" aria-label="가이드 보기" id="SettingDarkMode"><strong  id="SettingDarkMode_SECTION_LABEL">어두운 테마 설정 가이드</strong></button>
+			<div id="SettingDarkMode_Content">
+			<section aria-label="기술체험 참고" class="complementary-section">
+				<div aria-hidden="true" class="visualTitle"><strong>기술체험 참고</strong></div>
+				<div class="complementary-section-content">
+					<p>이 아티클은 prefers-color-scheme이 적용되어 있습니다.</p>
+					<p>체험하시려면 이 영역의 하위 항목을 확장하고 설정 방법을 참고하실 수 있습니다.</p>
+					<p>설정 방법을 알고 있다면 이 영역을 접거나 아래 링크로 건너뛰세요.</p>
+					<a href="#sec_h3-3">다음 섹션으로 바로 가기</a>
+				</div>
+			</section>
+			<section class="GuideSection lv1">
+				<h4>PC</h4>
+				<section class="GuideSection lv2">
+				<p role="heading" aria-level="5"><button id="BtnForWindows10" class="btn_accordion"><strong>Windows 10</strong></button></p>
+				<div id="ContentBoxForWindows10">
+						
+					<dl class="OS_SETTING Windows">
+						<dt>참고</dt>
+						<dd>
+						<p>※ Windows 10 Version 1903을 기준으로 작성되었습니다.</p>
+						<p>※ 설정 열기의 빠른 방법에서 "테마 및 관련 설정"을 검색하여 테마 설정 창을 열었을 경우, 테마 설정 찾아가기 과정이 필요하지 않습니다.</p>
+						</dd>
+						<dt><h6>설정 열기</h6></dt>
+						<dd>
+								<table>
+									<tbody>
+										<tr>
+											<th><strong role="text">키보드</strong></th>
+											<td>
+													<span class="icon windowskey" aria-label="로고 키" role="text"></span> + X로 컨텍스트 메뉴 열고
+													위 또는 아래 화살표 키로 설정(N)을 찾거나,  'N' 키를 눌러 설정을 엽니다.
+											</td>
+										</tr>
+										
+										<tr>
+											<th><strong role="text">마우스</strong></th>
+											<td>
+												<p>화면 왼쪽 아래에 있는 <span role="text" class="icon windowskey" aria-label="시작"></span> 버튼을 마우스 오른쪽 클릭으로 눌러
+												컨텍스트 메뉴 열고, 설정을 찾아 클릭합니다.</p>
+											</td>
+										</tr>
+										
+										<tr>
+											<th><strong role="text">빠른 방법</strong></th>
+											<td>
+											<p><span aria-hidden="true">Windows </span><span class="icon windowskey" aria-label="로고 키" role="text"></span>를 눌러 시작 메뉴를 열거나
+												화면 왼쪽 아래에 있는 <span role="text" class="icon windowskey" aria-label="시작"></span> 버튼을 마우스로 클릭하여 시작 메뉴를 열고,  "설정" 또는 "테마 및 관련 설정"을 검색한 다음, Enter를 눌러 접근합니다.
+											</p>
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</dd>
+							<dt><h6>테마 설정 찾아가기</h6></dt>
+							<dd>
+								<table>
+								<tbody>
+									<tr>
+										<th><strong role="text">마우스</strong> </th>
+										<td>
+										<p>
+											설정 목록의 항목인 "개인 설정"을 찾아 클릭합니다.
+										</p>
+										</td>
+									</tr>
+									<tr>
+										<th>
+											<p><strong role="text">키보드</strong> </p>
+										</th>
+										<td>
+											<p>
+												설정 창이 열렸다면 첫 번째로 설정 찾기 검색 상자에 초점이 제공되므로,
+												Tab 키로 목록의 첫 항목 요소(시스템)로 이동한 다음, "개인 설정" 항목을 찾아 Enter로 누릅니다.
+											</p>
+											<p>
+												목록은 그리드 형태로 제공되며, 위 또는 아래 화살표 키나 왼쪽 또는 오른쪽 화살표 키로 탐색해야 합니다. 
+												순차적인 탐색을 원한다면 왼쪽 또는 오른쪽  화살표 키를 사용하세요.
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<th><strong role="text">빠른 방법</strong> </th>
+										<td><p>설정 창을 열 경우, 가장 처음에 초점이 제공되는 설정 찾기 검색 상자에  "테마 및 관련 설정"을 입력하고 Enter를 누릅니다.</p></td>
+									</tr>
+								</tbody>
+							</table>
+						</dd>
+						<dt><h6>색 설정에서 어두운 테마 설정하기</h6></dt>
+						<dd>
+							<table>
+								<tbody>
+									<tr>
+										<th><strong role="text">마우스</strong> </th>
+										<td>
+											<p>
+												개인 설정 창의 왼쪽에 있는 개인설정 하위 목록 중 2번째 목록인 "색" 항목을 선택합니다.
+												"색" 항목이 선택되어 오른쪽의 설정 패널이 변경되었다면,
+												미리 보기 화면 바로 아래쪽에 "색 설정"이라는 레이블과 함께 제공된 콤보 상자를 클릭하고,
+												"어둡게"로 변경하세요.
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<th>
+											<strong role="text">키보드</strong> 
+										</th>
+										<td>
+											<p>
+												설정 창과 마찬가지로 첫 번째로 설정 찾기 검색 상자에 초점이 제공되므로,
+												Tab 키로 목록의 첫 항목 요소(배경)로 이동한 다음, 두 번째 항목인 "색" 항목을 찾아 Enter로 누릅니다.
+											</p>
+											<p>
+												목록은 세로 막대 형태의 한 줄로 제공되며, 위 또는 아래 화살표 키로 순차 탐색이 가능합니다.
+											</p>
+											<p>
+												스크린 리더 사용자는 선택정보를 제공하므로, 선택되었는가를 음성을 통해 확인하고,
+												Tab 키를 눌러 오른쪽에 표시된 설정 패널의 가장 첫 번째 요소인 "색 선택" 콤보 상자로 이동한 다음,
+												위 또는 아래 화살표 키로 "어둡게"를 찾아 Enter로 선택합니다.
+											</p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</dd>
+					</dl>
+				</div>
+				</section>
+				<section class="GuideSection lv2">
+					<p role="heading" aria-level="5"><button class="btn_accordion" id="BtnForMacOS"><strong>Mac OS</strong></button></p>
+					<div id="ContentBoxForMacOS">
+						<dl class="OS_SETTING Mac">
+							<dt><h6>참고</h6></dt>
+							<dd>
+								<p>※ 이 가이드는 Mac OS Catalina을 기준으로 작성되었습니다.</p>
+								<table>
+									<tbody>
+										<tr>
+											<th><strong><span class="VO">VO</span> 키란?</strong></th>
+											<td>
+													<div>
+														<p>
+															Control + <span role="text" aria-label="option" class="icon macoptionkey"></span> 키 조합을 VoiceOver 키, 줄여서 VO 키라고 부릅니다. Control + <span role="text" aria-label="option" class="icon macoptionkey"></span> 조합 외에도 CapsLock 키로도 대체가 가능합니다.
+															VoiceOver 사용자는 <span class="VO">VO</span> + Space로 요소를 클릭할 수 있으나, 버튼이나 메뉴 같은 기본 컨트롤 요소에서는 Space로도 활성화가 가능하므로, 이 가이드에서는 Space로 활성화합니다.
+														</p>
+													</div>
+											</td>
+										</tr>
+										<tr>
+											<th><strong>키보드 설정</th>
+											<td>
+												<p>
+													MacOS의 UI 내에서 VoiceOver를 사용하지 않고 키보드를 사용할 경우,
+													기본적으로 <strong>‘키보드 탐색을 사용하여 컨트롤 간에 초점 이동’</strong>
+													설정이 해제된 상태이므로 Control + F1 단축키를 사용하여
+													별도로 설정해야 합니다.
+												</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</dd>
+							
+							<dt><h6>설정 열기</h6></dt>
+							<dd>
+								<table>
+									<tbody>
+									
+										<tr>
+											<th><strong>키보드</strong></th>
+											<td>
+													<p>
+													키보드 탐색 사용자는 Control + F2를 눌러 메뉴 막대로 접근할 수 있습니다.
+													VoiceOver 사용자는 <strong class="VO">VO</strong> + M을 눌러 메뉴 막대로 이동할 수 있습니다.
+													</p>
+													<p>
+													화면 맨 위의 메뉴 막대에 접근했다면 첫 번째 항목인 <span role="text" aria-label="Apple 메뉴" class="icon appleLogo"></span> 버튼에 초점을 제공하므로,
+													아래 화살표 키를 눌러 해당 메뉴를 확장하고, 시스템 환경설정 메뉴 항목을 찾아 Enter로 활성화합니다.
+													</p>
+													<p>Dock에 환경설정 바로 가기가 있는 경우에는 다음과 같이 수행할 수 있습니다.</p>
+													<p><strong>키보드 탐색 사용자</strong>는 Control + F3 키를 통해 Dock 영역으로 이동하여 환경설정을 찾아 Enter로 누릅니다.</p>
+													<p><strong>VoiceOver 사용자</strong>는 <span class="VO">VO</span> + D 키를 통해 Dock 영역으로 이동하여 환경설정을 찾아 Enter로 누릅니다.</p>
+											</td>
+										</tr>
+										
+										<tr>
+											<th><strong>마우스</strong></th>
+											<td>
+												<p>화면 상단에 위치한 메뉴 막대의 <span role="text" aria-label="Apple Logo" class="icon appleLogo"></span> 버튼을 클릭하여 메뉴 목록을 확장하고, 시스템 환경설정 메뉴 항목을 클릭하여 엽니다.</p>
+												</p>
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</dd>
+							
+							<dt><h6>일반 설정 찾아가기</h6></dt>
+							<dd>
+							<table>
+								<tbody>
+								
+									<tr>
+										<th><strong>마우스</strong> </th>
+										<td>
+										<p>
+											개정 정보 바로 밑에 위치한 환경설정 패널의 첫 번째 아이콘인 일반 아이콘을 클릭하여 일반 설정에 들어갑니다.
+										</p>
+										</td>
+									</tr>
+									
+									<tr>
+										<th><strong>키보드</strong></th>
+										<td>
+											<p>
+												설정 창이 열렸다면 Tab 키를 활용하여 환경설정 패널까지 이동한 다음,
+												환경설정 패널은 Tab 키 또는 오른쪽 또는 왼쪽 화살표 키나 위 또는 아래 화살표 키로 탐색할 수 있습니다.
+												순차 탐색을 원한다면 오른쪽 또는 왼쪽 방향키를 사용하거나 Tab과 Shift + Tab을 활용합니다.
+											</p>
+											<p>
+											환경설정 패널에 접근할 경우, 일반 아이콘이 가장 첫 번째에 있으므로 별도의 조작 없이 Space로 누릅니다.
+											</p>
+										</td>
+									</tr>
+									
+									</tbody>
+								</table>
+							</dd>
+							
+							<dt><h6>일반 설정에서 어두운 테마 설정하기</h6></dt>
+							<dd>
+								<table>
+									<tbody>
+									
+										<tr>
+											<th><strong>마우스</strong> </th>
+											<td>
+												<p>
+													일반 설정 도구막대 바로 아래에 있는 "화면 모드"에서
+													"다크모드"를 클릭합니다.
+												</p>
+											</td>
+										</tr>
+										
+										<tr>
+											<th><strong>키보드</strong> </th>
+											<td>
+												</p>
+												<p>
+													<strong>키보드 사용자 및 VoiceOver 사용자</strong>는 Tab 키를 통해 "화면 모드"의 세 가지 토글 버튼에 초점을 보낼 수 있습니다.
+													VoiceOver 사용자도 마찬가지로 Tab 키를 통해 "화면 모드"의 세 가지 토글 버튼에 초점을 보낼 수 있습니다.
+													2번째 토글 버튼 요소인 "다크모드"를 Space로 선택합니다.
+												</p>
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</dd>
+							
+						</dl>
+					</div>
+				</section>
+			</section>
+			<section class="GuideSection lv1">
+				<h4>모바일</h4>
+				<section class="GuideSection lv2">
+					<p role="heading" aria-level="5"><button  class="btn_accordion" id="BtnForAndroid10"><strong role="text">Android</strong></button></p>
+					<div id="ContentBoxForAndroid10">
+						<dl class="OS_SETTING Android10">
+								<dt><p><strong>참고</strong></p></dt>
+								<dd>
+									<p>※ SAMSUNG GALAXY의 경우, Android 9.0부터 "야간 모드"라는 이름으로 다크모드를 지원합니다. </p>
+									<p>※ SAMSUNG GALAXY와 Google 레퍼런스 스마트폰(픽셀 등)의 설정 경로는 거의 동일합니다. 이 설정 방법은 SAMSUNG의 Android 10 설정을 따릅니다.</p>
+									<p>※ 스마트폰 기종에 따라 약간씩 설정 항목 이름에 차이가 있을 수 있습니다. Google 레퍼런스 스마트폰의 Android 10 설정에서는 어두운 모드로 표시됩니다.</p>
+									<p>※ 현재 모바일 웹 브라우저 중 prefers-color-scheme은 Chrome에서만 지원됩니다.</p>
+								</dd>
+								<dt><h6>다크모드 설정하기 : SAMSUNG GALAXY 및 Google 레퍼런스 폰</h6></dt>
+								<dd>
+										<p>1. 홈 화면에서 위로 쓸기 동작으로 Apps 화면 열기</p>
+										<p>2. 상단의 검색 수정 창을 통해 "설정"을 검색하거나, 아이콘 중에서 "설정" 애플리케이션을 찾아 실행합니다.</p>
+										<p>3. 설정 앱이 열렸다면 설정 목록에서 "디스플레이" 항목을 찾아 누릅니다.</p>
+										<p>4. 디스플레이 설정 화면의 목록 항목 중 다크모드 항목을 찾아 눌러 스위치를 ON으로 전환하세요.</p>
+								</dd>
+								<dt><h6>Chrome에서 다크모드 활성화 또는 비활성화 설정하기</h6></dt>
+								<dd>
+									<p>1. Chrome 애플리케이션을 찾아 실행합니다.</p>
+									<p>2. Chrome 앱이 실행되면 화면 오른쪽 상단에 위치한 <span aria-label="옵션 더보기" role="text" class="icon moreoption"></span> 버튼을 찾아 누릅니다.</p>
+									<p>3. 메뉴가 확장되었다면 "설정"을 찾아 누릅니다.</p>
+									<p>4. 기본 설정 섹션의 목록에서 "테마" 항목을 찾아 눌러 테마 설정 화면을 엽니다.</p>
+									<p>5. 테마 설정 화면에는 테마를 설정하는 1개의 라디오 그룹이 있으며 시스템 기본값, 밝게, 어둡게 라디오 버튼으로 구성되어 있으며, 기본값으로 시스템 기본값 라디오 버튼이 선택되어 있습니다.</p>
+									<p>6. Chrome 브라우저가 시스템 설정값에 따라 변경되는 것을 원하지 않는다면, 밝게 또는 어둡게 라디오 버튼 중 원하는 값을 선택하면 됩니다.</p>
+								</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="GuideSection lv2">
+					<p role="heading" aria-level="5"><button class="btn_accordion" id="BtnForiOS13"><strong role="text">iOS</strong></button></p>
+					<div id="ContentBoxForiOS13">
+						<dl class="OS_SETTING iOS13">
+							<dt><h6>다크모드 설정 하기</h6></dt>
+							<dd>
+								<p>1. 홈 화면에서 설정 애플리케이션을 찾아 실행합니다.
+								애플리케이션이 많을 경우 한 손가락 아래로 쓸기, VoiceOver 사용자는 세 손가락 아래로 쓸기
+								동작으로 스팟라이트 검색 화면으로 이동한 다음과 설정을 검색하여 나타난 아이콘을 통해 실행합니다.
+								</p>
+								<p>2. 설정 화면의 목록 항목 중 "디스플레이 및 밝기"를 찾아 누릅니다.</p>
+								<p>
+									3. 디스플레이 및 밝기 설정 화면이 열리면 가장 위에 표시되는 첫 번째 섹션인 "화면 스타일"이 있습니다.
+									VoiceOver 사용자는 섹션 제목이 머리말로 제공되어 있으므로 섹션을 명확히 구분할 수 있습니다.
+								</p>
+								<p>
+									4. 화면 스타일 섹션은 라이트 모드와 다크 모드 버튼, 총 두 개의 버튼으로 이루어져 있습니다.
+									기본값으로 라이트 모드가 선택되어 있으며, 다크 모드를 눌러 전환합니다.
+								</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+			</section>
+		</aside>
 	</section>
 	<section>
-		<h3><a href="#sec_h3-3" id="sec_h3-3" class="sec h3 no3">더 다양한 환경설정에 따른 미디어쿼리 지원예정</a></h3>
-			<aside>
-				<strong>※ 주의(CAUTION)</strong>
+		<h3><a href="#sec_h3-3" id="sec_h3-3" class="sec h3 no3">더 다양한 환경설정에 따른 미디어 쿼리 지원 예정</a></h3>
+			<aside aria-label="주의">
+				<strong>※ 주의</strong>
 				<p> 아직 적용되지 않은 미디어 쿼리 기술에 대한 설명입니다. </p>
 			</aside>
+			<aside>
+				<strong>※ 참고</strong>
+				<p>사용자 선호 환경과 관련된 미디어 쿼리의 속성값중에는 no-preference 값이 있습니다.</p>
+				<p>하지만, 미디어 쿼리를 제공하지 않은 것과 같은 기본값에 해당하므로 따로 언급하지 않습니다.</p>
+			</aside>
 			<section>
-				<h4><a href="#sec_h4-1" id="sec_h4-1" class="sec h4 no1"></a>1.	다양한 디바이스에 적용되는 고대비 미디어쿼리</a></h4>
+				<h4><a href="#sec_h4-1" id="sec_h4-1" class="sec h4 no1">1.	다양한 디바이스에 적용되는 고대비 미디어 쿼리</a></h4>
 				<p>
 				지난 4월부터 5월까지 두 달에 거처 소개되었던 -ms-high-contrast의 경우,
-				ms의 브라우저에 한정되어 있다는 점이 아쉬운 부분이었습니다. 이러한 부분을 고려하여,
-				고대비 모드를 지원하는 많은 디바이스를 지원하는 고대비 사용자를 위한 미디어쿼리
-				prefers-contrast가 준비중에 있습니다.
-				이 미디어쿼리를 많은 브라우저에서 지원한다면 고대비 모드 사용자의 접근성이 향상될 것으로 보입니다.
+				ms의 브라우저에 한정되어 있다는 점이 아쉬운 부분이었습니다.
+				</p>
+				<p>
+				이러한 부분을 고려하여,
+				고대비 모드를 지원하는 많은 디바이스를 지원하는 고대비 준비 중에자를 위한 미디어 쿼리
+				prefers-contrast가 준비 중에 있습니다.
+				이 미디어 쿼리를 많은 브라우저에서 지원한다면 고대비 모드 준비 중에자의 접근성이 향상될 것으로 보입니다.
 				</p>
 			</section>
 			<section>
-				<h4><a href="#sec_h4-2" id="sec_h4-2" class="sec h4 no2">2.	운영체제의 투명 테마 설정에 따라 반응하는 미디어쿼리</a></h4>
+				<h4><a href="#sec_h4-2" id="sec_h4-2" class="sec h4 no2">2.	운영체제의 투명 테마 설정에 따라 반응하는 미디어 쿼리</a></h4>
 				<p>
-					prefers-reduced-transparency는 사용자가 투명한 UI를 선호하지 않아 불투명한 UI 테마를 사용할 경우,
+					prefers-reduced-transparency는 준비 중에자가 투명한 UI를 선호하지 않아 불투명한 UI 테마를 준비 중에할 경우,
 					웹 개발자가 투명한 요소의 투명도를 줄이거나, 불투명한 색상으로 웹페이지를 제공할 수 있도록 도와줄 예정입니다.
 				</p>
 				<p>
-					속성 값은 no-preference와 reduce로 구성되어 있으며,
-					투명도 관련 설정 사용 유무에 따라 반투명한 요소의 투명도를 조절해줄 수 있습니다.
+					속성 값을 reduce로 작성하여 적용할 수 있으며,
+					투명도 관련 설정 준비 중에 여부에 따라 반투명한 요소의 투명도를 조절해줄 수 있습니다.
 				</p>
 			</section>
 			<section>
-				<h4><a href="#sec_h4-3" id="sec_h4-3" class="sec h4 no3">3.	화면 밝기에 따라 반응하는 미디어쿼리</a></h4>
+				<h4><a href="#sec_h4-3" id="sec_h4-3" class="sec h4 no3">3.	화면 밝기에 따라 반응하는 미디어 쿼리</a></h4>
 				<p>
-					light-level은 디바이스 주변 광량에 따른 자동 밝기설정에 반응하여 웹사이트가 사용자에게 보여줄 CSS 스타일을 
-					결정할 수 있게 됩니다. light-level은 다음 3 개의 속성값을 지원할 예정입니다.
+					light-level은 디바이스 주변 광량에 따른 자동 밝기설정에 반응하여 웹사이트가 준비 중에자에게 보여줄 CSS 스타일을 
+					결정할 수 있게 됩니다. light-level은 다음 세 가지의 속성값을 지원할 예정입니다.
 				</p>
 				<dl>
 					<dt>
+						<h5>dim</h5>
 					</dt>
 					<dd>
-						<p>dim은 사용자가 디바이스를 어두운 환경에서 사용할 때에 대한 스타일을 설정하는 값입니다.</p>
+						<p>dim은 준비 중에자가 디바이스를 어두운 환경에서 준비 중에할 때에 대한 스타일을 설정하는 값입니다.</p>
 						<p>야간, 희미한 실내조명에 따라 변동된 화면 밝기를 감지하여 스타일을 제공합니다.</p>
 					</dd>
 					<dt>
 						<h5>normal</h5>
 					</dt>
 					<dd>
-						<p>normal은 적당한 광량이 있는 환경에서 사용할 때 조절된 밝기에 따라 변경되는 스타일 설정 값입니다. </p>
+						<p>normal은 적당한 광량이 있는 환경에서 준비 중에할 때 조절된 밝기에 따라 변경되는 스타일 설정값입니다. </p>
 						<p>햇빛이 강하지 않고 적당히 들어오는 실내 환경이 이에 해당합니다.</p>
 					</dd>
 					<dt>
 						<h5>washed</h5>
 					</dt>
 					<dd>
-						<p>washed는 광량이 밝은 곳에서의 디바이스 밝기에 따라 변경될 스타일 설정 값입니다. </p>
+						<p>washed는 광량이 밝은 곳에서의 디바이스 밝기에 따라 변경될 스타일 설정값입니다. </p>
 						<p>햇빛이 강한 야외 환경이 이에 해당합니다.</p>
 					</dd>
 				</dl>
@@ -147,16 +481,19 @@
 			<section>
 				<h4><a href="#sec_h4-4" id="sec_h4-4" class="sec h4 no4">4. 시스템 색상 제한 모드에 반응하는 미디어 쿼리 </a></h4>
 				<p>
-					사용자의 디바이스 환경이나 사용자의 신체적 특징으로 인해 특정 색상을 화면에서 제외시키거나 대체하는 모드 사용 시, 이를 브라우저에서 인식하여
+					준비 중에자의 디바이스 환경이나 준비 중에자의 신체적 특징으로 인해 특정 색상을 화면에서 제외하거나 대체하는 모드 준비 중에 시, 이를 브라우저에서 인식하여
 					웹 개발자가 웹에서도 제한된 색상 모드를 지원할 수 있도록 돕는 속성입니다.
 					속성값은 총 두 가지로, 색상 제한 모드가 꺼진 상태인 none(기본값)과 켜진 상태인 active 값이 있습니다.
 				</p>
 			</section>
 			<section class="sec end">
 				<p>
-				지금까지 현재 적용가능하거나, 머지 않아 추가될 사용자 선호환경에 따라
-				반응하는 미디어 쿼리에 대해 알아 보았습니다. 이러한 반응형 웹이	많은 사이트에 적용된다면앞으로의
-				지금보다 더 사용자 친화적인 웹 환경이 조성되어 정보접근성이 향상될 것으로 보여 매우 기대됩니다.
+				지금까지 현재 적용이 가능하거나, 머지않아 추가될 준비 중에자 선호환경에 따라
+				반응하는 미디어 쿼리에 대해 알아보았습니다.
+				</p>
+				<p>
+				이러한 반응형 웹이	많은 사이트에 적용된다면 앞으로의
+				지금보다 더 준비 중에자 친화적인 웹 환경이 조성되어 정보 접근성이 향상될 것으로 보여 매우 기대됩니다.
 				앞으로도 더 좋은 내용의 아티클로 찾아뵙도록 노력하겠습니다. 읽어주셔서 감사합니다. 
 				</p>
 			</section>
@@ -169,10 +506,10 @@
 	</main>
 	</div>
 	<script type="text/javascript">
-		const index_nav=document.querySelector('.index_nav');
-		const btn_showIndex=document.querySelector('.btn_show_index');
-		const container=btn_showIndex.nextElementSibling;
-		const MediaDetector={}
+		var index_nav=document.querySelector('.index_nav');
+		var btn_showIndex=document.querySelector('.btn_show_index');
+		var container=btn_showIndex.nextElementSibling;
+		var MediaDetector={}
 			Object.defineProperty(MediaDetector,'_mediaState',{
 				get:function(){
 					return  this._MediaState=checkMedia(),eventLoader(this._MediaState);
@@ -215,7 +552,7 @@
 		}}
 		
 		function showAndHideContainer(e){
-			const state=e.target.getAttribute('aria-label');
+			var state=e.target.getAttribute('aria-label');
 			if(state === '목차 보기'){
 			e.target.setAttribute('aria-label','목차 접기');
 			e.target.classList.add('expanded');
@@ -230,9 +567,9 @@
 		}
 		
 		function setCollapse(e){
-			const btn=btn_showIndex;
-			const btn_state=btn.getAttribute('aria-label')
-			const isContain=index_nav.contains(e.target);
+			var btn=btn_showIndex;
+			var btn_state=btn.getAttribute('aria-label')
+			var isContain=index_nav.contains(e.target);
 			if(isContain === false  && btn_state === '목차 접기'){
 				btn.setAttribute('aria-label','목차 보기');
 				btn.classList.add('collapsed');
@@ -272,6 +609,64 @@
 					index_nav.style.left='-12%';
 				}
 		}
+	</script>
+	<script>
+		Element.prototype.setAccordion=function(state,displayTarget){
+			this.setAttribute('data-displaytarget','#'+displayTarget.id);
+			displayTarget.className='accordion'
+			if(state==true){
+				this.setAttribute('aria-expanded',state);
+				displayTarget.classList.toggle('expand',state==true);
+			}else if(state==false){
+				this.setAttribute('aria-expanded',state);
+				displayTarget.classList.toggle('collapse',state==false);
+			}
+		};
+		Element.prototype.toggleAccordion=function(){
+			var isExpandable=this.hasAttribute('aria-expanded');
+			var box=document.querySelector(this.getAttribute('data-displaytarget'));
+			if(isExpandable == true){
+				var state=this.getAttribute('aria-expanded');
+				if(state=='true'){
+					this.setAccordion(false,box)
+				}else if(state=='false'){
+					this.setAccordion(true,box)
+				}
+			}
+		}
+		
+		var SettingDarkMode=document.querySelector('button#SettingDarkMode');
+		var BtnForWindows10=document.querySelector('button#BtnForWindows10');
+		var BtnForAndroid10=document.querySelector('button#BtnForAndroid10');
+		var BtnForMacOS=document.querySelector('button#BtnForMacOS');
+		var BtnForiOS13=document.querySelector('button#BtnForiOS13');
+		
+		SettingDarkMode.setAccordion(true,document.querySelector('#SettingDarkMode_Content'));
+		BtnForWindows10.setAccordion(false,document.querySelector('#ContentBoxForWindows10'));
+		BtnForMacOS.setAccordion(false,document.querySelector('#ContentBoxForMacOS'));
+		BtnForAndroid10.setAccordion(false,document.querySelector('#ContentBoxForAndroid10'));
+		BtnForiOS13.setAccordion(false,document.querySelector('#ContentBoxForiOS13'));
+		
+		SettingDarkMode.addEventListener('click',function(){
+			this.toggleAccordion();
+		})
+		
+		BtnForWindows10.addEventListener('click',function(){
+			this.toggleAccordion();
+		})
+		
+		BtnForMacOS.addEventListener('click',function(){
+			this.toggleAccordion();
+		})
+		
+		BtnForAndroid10.addEventListener('click',function(){
+			this.toggleAccordion();
+		})
+		
+		BtnForiOS13.addEventListener('click',function(){
+			this.toggleAccordion();
+		})
+		
 	</script>
 </body>
 </html>
