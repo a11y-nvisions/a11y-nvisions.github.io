@@ -2,11 +2,16 @@
 *{margin:0;padding:0;}
 body{font-size:1.5rem; position:relative;}
 a{font-size:inherit; font-weight:bold; text-decoration:none; display:inline-block;}
-ul{list-style:none;}
-li{margin:1% 0;}
-p{ margin:0.75% 0;}
-p a{display:inline;}
+ul{list-style:none;}li{margin:1% 0;}
+p{margin:0.75% 0;}p a{display:inline;}strong{font-size:inherit;}
 .blind{ position:absolute;color:transparent;  z-index:-1;}
+h1,[role="heading"][aria-level="1"]{font-size:240%;}
+h2,[role="heading"][aria-level="2"]{font-size:200%;}
+h3,[role="heading"][aria-level="3"]{font-size:160%;}
+h4,[role="heading"][aria-level="4"]{font-size:140%;}
+h5,[role="heading"][aria-level="5"]{font-size:120%;}
+h6,[role="heading"][aria-level="6"]{font-size:110%;}
+p.container-label{width:100%; color:#fff; background:linear-gradient(rgba(0,0,0,1),rgba(0,0,0,0.01)); }
 button{font-size:inherit; color:inherit; background-color:inherit; border:inherit;}
 
 a:link{color:#3a3;}a:visited{color:#158a;}
