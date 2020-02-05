@@ -1,0 +1,19 @@
+#answer_form{
+	width:90%; border-collapse:collapse;
+	border:solid 1px;
+	border-color:#208;
+}
+
+#answer_form *{padding:0; margin:0;}
+
+#answer_form th{ font-size:200%;}
+
+#answer_form td{
+	padding:0.5% 1.5%;
+	border:solid 1px;
+	border-color:inherit;
+}
+
+[type="radio"]:checked+label{font-weight:bold;}
+
+#answer_form th{background-color:#3fcfff; border:solid 1px; border-color:inherit;}
