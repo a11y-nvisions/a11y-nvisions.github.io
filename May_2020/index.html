@@ -212,16 +212,16 @@
 
                         if(stepForm.formInfomation.activeStep === stepForm.formInfomation.StepLength-1){
                             stepForm_btn_next.setAttribute('disabled','');
-                            if(stepForm_btn_prev.hasAttribute('disabled')){
-                            stepForm_btn_prev.removeAttribute('disabled');
-                            }
-                        }
-                        if(stepForm.formInfomation.activeStep === 0 ){
-                            stepForm_btn_prev.setAttribute('disabled','');
-                            if(stepForm_btn_next.hasAttribute('disabled')){
+                        }else{
                             stepForm_btn_next.removeAttribute('disabled');
-                            }
                         }
+
+                        if( stepForm.formInfomation.activeStep === 0 ){
+                            stepForm_btn_prev.setAttribute('disabled','');
+                        }else{
+                            stepForm_btn_prev.removeAttribute('disabled');
+                        }
+
                         for(var i=0; i<stepForm.formInfomation.StepLength; i++){
                             if(i !== val){
                                 stepForm.children[i].setAttribute('aria-hidden','true');
