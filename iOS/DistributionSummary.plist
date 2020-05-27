@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ImprovingAccessibility.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>6BBD419F754F349723C65ED86E1F82941918878F</string>
+				<key>dateExpires</key>
+				<string>2021/02/20</string>
+				<key>type</key>
+				<string>Apple Development</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>GPSC4H96AT.nvisions.ImprovingAccessibility</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>GPSC4H96AT</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>GPSC4H96AT.nvisions.ImprovingAccessibility</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>오류 유형별 접근성 해결방안.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>ab39e112-bd34-47a3-8871-77b3bbca61f9</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: *</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>GPSC4H96AT</string>
+				<key>name</key>
+				<string>Hyongsop Kim</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
