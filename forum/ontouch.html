@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>터치 이벤트 접근성 테스트</title>
+</head>
+<body>
+        <p>이것은 터치 이벤트 접근성 테스트입니다.</p>
+        <button ontouchstart="myFunction()">저를 터치해 보세요</button>
+        <p ontouchstart="myFunction2()">저도 한번 터치해 보세요.</p>
+<p id="demo2" aria-live="polite"></p>
+<p id="demo" aria-live="polite"></p>
+
+<script>
+function myFunction() {
+  document.getElementById("demo").innerHTML = "와우, 성공하셨습니다. 그런데 톡백으로는 이중탭해도 제가 나오지 않을 거예요.";
+}
+function myFunction2() {
+  document.getElementById("demo2").innerHTML = "와우, 성공하셨습니다. 그런데 톡백으로는 이중탭해도 제가 나오지 않을 거예요.";
+}
+</script>
+
+
+        </body></html>
