@@ -181,17 +181,17 @@
         var stepTitle=document.querySelector('#STEP-TITLE');
         var stepDesc=document.querySelector('#STEP-DESCRIPTION');
         var UserName=document.querySelector('#UserName');
-        stepForm.formInfomation={
+        stepForm.formInformation={
             activeStep:0,
             activeForm:stepForm.children[0],
             StepLength:stepForm.children.length
         };
 
-        if(stepForm.formInfomation.activeStep == 0 ){
-            stepForm.classList.add('step'+(stepForm.formInfomation.activeStep+1))
+        if(stepForm.formInformation.activeStep == 0 ){
+            stepForm.classList.add('step'+(stepForm.formInformation.activeStep+1))
         }
 
-        Object.defineProperty(stepForm.formInfomation,'step',{
+        Object.defineProperty(stepForm.formInformation,'step',{
             set:function (val){
                 if(typeof val === 'number'){
                     var UserName_Saved = UserName.value.length===0 ? '익명' : UserName.value;
@@ -202,27 +202,27 @@
                         UserName_Saved+'님도 인터넷에 집이 있으신가요? 있으시다면 홈페이지를 입력해주세요.'
                     ]
                     if(stepForm.children[val]){
-                        stepForm.formInfomation.activeStep=val;
-                        stepForm.formInfomation.activeForm=stepForm.children[val];
+                        stepForm.formInformation.activeStep=val;
+                        stepForm.formInformation.activeForm=stepForm.children[val];
                         stepForm.scrollToElement(val);
                         setTimeout(function(){
                             stepTitle.innerHTML='STEP'+(val+1)+':';
                             stepDesc.innerHTML=activeFormString[val];
                         },200);
 
-                        if(stepForm.formInfomation.activeStep === stepForm.formInfomation.StepLength-1){
+                        if(stepForm.formInformation.activeStep === stepForm.formInformation.StepLength-1){
                             stepForm_btn_next.setAttribute('disabled','');
                         }else{
                             stepForm_btn_next.removeAttribute('disabled');
                         }
 
-                        if( stepForm.formInfomation.activeStep === 0 ){
+                        if( stepForm.formInformation.activeStep === 0 ){
                             stepForm_btn_prev.setAttribute('disabled','');
                         }else{
                             stepForm_btn_prev.removeAttribute('disabled');
                         }
 
-                        for(var i=0; i<stepForm.formInfomation.StepLength; i++){
+                        for(var i=0; i<stepForm.formInformation.StepLength; i++){
                             if(i !== val){
                                 stepForm.children[i].setAttribute('aria-hidden','true');
                                 stepForm.children[i].classList.add('hidden');
@@ -240,22 +240,22 @@
 
         var focusables=stepForm.querySelectorAll('input,button,select,textarea')
 
-        stepForm.formInfomation.step=0;
+        stepForm.formInformation.step=0;
         stepForm_btn_next.addEventListener('click',function(){
-            stepForm.formInfomation.step=stepForm.formInfomation.activeStep+1;
-            var focusables=stepForm.formInfomation.activeForm.querySelectorAll('input,button,select,textarea');
+            stepForm.formInformation.step=stepForm.formInformation.activeStep+1;
+            var focusables=stepForm.formInformation.activeForm.querySelectorAll('input,button,select,textarea');
             setTimeout(function(){focusables[0].focus()},100);
-            stepForm.classList.replace('step'+(stepForm.formInfomation.activeStep),'step'+(stepForm.formInfomation.activeStep+1))
-            stepForm_btn_next.classList.replace('step'+(stepForm.formInfomation.activeStep),'step'+(stepForm.formInfomation.activeStep+1))
-            stepForm_btn_prev.classList.replace('step'+(stepForm.formInfomation.activeStep),'step'+(stepForm.formInfomation.activeStep+1))
+            stepForm.classList.replace('step'+(stepForm.formInformation.activeStep),'step'+(stepForm.formInformation.activeStep+1))
+            stepForm_btn_next.classList.replace('step'+(stepForm.formInformation.activeStep),'step'+(stepForm.formInformation.activeStep+1))
+            stepForm_btn_prev.classList.replace('step'+(stepForm.formInformation.activeStep),'step'+(stepForm.formInformation.activeStep+1))
         })
         stepForm_btn_prev.addEventListener('click',function(){
-            stepForm.formInfomation.step=stepForm.formInfomation.activeStep-1;
-            var focusables=stepForm.formInfomation.activeForm.querySelectorAll('input,button,select,textarea');
+            stepForm.formInformation.step=stepForm.formInformation.activeStep-1;
+            var focusables=stepForm.formInformation.activeForm.querySelectorAll('input,button,select,textarea');
             setTimeout(function(){focusables[0].focus()},100);
-            stepForm.classList.replace('step'+(stepForm.formInfomation.activeStep+2),'step'+(stepForm.formInfomation.activeStep+1));
-            stepForm_btn_next.classList.replace('step'+(stepForm.formInfomation.activeStep+2),'step'+(stepForm.formInfomation.activeStep+1));
-            stepForm_btn_prev.classList.replace('step'+(stepForm.formInfomation.activeStep+2),'step'+(stepForm.formInfomation.activeStep+1));
+            stepForm.classList.replace('step'+(stepForm.formInformation.activeStep+2),'step'+(stepForm.formInformation.activeStep+1));
+            stepForm_btn_next.classList.replace('step'+(stepForm.formInformation.activeStep+2),'step'+(stepForm.formInformation.activeStep+1));
+            stepForm_btn_prev.classList.replace('step'+(stepForm.formInformation.activeStep+2),'step'+(stepForm.formInformation.activeStep+1));
         })
     </script>
 </body>
