@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>내비게이션형 목록 리스트 접근성 테스트 데모</title>
+    </head>
+    <body>
+        <p>탭키를 눌러 여러 목록 간 링크 사이를 이동할 때 목록의 제목을 스크린 리더가 자동으로 읽어줄 수 있도록 구현한 샘플입니다. 반드시 탭키를 이용하여 테스트 하시기 바랍니다.</p>
+                <h2>접근성이 적용되지 않은 예시</h2>
+                <p>과일리스트</p>
+<ul>
+ <li><a href="http://www.example1.com">사과</a></li>
+ <li><a href="http://www.example2com">오렌지</a></li>
+</ul>
+<p>육류 리스트</p>
+<ul>
+ <li><a href="http://www.example3.com">삼겹살</a></li>
+ <li><a href="http://www.example4.com">등심</a></li>
+</ul>
+<h2>접근성이 적용된 예시</h2>
+<p id="fruit">과일리스트</p>
+<ul aria-labelledby="fruit">
+ <li><a href="http://www.example1.com">사과</a></li>
+ <li><a href="http://www.example2com">오렌지</a></li>
+</ul>
+<p id="meat">육류 리스트</p>
+<ul aria-labelledby="meat">
+ <li><a href="http://www.example3.com">삼겹살</a></li>
+ <li><a href="http://www.example4.com">등심</a></li>
+</ul>
+    </body>
+    </html>
