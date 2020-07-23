@@ -174,12 +174,12 @@ card-list card-li[aria-level="3"] .card-title::before{
         width:100%;
         grid-auto-flow: row dense;
         grid-template-columns:1fr 1fr 1fr 1fr;
-        grid-auto-rows: minmax(200px,auto);
+        grid-auto-rows: minmax(100px,auto);
         gap:0.1rem; margin:1rem auto;
     }
 
     .gridType card-li{
-        width:80%; height:auto; aspect-ratio: 16 / 9; margin:0 auto;
+        width:60%; height:auto; aspect-ratio: 16 / 9; margin:0 auto;
         grid-column: span 4;
         perspective: 1000px;
     }
