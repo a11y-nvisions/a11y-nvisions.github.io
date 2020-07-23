@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMBED FOR NULI ARTICLE</title>
+    <link rel="stylesheet"href="https://unpkg.com/simplebar@latest/dist/simplebar.css"/>
+    <link rel="stylesheet" href="style/main.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
+</head>
+<body>
+    <card-list data-type="ordered" class="gridType">
+        <card-li>
+        <div class="flip-wrapper">
+            <div class="title-side">
+                <div class="scroller" >
+                    <strong class="card-title">
+                        직역하면 역할 설명에 대한 속성이지만 장문의 설명이 아닌 요소의 역할을 더 명확하게 세분화하기 위해 사용하는 속성입니다.
+                        이는 요소의 역할의 의미를 무시하고, 덮어씌웁니다.
+                    </strong>
+                </div>
+            </div>
+            <div class="flipped-content">
+                <div class="scroller" >
+                    <p>
+                    대표적으로 많이들 오해하는 부분으로, aria-describedby와 많이 혼동됩니다. aria-roleDescription은 힌트와 같은
+                    문장 안내를 하기 위한 속성이 아닙니다.</p>
+                    <p>HTML이나 WAI-ARIA에 있는 역할의 기능에 따라 조금 더 역할을 세분화하고 강조하기 위해 "1, 색인 버튼"과 같이
+                    사용합니다.</p>
+                </div>
+            </div>
+        </div>
+        </card-li>
+        <card-li>
+        <div class="flip-wrapper">
+            <div class="title-side">
+                <div class="scroller" >
+                    <strong class="card-title">roledescription은 ARIA나 네이티브 HTML에서 정의된 요소 유형에 해당해야 합니다.</strong>
+                </div>
+            </div>
+            <div class="flipped-content">
+                <div class="scroller" >
+                    <p>이 또한 오해하기 쉬운 부분으로, 1번 카드에서 언급했던 것처럼, 특정 요소의 용도를 더 명확하게 명시하기 위해 사용합니다.</p>
+                    <p>
+                        aria-roledescription은 새로운 컨트롤이나 컨테이너를 정의하기 위해 사용하지 않습니다.
+                        반드시 존재하는 요소 유형을 텍스트로 함께 사용해야 하며, 빈칸을 사용해선 안 됩니다.
+                    </p>
+                    <dl>
+                        <dt><strong>EXAMPLE :</strong></dt>
+                        <dd>
+                            <p>aria-roleDescription="DoSomething" - X</p>
+                            <p>aria-roleDescription="DoSomething Button" - O</p>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        </card-li>
+        <card-li>
+        <div class="flip-wrapper">
+            <div class="title-side">
+                <div class="scroller" >
+                    <strong class="card-title">되도록 사용자 상호작용이 없는 요소에 사용하는 것이 바람직합니다.</strong>
+                </div>
+            </div>
+            <div class="flipped-content">
+                <div class="scroller" >
+                    <p>section, region, group과 같은 클릭이나 키보드 동작이 없는 컨테이너 요소에먼 사용하는 것이 바람직합니다.</p>
+                    <p>2번 카드에서 설명했던 것처럼, Widget에 사용할 수는 있으나 상호작용이 가능한 컨트롤 요소에 사용하면
+                        예상하지 못한 버그가 발생하기도 하며, 기기별 호환성 상에 이슈가 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        </card-li>
+        <card-li>
+        <div class="flip-wrapper">
+            <div class="title-side">
+                <div class="scroller" >
+                    <strong class="card-title">컴포넌트에 대한 지역화가 필요합니다.</strong>
+                </div>
+            </div>
+            <div class="flipped-content">
+                <div class="scroller" >
+                    <p>HTML이나 role 속성을 통해 지정된 역할 이름은 언어마다 현지화가 이루어집니다.
+                        같은 요소여도 사용자의 시스템 언어가 다르다면 그 언어의 단어로 대체됩니다.
+                    </p>
+                    <p>
+                        예를 들어 ul과 li 태그는 한국어를 사용할 때 "목록"이라고 읽어주지만,
+                        Windows의 시스템 언어가 English라면 "List"라고 읽을 것입니다.
+                    </p>
+                    <p>
+                        하지만, aria-roledescription의 텍스트는 고정값으로 현지화 번역이 이루어지지 않습니다.
+                        또한, aria 속성 안에 들어 있는 텍스트는 웹사이트 번역 등으로도 번역되지 않습니다.</p>
+                    <p>
+                        aria-label이나 aria-describedby와 같은 텍스트를 작성하는 속성을 가진 요소를 사용자가
+                        스크린 리더로 안내받을 때, 현지화가 되어있지 않기 때문에 음성 엔진의 언어가 달라 듣지 못하게 됩니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        </card-li>
+    </card-list>
+    <div id="CardHint" class="live-region invisible" aria-live="polite"></div>
+    <script defer>    
+        class CardListView extends HTMLElement{
+            constructor(){
+                super();
+            }
+            
+            __init__(){
+                this.setAttribute('role',"list");
+                this.setAttribute('aria-roleDescription','카드 목록');
+                const listItems = this.querySelectorAll('card-li')
+                for (let i = 0; i < listItems.length; i++) {
+                    const elem = listItems[i];
+                    elem.setAttribute('aria-posinset',(i+1));       
+                }
+            }
+    
+            connectedCallback(){
+                this.__init__();
+            }
+        }customElements.define('card-list',CardListView)
+        class CardListItems extends HTMLElement{
+            constructor(){
+                super();
+            }
+    
+            setLevel(){
+                const parents=getParentElements(this);
+                let ListParents=[];
+                for (let i = 0; i < parents.length; i++) {
+                    const element = parents[i];
+                    if(element.constructor === CardListView){
+                        ListParents.push(element)
+                        element.setAttribute('data-depth-level',(i+1))
+                    }
+                }
+                this.setAttribute('aria-level', ListParents.length);
+            }
+    
+            __init__(){
+                this.setAttribute('role','listitem');
+                this.setAttribute('aria-roledescription','카드 항목');
+                this.setLevel();
+            }
+    
+            connectedCallback(){
+                this.__init__();
+            }
+    
+            
+        }customElements.define('card-li',CardListItems)
+    
+        function getParentElements(elem){
+            const parents = [];
+            let node = elem;
+            while(node != document){
+                parents.push(node.parentNode);
+                node = node.parentNode;
+            }
+            return parents;
+        }
+        const flipItems = document.querySelectorAll('card-li')
+        for (let i = 0; i < flipItems.length; i++) {
+            let element = flipItems[i];
+            if(!element.querySelector('.flip-wrapper').classList.contains('front') || !element.querySelector('.flip-wrapper').classList.contains('back')){
+                element.querySelector('.flip-wrapper').classList.add('front');
+            }
+
+            const FlipContentScroller = element.querySelectorAll('.scroller');
+            if( FlipContentScroller.length > 0){
+                for (let el = 0; el < FlipContentScroller.length; el++) {
+                    const element = FlipContentScroller[el];
+                    document.addEventListener('DOMContentLoaded',function(){
+                        const scrollbox = new SimpleBar(element);
+                        const scroller = scrollbox.getScrollElement();
+                        scroller.setAttribute('tabindex',-1)
+                        
+                    })
+                }
+            }
+
+            const flipButton = document.createElement('button');
+            element.appendChild(flipButton);
+            flipButton.classList.add('btn_flip')
+            flipButton.setAttribute('aria-label','뒷면으로 뒤집어 보기')
+            flipButton.addEventListener('click',function(){
+                flipHandler();
+            })
+
+        }
+    
+        function flipHandler(){
+                const flipWrapper = event.target.parentElement.querySelector('.flip-wrapper');
+                flipWrapper.classList.contains('front') ? 
+                (
+                    flipWrapper.classList.replace('front','back'),
+                    event.target.setAttribute('aria-label','앞면으로 뒤집어 보기'),
+                    flipWrapper.querySelector('.flipped-content .scroller .simplebar-content-wrapper').focus()
+                ) : flipWrapper.classList.contains('back') ? (
+                    flipWrapper.classList.replace('back','front'),
+                    event.target.setAttribute('aria-label','뒷면으로 뒤집어 보기'),
+                    flipWrapper.querySelector('.title-side .scroller .simplebar-content-wrapper').focus()
+                )
+            : false;
+        }
+    </script>
+</body>
+</html>
