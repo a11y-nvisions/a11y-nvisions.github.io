@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>announce</title>
+    <style>
+        :root{
+            --main-background-color:#efefef;
+            --main-foreground-color:#1f1f1f;
+            --announce-background-color:#7fafff;
+            --announce-foreground-color:var(--main-foreground-color);
+        }
+        *{box-sizing:border-box; margin:0; padding:0;}
+        html,body{ position:relative; overflow:hidden; width:100%; height:100%;}
+        body{color:var(--main-foreground-color); background-color:var(--main-background-color);}
+        
+        .msgbox.srOnly{/*.srOnly라는 클래스가 있으면 보이지 않는 live 알림을 제공합니다.*/
+            border: 0; clip: rect(0 0 0 0);
+            height: 1px; width: 1px;        
+            margin: -1px; padding: 0;
+            overflow: hidden; position: absolute;
+        }
+
+        .msgbox.visible{/*visible 클래스가 있으면 보이는 디자인을 제공합니다.*/
+            position:absolute; padding:2rem; bottom:0; left:0;
+            background-color:var(--announce-background-color);
+            color:var(--announce-foreground-color); margin:1%;
+            font-size:1.5em; max-width:40%; word-break:keep-all; word-wrap: break-word;
+            border:solid 1px; border-radius:0.3rem;
+        }
+
+        /*classList.replace로 표시/숨김 처리할 때 쓸 class입니다. */
+        .show {display:block;}
+        .hide {display:none;}
+
+    </style>
+</head>
+<body>
+
+    <main id="favorite_naverPages">
+        <!-- 버튼들을 스크립트로 불러오기 위한 컨테이너에 아이디를 줍니다. -->
+        <h1>사이트 이동</h1>
+        <!--type="button"은 굳이 필요하지않지만 넣어줬습니다.
+        중요한 것은 live지만 어찌되었건 페이지 이동 버튼이니
+        value값을 홈페이지명으로 합니다.-->
+        <button type="button" value="http://www.naver.com">NAVER 홈</button>
+        <button type="button" value="http://cafe.naver.com">NAVER 카페 홈</button>
+        <button type="button" value="http://blog.naver.com">NAVER 블로그 홈</button>
+        <button type="button" value="http://news.naver.com">NAVER 뉴스 홈</button>
+    </main>
+    <!--aria-live 콘테이너 두 개 입니다. 급보처럼 읽던 것을 중단하고 알리는 assertive 라이브 리전과
+    읽던 것을 마치면 새로운 정보를 알리는 polite 라이브 리전 컨테이너입니다.
+    안에 있는 p태그가 숨겨젔다 나타나는 것으로 live 정보를 스크린리더 사용자에게 전달할 겁니다-->
+    <div id="assertive_announcer" aria-live="assertive">
+        <p class="msgbox visible hide" id="assertive_message"></p>
+    </div>
+    <div id="polite_announcer" aria-live="polite">
+        <p class="msgbox visible hide" id="polite_message"></p>
+    </div>
+
+    <script>
+        /* (1) 요소 변수와 아래에서 쓸 timeout 제거용 변수 */
+        const favoritePages = document.querySelectorAll('#favorite_naverPages>button')
+        let hideAnnounce; let showAnnounce;
+
+        /* (2) 이벤트 핸들러 등록 */
+        for (let i = 0; i < favoritePages.length; i++) {
+            const element = favoritePages[i];        
+            element.addEventListener('click',function(){ location.href = this.value; })
+            element.addEventListener('focusin',announceHintHandler)
+        }
+
+        /*(3) 포커스 인/아웃 핸들러*/
+
+        //(3-1) 초점을 받으면 맨 아래 정의된 announcement 함수를 실행합니다.
+        function announceHintHandler(e){
+            announcement('페이지로 이동하려면 Enter 또는 Space 키를 누르십시오.','polite')/*(3) 요소에
+            초점이 가면, 요소명을 읽은 다음 안내메시지를 읽어야하기 때문에 polite를 사용합니다.
+            */
+        }
+
+        //(3-3) 초점을 잃으면 announcement의 setTimeout들을 초기화시킵니다.
+        function resetAnnounceHintHandler(e){
+            clearTimeout(showAnnounce);
+            clearTimeout(hideAnnounce);
+        }
+
+        /*(4) aria-live로 스크린리더에게 알림을 줄 함수를 만듭니다.*/
+
+        function announcement(text,type,mils=4000){/*(4-1) type은 aria-live의 두 가지 속성값을 넣습니다. 
+            mils는 기본값을 넣어 입력하지 않아도 기본값으로 작동하도록 합시다.*/
+
+            type = (type === 'polite' ? 'polite' : 'assertive');/*(4-2) 삼항 연산자를 사용하여
+            polite가 아니면 type의 기본값을 assertive로 설정합니다.*/
+            
+            const announcementElement = 'polite' ? document.getElementById('polite_announcer') 
+            : document.getElementById('assertive_announcer'); /*(4-3) type에 따라 위에
+            HTML에서 마크업한 요소를 삼항연산자로 announcementElement라는 변수에 담습니다.*/
+            
+            const msgbox = announcementElement.querySelector('.msgbox')/*(4-4) 메시지가 작성될 자식요소를
+            announcementElement로부터 CSS Selector로 검색합니다. */
+            
+            showAnnounce = setTimeout(function(){/*(4-5) live 텍스트보다 요소 텍스트와 유형을 먼저
+            읽게 하기 위해 메시지 출력에 약간의 딜레이를 줍니다.*/
+                msgbox.classList.replace('hide','show')
+                msgbox.innerHTML = text;
+            },50)
+
+            hideAnnounce = setTimeout(function(){/*(4-6) 눈에 보이는 안내 상자가 사라질 시간을
+            지정합니다. 보이지 않는 알림은 mils를 짧게 주고, css로 보이지 않게끔 수정하면 됩니다. */
+                msgbox.classList.replace('show','hide');
+            },mils);
+        }
+    </script>
+</body>
+</html>
