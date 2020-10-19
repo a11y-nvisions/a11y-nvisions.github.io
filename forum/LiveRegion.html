@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#btn2").click(function(){
+        $("#paragraph").show();
+      });
+});
+</script>
+<title>LiveReigion example</title>
+</head>
+<body>
+    <p>Hello, this is a LiveRegion test.</p>
+   <div id="paragraph" style="display: none;">
+    <p aria-live="assertive">This is a paragraph.</p>
+   </div>
+
+<button id="btn2">Show</button>
+
+</body>
+</html>
