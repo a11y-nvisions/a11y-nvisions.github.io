@@ -1,4 +1,4 @@
-const ALL = document.body.querySelectorAll('*:not(script):not(img):not(figure):not(svg):not(iframe):not(frame), * :not(svg)');
+const ALL = document.body.querySelectorAll('*');
 
 Element.prototype.getParents = function(){
     var parentsList = []
@@ -53,8 +53,6 @@ function getClassText(el){
 
 function ContrastCheckFromElement(el){
     const ElStyle = window.getComputedStyle(el);
-
-    
     const hasGradient = ElStyle.background.indexOf('linear-gradient') > -1;
     const hasImage = ElStyle.background.indexOf('url') > -1;
     
@@ -64,21 +62,33 @@ function ContrastCheckFromElement(el){
 
     let bg = extractRGBNumber(ElStyle.background);
     let fg = extractRGBNumber(ElStyle.color);
-    let result;
+    let result = calcContrast_RGB(bg.result,fg.result);
 
     if(bg.alpha === 0){
         const parents = el.getParents()
         for(let i=0; i<parents.length; i++){
-            const ParentBG = extractRGBNumber(window.getComputedStyle(parents[i]).background);
+            const ParentBG = extractRGBNumber( window.getComputedStyle(parents[i]).background )
             if( ParentBG.alpha === 0){
                 continue;
-            }else{
+            }
+
+            if( ParentBG.alpha > 0){
                 bg = ParentBG;
                 break;
             }
+
         }
+
         result = calcContrast_RGB(bg.result,fg.result);
+
+        if( Number(result) === 1){
+            return '1:1 (전경색과 배경색이 같거나 지정되지 않음)'
+        }
+
+        return Number(result);
     }
+
+    return result;
 }
 
 function extractRGBNumber(colorStyleString){
@@ -89,15 +99,20 @@ function extractRGBNumber(colorStyleString){
     const c = s.slice(f,l)
 
     const result = c.replace(FindColorCode,'').split(',')
+
     
     for(let i=0; i<result.length; i++){
         result[i] = Number(result[i])
     }
-
+    
     const withoutAlpha = c.replace(FindColorCode,'').split(',',3)
+    
+    const resultObject = {
+        result:withoutAlpha,
+        alpha:result[3]
+    };
 
-
-    return {result:withoutAlpha,alpha:result[3]};
+    return resultObject
 }
 
 function calcContrast_RGB(background, foreground){
