@@ -1,6 +1,8 @@
 const ALL = document.body.querySelectorAll('*:not(script):not(img):not(figure):not(svg):not(iframe):not(frame), * :not(svg)');
 
-alert('검사결과가 표시되었습니다. \n 이 기능을 끄려면 Alt+`(~ : 물결기호)를 누르십시오. \n결과 내용을 보려면 마우스 포인터를 보고싶은 요소에 올리고, 마우스 오른쪽 버튼 클릭을 하십시오..');
+alert(`검사결과가 표시되었습니다.
+이 기능을 끄려면 새로고침 하십시오.
+결과 내용을 보려면 마우스 포인터를 보고싶은 요소에 올리고, 마우스 왼쪽 버튼 클릭을 하십시오.`);
 for( let i=0; i<ALL.length; i++){
     const ElStyle = window.getComputedStyle(ALL[i])
     const TAGNAME = ALL[i].tagName.toLowerCase();
@@ -10,21 +12,23 @@ for( let i=0; i<ALL.length; i++){
     ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
     ALL[i].setAttribute('data-background-color',ElStyle.backgroundColor);
     ALL[i].setAttribute('data-font-color',ElStyle.color);
-    ALL[i].addEventListener('contextmenu',showAfter);
-    ALL[i].addEventListener('mouseleave',hideAfter);
+    ALL[i].setAttribute('data-contrast-ratio',ContrastCheckFromElement(ALL[i]));
+    ALL[i].addEventListener('click',showResult,{capture:false});
 }
 
-function showAfter(e){
+function showResult(e){
     e.stopPropagation();
     e.preventDefault();
-    this.setAttribute('data-contrast-ratio',ContrastCheckFromElement(e.target));
-    ALL[i].removeAttribute('aria-live','polite');
-}
-function hideAfter(e){
-    e.preventDefault();
-    e.stopPropagation();
-    ALL[i].removeAttribute('aria-live');
-    this.removeAttribute('data-contrast-ratio');
+    const bg_color = this.getAttribute('data-background-color');
+    const fg_color = this.getAttribute('data-font-color');
+    const c_ratio = this.getAttribute('data-contrast-ratio');
+    const s_path = this.getAttribute('data-view-path');
+    alert(`
+        배경:${bg_color}
+        전경:${fg_color}
+        명도대비:${c_ratio}
+        셀렉터 경로:${s_path}
+    `);
 }
 
 function getClassText(el){
@@ -35,22 +39,6 @@ function getClassText(el){
         Text+='.'+element
     }
     return Text;
-}
-
-document.addEventListener('keydown',removeCheckedResult);
-function removeCheckedResult(e){
-    if(e.altKey && e.key === '`' ){
-        alert('기능 종료됨');
-        for( let i=0; i<ALL.length; i++){
-            ALL[i].addEventListener('mouseover',showAfter);
-            ALL[i].addEventListener('mouseleave',hideAfter);
-            ALL[i].removeAttribute('data-view-path');
-            ALL[i].removeAttribute('aria-live');
-            ALL[i].removeAttribute('data-background-color')
-            ALL[i].removeAttribute('data-font-color');
-        }
-        document.removeEventListener('keydown',removeCheckedResult);
-    }
 }
 
 function ContrastCheckFromElement(el){
