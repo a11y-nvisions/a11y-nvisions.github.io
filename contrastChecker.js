@@ -23,7 +23,7 @@ for( let i=0; i<ALL.length; i++){
     const ID = ALL[i].id ? '#'+ALL[i].id : '';
     const SELECTOR_TEXT = TAGNAME+ID+CLASSTEXT;
     ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
-    ALL[i].setAttribute('data-background-color',ElStyle.backgroundColor);
+    ALL[i].setAttribute('data-background-color',ElStyle.background);
     ALL[i].setAttribute('data-font-color',ElStyle.color);
     ALL[i].setAttribute('data-contrast-ratio',ContrastCheckFromElement(ALL[i]));
     ALL[i].addEventListener('click',showResult,{capture:false});
