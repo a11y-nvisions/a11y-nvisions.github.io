@@ -1,6 +1,6 @@
 const ALL = document.body.querySelectorAll('*:not(script):not(img):not(figure):not(svg):not(iframe):not(frame), * :not(svg)');
 
-alert('검사결과가 표시되었습니다. \n 이 기능을 끄려면 Alt+`(~ : 물결기호)를 누르십시오. \n결과 내용을 보려면 마우스 포인터를 보고싶은 요소에 올리십시오.');
+alert('검사결과가 표시되었습니다. \n 이 기능을 끄려면 Alt+`(~ : 물결기호)를 누르십시오. \n결과 내용을 보려면 마우스 포인터를 보고싶은 요소에 올리고, 마우스 오른쪽 버튼 클릭을 하십시오..');
 for( let i=0; i<ALL.length; i++){
     const ElStyle = window.getComputedStyle(ALL[i])
     const TAGNAME = ALL[i].tagName.toLowerCase();
