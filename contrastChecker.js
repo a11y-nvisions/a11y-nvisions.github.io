@@ -1,5 +1,15 @@
 const ALL = document.body.querySelectorAll('*:not(script):not(img):not(figure):not(svg):not(iframe):not(frame), * :not(svg)');
 
+Element.prototype.getParents = function(){
+    var parentsList = []
+    var start = this;
+    while(start.parentElement){
+        parentsList.push(start.parentElement);   
+        start=start.parentElement;
+    }
+    return parentsList;
+}
+
 alert(`검사결과가 표시되었습니다.
 이 기능을 끄려면 새로고침 하십시오.
 결과 내용을 보려면 마우스 포인터를 보고싶은 요소에 올리고, 마우스 왼쪽 버튼 클릭을 하십시오.`);
@@ -44,18 +54,31 @@ function getClassText(el){
 function ContrastCheckFromElement(el){
     const ElStyle = window.getComputedStyle(el);
 
-    const bg = extractRGBNumber(ElStyle.background)
-    const fg = extractRGBNumber(ElStyle.color);
-
+    
     const hasGradient = ElStyle.background.indexOf('linear-gradient') > -1;
     const hasImage = ElStyle.background.indexOf('url') > -1;
-
-    const result = calcContrast_RGB(bg,fg);
     
     if(hasGradient || hasImage){
         return '자동 측정 불가(그라데이션 또는 이미지)';
     }
-    return result ? result +':1' : '측정 불가능';
+
+    let bg = extractRGBNumber(ElStyle.background);
+    let fg = extractRGBNumber(ElStyle.color);
+    let result;
+
+    if(bg.alpha === 0){
+        const parents = bg.getParents()
+        for(let i=0; i<parents.length; i++){
+            const ParentBG = extractRGBNumber(window.getComputedStyle(parents[i]).background);
+            if( ParentBG.alpha === 0){
+                continue;
+            }else{
+                bg = ParentBG;
+                break;
+            }
+        }
+        result = calcContrast_RGB(bg.result,fg.result);
+    }
 }
 
 function extractRGBNumber(colorStyleString){
@@ -65,12 +88,16 @@ function extractRGBNumber(colorStyleString){
     const l = s.indexOf(s.match(FindColorCode).pop())+1;
     const c = s.slice(f,l)
 
-    const result = c.replace(FindColorCode,'').split(',',3)
-
+    const result = c.replace(FindColorCode,'').split(',')
+    
     for(let i=0; i<result.length; i++){
         result[i] = Number(result[i])
     }
-    return result;
+
+    const withoutAlpha = c.replace(FindColorCode,'').split(',',3)
+
+
+    return {result:withoutAlpha,alpha:result[3]};
 }
 
 function calcContrast_RGB(background, foreground){
