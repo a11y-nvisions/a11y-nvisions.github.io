@@ -1,6 +1,28 @@
 const ALL = document.body.querySelector('*:not(script)');
-for( let i=0; i<ALL.length; i++){
-    ALL[i].setAttribute( 'data-contrast-ratio',ContrastCheckFromElement(ALL[i]))
+
+const ALL = document.body.querySelectorAll('*:not(script):not(img):not(figure):not(svg):not(iframe):not(frame), * :not(svg)');
+function startContrastChecker(turn){
+    for( let i=0; i<ALL.length; i++){
+        if(turn === 'on'){
+            alert('검사결과 표시됨');
+            const TAGNAME = ALL[i].tagName.toLowerCase();
+            const CLASSTEXT = ALL[i].classList.length > 0 ? getClassText(ALL[i]) : '';
+            const ID = ALL[i].id ? '#'+ALL[i].id : '';
+            const isHide = (window.getComputedStyle(ALL[i]).display === 'none' ||
+            window.getComputedStyle(ALL[i]).visibility === 'hidden' ||
+            window.getComputedStyle(ALL[i]).contentVisibility === 'hidden') ? 'true' : 'false'
+        
+            const SELECTOR_TEXT = TAGNAME+ID+CLASSTEXT;
+            ALL[i].setAttribute('data-is-hide',isHide)
+            ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
+            ALL[i].setAttribute('data-contrast-ratio',ContrastCheckFromElement(ALL[i]));
+        }else if(turn === 'off'){
+            alert('검사결과 숨김');
+            ALL[i].removeAttribute('data-is-hide');
+            ALL[i].removeAttribute('data-view-path')
+            ALL[i].removeAttribute('data-contrast-ratio');
+        }
+    }
 }
 
 function ContrastCheckFromElement(el){
