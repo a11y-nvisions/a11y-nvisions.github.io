@@ -7,23 +7,23 @@ for( let i=0; i<ALL.length; i++){
     const CLASSTEXT = ALL[i].classList.length > 0 ? getClassText(ALL[i]) : '';
     const ID = ALL[i].id ? '#'+ALL[i].id : '';
     const SELECTOR_TEXT = TAGNAME+ID+CLASSTEXT;
-    const isHide = (window.getComputedStyle(ALL[i]).display === 'none' ||
-    window.getComputedStyle(ALL[i]).visibility === 'hidden' ||
-    window.getComputedStyle(ALL[i]).contentVisibility === 'hidden') ? 'true' : 'false'
-    ALL[i].setAttribute('data-is-hide',isHide);
     ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
     ALL[i].setAttribute('data-background-color',ElStyle.backgroundColor);
     ALL[i].setAttribute('data-font-color',ElStyle.color);
-    ALL[i].addEventListener('mouseover',showAfter);
+    ALL[i].addEventListener('contextmenu',showAfter);
     ALL[i].addEventListener('mouseleave',hideAfter);
 }
 
 function showAfter(e){
     e.stopPropagation();
+    e.preventDefault();
     this.setAttribute('data-contrast-ratio',ContrastCheckFromElement(e.target));
+    ALL[i].removeAttribute('aria-live','polite');
 }
 function hideAfter(e){
+    e.preventDefault();
     e.stopPropagation();
+    ALL[i].removeAttribute('aria-live');
     this.removeAttribute('data-contrast-ratio');
 }
 
@@ -44,8 +44,8 @@ function removeCheckedResult(e){
         for( let i=0; i<ALL.length; i++){
             ALL[i].addEventListener('mouseover',showAfter);
             ALL[i].addEventListener('mouseleave',hideAfter);
-            ALL[i].removeAttribute('data-is-hide');
             ALL[i].removeAttribute('data-view-path');
+            ALL[i].removeAttribute('aria-live');
             ALL[i].removeAttribute('data-background-color')
             ALL[i].removeAttribute('data-font-color');
         }

@@ -4,7 +4,7 @@
 
 [data-contrast-ratio]:not([data-is-hide=true]):after{
     display:inline-block; width:max-content;
-    content: '☜명도대비:' attr(data-contrast-ratio) '　' '\a　경로:' attr(data-view-path) '　';
+    content: '☜명도대비:' attr(data-contrast-ratio) '　' '\a　경로:' attr(data-view-path) '　' '\a전경:' attr(data-background-color) '\a배경:' attr(data-font-color);
     white-space:pre; font-size:0.6rem;
     position: absolute; z-index:999; margin-left:45%;
     color:white; background:black; border-radius:0.3rem;
