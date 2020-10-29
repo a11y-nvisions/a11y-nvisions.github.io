@@ -1,4 +1,4 @@
-ㅋconst ALL = document.body.querySelectorAll('*');
+const ALL = document.body.querySelectorAll('*');
 
 Element.prototype.getParents = function(){
     var parentsList = []
