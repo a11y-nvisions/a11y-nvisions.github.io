@@ -15,6 +15,16 @@ for( let i=0; i<ALL.length; i++){
     ALL[i].setAttribute('data-contrast-ratio',ContrastCheckFromElement(ALL[i]));
 }
 
+function getClassText(el){
+    let Text = '';
+    const classList = el.classList;
+    for(let i=0; i<classList.length; i++){
+        const element = classList[i];
+        Text+='.'+element
+    }
+    return Text;
+}
+
 document.addEventListener('keydown',removeCheckedResult);
 function removeCheckedResult(e){
     if(e.altKey && e.key === '`' ){
