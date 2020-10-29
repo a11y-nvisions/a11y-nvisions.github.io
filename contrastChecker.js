@@ -23,7 +23,7 @@ for( let i=0; i<ALL.length; i++){
     const ID = ALL[i].id ? '#'+ALL[i].id : '';
     const SELECTOR_TEXT = TAGNAME+ID+CLASSTEXT;
     ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
-    ALL[i].setAttribute('data-background-color',ElStyle.background);
+    ALL[i].setAttribute('data-background-color',ElStyle.backgroundColor);
     ALL[i].setAttribute('data-font-color',ElStyle.color);
     ALL[i].setAttribute('data-contrast-ratio',ContrastCheckFromElement(ALL[i]));
     ALL[i].addEventListener('click',showResult,{capture:false});
@@ -75,11 +75,11 @@ function ContrastCheckFromElement(el){
                 continue;
             }
 
-            if( i === parents.length-1 && ParentBG.alpha === 0 ){
+            if( i === parents.length-1 && ParentBG.alpha === 0 && calcContrast_RGB(bg.result,fg.result) === 1){
                 return '기본 배경색 없음'
             }
 
-            if( ParentBG.alpha > 0){
+            if( ParentBG.alpha > 0 ){
                 bg = ParentBG;
                 break;
             }
@@ -92,10 +92,10 @@ function ContrastCheckFromElement(el){
             return '1:1 (전경색과 배경색이 같거나 지정되지 않음)'
         }
 
-        return Number(result);
+        return result+':1';
     }
 
-    return result;
+    return result+':1';
 }
 
 function extractRGBNumber(colorStyleString){
