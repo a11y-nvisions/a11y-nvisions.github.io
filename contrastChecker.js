@@ -1,4 +1,4 @@
-const ALL = document.body.querySelectorAll('*');
+ㅋconst ALL = document.body.querySelectorAll('*');
 
 Element.prototype.getParents = function(){
     var parentsList = []
@@ -12,7 +12,10 @@ Element.prototype.getParents = function(){
 
 alert(`검사결과가 표시되었습니다.
 이 기능을 끄려면 새로고침 하십시오.
-결과 내용을 보려면 마우스 포인터를 보고싶은 요소에 올리고, 마우스 왼쪽 버튼 클릭을 하십시오.`);
+결과 내용을 보려면 마우스 포인터를 보고싶은 요소에 올리고, 마우스 왼쪽 버튼 클릭을 하십시오.
+
+(주의)배경색을 여러 개 덭씌우는 것과 같은 특수한 패턴이 사용되었다면 정확한 수치가 나오지 않을 수 있으니 수치가 이상하다면
+다른 방법으로 테스트하시기 바랍니다.`);
 for( let i=0; i<ALL.length; i++){
     const ElStyle = window.getComputedStyle(ALL[i])
     const TAGNAME = ALL[i].tagName.toLowerCase();
@@ -70,6 +73,10 @@ function ContrastCheckFromElement(el){
             const ParentBG = extractRGBNumber( window.getComputedStyle(parents[i]).background )
             if( ParentBG.alpha === 0){
                 continue;
+            }
+
+            if( i === parents.length-1 && ParentBG.alpha === 0 ){
+                return '기본 배경색 없음'
             }
 
             if( ParentBG.alpha > 0){
