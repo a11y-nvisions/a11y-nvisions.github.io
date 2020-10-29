@@ -23,7 +23,6 @@ for( let i=0; i<ALL.length; i++){
     const ID = ALL[i].id ? '#'+ALL[i].id : '';
     const SELECTOR_TEXT = TAGNAME+ID+CLASSTEXT;
     ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
-    ALL[i].setAttribute('data-background-color',ElStyle.backgroundColor);
     ALL[i].setAttribute('data-font-color',ElStyle.color);
     ALL[i].setAttribute('data-contrast-ratio',ContrastCheckFromElement(ALL[i]));
     ALL[i].addEventListener('click',showResult,{capture:false});
@@ -89,12 +88,13 @@ function ContrastCheckFromElement(el){
         result = calcContrast_RGB(bg.result,fg.result);
 
         if( Number(result) === 1){
+            el.setAttribute('data-background-color','rgb('+bg.result[0]+','+bg.result[1]+','+bg.result[2]+')')
             return '1:1 (전경색과 배경색이 같거나 지정되지 않음)'
         }
-
+        el.setAttribute('data-background-color','rgb('+bg.result[0]+','+bg.result[1]+','+bg.result[2]+')')
         return result+':1';
     }
-
+    el.setAttribute('data-background-color','rgb('+bg.result[0]+','+bg.result[1]+','+bg.result[2]+')');
     return result+':1';
 }
 
