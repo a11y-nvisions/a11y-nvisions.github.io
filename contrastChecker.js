@@ -67,7 +67,7 @@ function ContrastCheckFromElement(el){
     let result;
 
     if(bg.alpha === 0){
-        const parents = bg.getParents()
+        const parents = el.getParents()
         for(let i=0; i<parents.length; i++){
             const ParentBG = extractRGBNumber(window.getComputedStyle(parents[i]).background);
             if( ParentBG.alpha === 0){
