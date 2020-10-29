@@ -1,18 +1,27 @@
 const ALL = document.body.querySelectorAll('*:not(script):not(img):not(figure):not(svg):not(iframe):not(frame), * :not(svg)');
 
-alert('검사결과가 표시되었습니다. \n 검사결과 텍스트를 지우려면 Alt+`(~ : 물결기호)를 누르십시오.');
+alert('검사결과가 표시되었습니다. \n 이 기능을 끄려면 Alt+`(~ : 물결기호)를 누르십시오. \n결과 내용을 보려면 마우스 포인터를 보고싶은 요소에 올리십시오.');
 for( let i=0; i<ALL.length; i++){
     const TAGNAME = ALL[i].tagName.toLowerCase();
     const CLASSTEXT = ALL[i].classList.length > 0 ? getClassText(ALL[i]) : '';
     const ID = ALL[i].id ? '#'+ALL[i].id : '';
+    const SELECTOR_TEXT = TAGNAME+ID+CLASSTEXT;
     const isHide = (window.getComputedStyle(ALL[i]).display === 'none' ||
     window.getComputedStyle(ALL[i]).visibility === 'hidden' ||
     window.getComputedStyle(ALL[i]).contentVisibility === 'hidden') ? 'true' : 'false'
-
-    const SELECTOR_TEXT = TAGNAME+ID+CLASSTEXT;
-    ALL[i].setAttribute('data-is-hide',isHide)
+    ALL[i].setAttribute('data-is-hide',isHide);
     ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
-    ALL[i].setAttribute('data-contrast-ratio',ContrastCheckFromElement(ALL[i]));
+    ALL[i].addEventListener('mouseover',showAfter);
+    ALL[i].addEventListener('mouseleave',hideAfter);
+}
+
+function showAfter(e){
+    e.stopPropagation();
+    this.setAttribute('data-contrast-ratio',ContrastCheckFromElement(this));
+}
+function hideAfter(e){
+    e.stopPropagation();
+    this.removeAttribute('data-contrast-ratio');
 }
 
 function getClassText(el){
@@ -28,12 +37,13 @@ function getClassText(el){
 document.addEventListener('keydown',removeCheckedResult);
 function removeCheckedResult(e){
     if(e.altKey && e.key === '`' ){
-        for( let i=0; i<ALL.length; i++){                
+        alert('기능 종료됨');
+        for( let i=0; i<ALL.length; i++){
+            ALL[i].addEventListener('mouseover',showAfter);
+            ALL[i].addEventListener('mouseleave',hideAfter);
             ALL[i].removeAttribute('data-is-hide');
-            ALL[i].removeAttribute('data-view-path')
-            ALL[i].removeAttribute('data-contrast-ratio');
+            ALL[i].removeAttribute('data-view-path');
         }
-        alert('검사 결과 제거됨');
         document.removeEventListener('keydown',removeCheckedResult);
     }
 }
