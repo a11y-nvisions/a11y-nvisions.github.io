@@ -1,5 +1,3 @@
-const ALL = document.body.querySelector('*:not(script)');
-
 const ALL = document.body.querySelectorAll('*:not(script):not(img):not(figure):not(svg):not(iframe):not(frame), * :not(svg)');
 function startContrastChecker(turn){
     for( let i=0; i<ALL.length; i++){
