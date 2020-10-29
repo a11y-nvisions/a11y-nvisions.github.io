@@ -1,34 +1,48 @@
 const ALL = document.body.querySelectorAll('*:not(script):not(img):not(figure):not(svg):not(iframe):not(frame), * :not(svg)');
-function startContrastChecker(turn){
-    for( let i=0; i<ALL.length; i++){
-        if(turn === 'on'){
-            alert('검사결과 표시됨');
-            const TAGNAME = ALL[i].tagName.toLowerCase();
-            const CLASSTEXT = ALL[i].classList.length > 0 ? getClassText(ALL[i]) : '';
-            const ID = ALL[i].id ? '#'+ALL[i].id : '';
-            const isHide = (window.getComputedStyle(ALL[i]).display === 'none' ||
-            window.getComputedStyle(ALL[i]).visibility === 'hidden' ||
-            window.getComputedStyle(ALL[i]).contentVisibility === 'hidden') ? 'true' : 'false'
-        
-            const SELECTOR_TEXT = TAGNAME+ID+CLASSTEXT;
-            ALL[i].setAttribute('data-is-hide',isHide)
-            ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
-            ALL[i].setAttribute('data-contrast-ratio',ContrastCheckFromElement(ALL[i]));
-        }else if(turn === 'off'){
-            alert('검사결과 숨김');
+
+alert('검사결과가 표시되었습니다. \n 검사결과 텍스트를 지우려면 Alt+`(~ : 물결기호)를 누르십시오.');
+for( let i=0; i<ALL.length; i++){
+    const TAGNAME = ALL[i].tagName.toLowerCase();
+    const CLASSTEXT = ALL[i].classList.length > 0 ? getClassText(ALL[i]) : '';
+    const ID = ALL[i].id ? '#'+ALL[i].id : '';
+    const isHide = (window.getComputedStyle(ALL[i]).display === 'none' ||
+    window.getComputedStyle(ALL[i]).visibility === 'hidden' ||
+    window.getComputedStyle(ALL[i]).contentVisibility === 'hidden') ? 'true' : 'false'
+
+    const SELECTOR_TEXT = TAGNAME+ID+CLASSTEXT;
+    ALL[i].setAttribute('data-is-hide',isHide)
+    ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
+    ALL[i].setAttribute('data-contrast-ratio',ContrastCheckFromElement(ALL[i]));
+}
+
+document.addEventListener('keydown',removeCheckedResult);
+function removeCheckedResult(e){
+    if(e.altKey && e.key === '`' ){
+        for( let i=0; i<ALL.length; i++){                
             ALL[i].removeAttribute('data-is-hide');
             ALL[i].removeAttribute('data-view-path')
             ALL[i].removeAttribute('data-contrast-ratio');
         }
+        alert('검사 결과 제거됨');
+        document.removeEventListener('keydown',removeCheckedResult);
     }
 }
 
 function ContrastCheckFromElement(el){
     const ElStyle = window.getComputedStyle(el);
+
     const bg = extractRGBNumber(ElStyle.background)
     const fg = extractRGBNumber(ElStyle.color);
-    const result = calcContrast_RGB(bg,fg)
-    return result ? result +':1' : 'this element got an unavailable color value';
+
+    const hasGradient = ElStyle.background.indexOf('linear-gradient') > -1;
+    const hasImage = ElStyle.background.indexOf('url') > -1;
+
+    const result = calcContrast_RGB(bg,fg);
+    
+    if(hasGradient || hasImage){
+        return '자동 측정 불가(그라데이션 또는 이미지)';
+    }
+    return result ? result +':1' : '측정 불가능';
 }
 
 function extractRGBNumber(colorStyleString){
