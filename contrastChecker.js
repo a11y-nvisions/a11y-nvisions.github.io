@@ -2,6 +2,7 @@ const ALL = document.body.querySelectorAll('*:not(script):not(img):not(figure):n
 
 alert('검사결과가 표시되었습니다. \n 이 기능을 끄려면 Alt+`(~ : 물결기호)를 누르십시오. \n결과 내용을 보려면 마우스 포인터를 보고싶은 요소에 올리십시오.');
 for( let i=0; i<ALL.length; i++){
+    const ElStyle = window.getComputedStyle(ALL[i])
     const TAGNAME = ALL[i].tagName.toLowerCase();
     const CLASSTEXT = ALL[i].classList.length > 0 ? getClassText(ALL[i]) : '';
     const ID = ALL[i].id ? '#'+ALL[i].id : '';
@@ -11,13 +12,15 @@ for( let i=0; i<ALL.length; i++){
     window.getComputedStyle(ALL[i]).contentVisibility === 'hidden') ? 'true' : 'false'
     ALL[i].setAttribute('data-is-hide',isHide);
     ALL[i].setAttribute('data-view-path',SELECTOR_TEXT);
+    ALL[i].setAttribute('data-background-color',ElStyle.backgroundColor);
+    ALL[i].setAttribute('data-font-color',ElStyle.color);
     ALL[i].addEventListener('mouseover',showAfter);
     ALL[i].addEventListener('mouseleave',hideAfter);
 }
 
 function showAfter(e){
     e.stopPropagation();
-    this.setAttribute('data-contrast-ratio',ContrastCheckFromElement(this));
+    this.setAttribute('data-contrast-ratio',ContrastCheckFromElement(e.target));
 }
 function hideAfter(e){
     e.stopPropagation();
@@ -43,6 +46,8 @@ function removeCheckedResult(e){
             ALL[i].addEventListener('mouseleave',hideAfter);
             ALL[i].removeAttribute('data-is-hide');
             ALL[i].removeAttribute('data-view-path');
+            ALL[i].removeAttribute('data-background-color')
+            ALL[i].removeAttribute('data-font-color');
         }
         document.removeEventListener('keydown',removeCheckedResult);
     }
@@ -83,10 +88,10 @@ function extractRGBNumber(colorStyleString){
 function calcContrast_RGB(background, foreground){
     const L1 = calculateRelativeLuminance(...background);
     const L2 = calculateRelativeLuminance(...foreground);
-    if(L2 > L1){
+    if(L2 >= L1){
         return ( (L2 + 0.05) / (L1 + 0.05) ).toFixed(2);
     }
-    if(L1 > L2){
+    if(L1 >= L2){
         return ( (L1 + 0.05) / (L2 + 0.05) ).toFixed(2);
     }
 }
