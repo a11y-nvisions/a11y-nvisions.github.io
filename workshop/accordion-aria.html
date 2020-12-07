@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script defer src="tabs.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="tabs.css" rel="stylesheet">
+  <title>커스텀 아코디언 접근성 데모 - 엔비전스 접근성 워크숍</title>
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+            <div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a aria-current="page"  href="accordion-aria.html">커스텀 아코디언 접근성 데모</a></li>
+          <li> <a href="custom-button.html">커스텀 버튼 키보드 테스트</a></li>
+          <li> <a href="custom-combo.html">자동완성 테스트</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main role="main">
+    <div class="tabs">
+      <div role="tablist" aria-label="step by step">
+        <button role="tab" aria-selected="true" aria-controls="original" id="tab1">접근성 적용 안됨</button>
+        <button role="tab" aria-selected="false" aria-controls="step1" id="tab2" tabindex="-1">step 1</button>
+        <button role="tab" aria-selected="false" aria-controls="step2" id="tab3" tabindex="-1">step 2</button>
+              </div>
+
+      <div role="tabpanel" id="original" aria-labelledby="tab1">
+        <span id="shipping-toggle1" style="font-weight:bold;">배달 관련 정보<i class="fa fa-plus-square"></i></span>
+        <div id="shipping-panel1" style="display:none">
+          <p>이 햄버거는 몸무게가 많이 나가는 사람이 주문하는 경우에는 배달이 되지 않습니다. 배달원이 집 앞에 도착했을 때 반드시 날씬한 사람이 나오셔야 햄버거를 받을 수 있습니다. 감사합니다.</p>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="step1" aria-labelledby="tab2" hidden="hidden">
+        <span role="button" tabindex="0" id="shipping-toggle" aria-expanded="false" style="font-weight:bold;">배달 관련 정보<i class="fa fa-plus-square" aria-hidden="true"></i></span>
+        <div id="shipping-panel" style="display:none">
+          <p>이 햄버거는 몸무게가 많이 나가는 사람이 주문하는 경우에는 배달이 되지 않습니다. 배달원이 집 앞에 도착했을 때 반드시 날씬한 사람이 나오셔야 햄버거를 받을 수 있습니다. 감사합니다.</p>
+        </div>
+      </div>
+
+      <div role="tabpanel" id="step2" aria-labelledby="tab3" hidden="hidden">
+        <span role="button" tabindex="0" id="shipping-toggle2" aria-expanded="false" style="font-weight:bold;">배달 관련 정보<i class="fa fa-plus-square" aria-hidden="true"></i></span>
+        <div id="shipping-panel2" style="display:none">
+          <p>이 햄버거는 몸무게가 많이 나가는 사람이 주문하는 경우에는 배달이 되지 않습니다. 배달원이 집 앞에 도착했을 때 반드시 날씬한 사람이 나오셔야 햄버거를 받을 수 있습니다. 감사합니다.</p>
+        </div>
+      </div>
+</div>     
+      </main>
+</div>
+<script>
+  $('#shipping-toggle1').mouseover(function(){
+    $('#shipping-panel1').show(500);
+    $(this).find('i').removeClass('fa-plus-square');
+    $(this).find('i').addClass('fa-minus-square');
+			  });
+
+$('#shipping-toggle1').mouseout(function() {
+$('#shipping-panel1').hide(500);
+$(this).find('i').removeClass('fa-minus-square');
+    $(this).find('i').addClass('fa-plus-square');
+    });
+
+$('#shipping-toggle').mouseover(function(){
+    $('#shipping-panel').show(500);
+    $(this).find('i').removeClass('fa-plus-square');
+    $(this).find('i').addClass('fa-minus-square');
+			$(this).attr('aria-expanded','true');
+  });
+
+$('#shipping-toggle').mouseout(function() {
+$('#shipping-panel').hide(500);
+$(this).find('i').removeClass('fa-minus-square');
+    $(this).find('i').addClass('fa-plus-square');
+    $(this).attr('aria-expanded','false');
+});
+
+  $('#shipping-toggle').keydown(function(e) {
+    if (e.keyCode == 13 || e.keyCode == 32) {
+      $('#shipping-panel').slideToggle('500');
+    $(this).find('i').toggleClass('fa-plus-square fa-minus-square')
+	if ($(this).attr('aria-expanded') == 'false') {
+		$(this).attr('aria-expanded','true');
+	} else {
+		$(this).attr('aria-expanded','false');
+    }
+    }
+  });
+
+  $('#shipping-toggle2').mouseover(function(){
+    $('#shipping-panel2').show(500);
+    $(this).find('i').removeClass('fa-plus-square');
+    $(this).find('i').addClass('fa-minus-square');
+			$(this).attr('aria-expanded','true');
+  });
+
+$('#shipping-toggle2').mouseout(function() {
+$('#shipping-panel2').hide(500);
+$(this).find('i').removeClass('fa-minus-square');
+    $(this).find('i').addClass('fa-plus-square');
+    $(this).attr('aria-expanded','false');
+});
+
+  $('#shipping-toggle2').keydown(function(e) {
+    if (e.keyCode == 13 || e.keyCode == 32) {
+      $('#shipping-panel2').slideToggle('500');
+    $(this).find('i').toggleClass('fa-plus-square fa-minus-square')
+	if ($(this).attr('aria-expanded') == 'false') {
+		$(this).attr('aria-expanded','true');
+	} else {
+		$(this).attr('aria-expanded','false');
+    }
+    }
+  });
+
+  $('#shipping-toggle2').click(function() {
+    $('#shipping-panel2').slideToggle('500');
+    $(this).find('i').toggleClass('fa-plus-square fa-minus-square');
+	if ($(this).attr('aria-expanded') == 'false') {
+		$(this).attr('aria-expanded','true');
+	} else {
+		$(this).attr('aria-expanded','false');
+    }
+  });
+</script>
+</body>
+</html>

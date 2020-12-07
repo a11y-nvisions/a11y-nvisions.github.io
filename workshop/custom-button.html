@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script defer src="tabs.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href="tabs.css" rel="stylesheet">
+  <title>커스텀 버튼 키보드 테스트 - 엔비전스 접근성 워크숍</title>
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+            <div>
+        <ul class="nav navbar-nav">
+          <li><a href="accordion-aria.html">커스텀 아코디언 접근성 데모</a></li>
+          <li class="active"> <a aria-current="page" href="custom-button.html">커스텀 버튼 키보드 테스트</a></li>
+          <li> <a href="custom-combo.html">자동완성 테스트</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main role="main">
+    <div class="tabs">
+      <div role="tablist" aria-label="step by step">
+        <button role="tab" aria-selected="true" aria-controls="original" id="tab1">step 1</button>
+        <button role="tab" aria-selected="false" aria-controls="step1" id="tab2" tabindex="-1">step 2</button>
+        <button role="tab" aria-selected="false" aria-controls="step2" id="tab3" tabindex="-1">step 3</button>
+              </div>
+
+      <div role="tabpanel" id="original" aria-labelledby="tab1">
+        <a href="#" style="font-weight:bold;" onclick="alert('주문이 완료되었습니다. 감사합니다.')">햄버거 주문 완료</a>
+          </div>
+
+          <div role="tabpanel" id="step1" aria-labelledby="tab2">
+            <a role="button" href="#" style="font-weight:bold;" onclick="alert('주문이 완료되었습니다. 감사합니다.')">햄버거 주문 완료</a>
+              </div>
+
+      <div role="tabpanel" id="step2" aria-labelledby="tab3" hidden="hidden">
+        <a href="#" style="font-weight:bold;" role="button" onclick="alert('햄버거 주문이 완료되었습니다. 감사합니다.')" onkeydown="if(event.keyCode==32){alert('햄버거 주문이 완료되었으며 스페이스 키로 주문을 완료하셨습니다. 감사합니다.')}">햄버거 주문 완료</a>
+      </div>
+      </div>
+          </main>
+</div>
+</body>
+</html>

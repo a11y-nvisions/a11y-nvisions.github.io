@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script defer src="tabs2.js"></script>
+<script defer src="utils.js"></script>
+<script defer src="listbox-combobox3.js"></script>
+<script defer src="listbox-combo-example.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href="tabs.css" rel="stylesheet">
+<link href="combobox.css" rel="stylesheet">
+<title>자동완성 테스트 - 엔비전스 접근성 워크숍</title>
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+            <div>
+        <ul class="nav navbar-nav">
+          <li><a href="accordion-aria.html">커스텀 아코디언 접근성 데모</a></li>
+          <li> <a href="custom-button.html">커스텀 버튼 키보드 테스트</a></li>
+          <li class="active"> <a aria-current="page" href="custom-combo.html">자동완성 테스트</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main role="main">
+    <div class="tabs">
+      <div role="tablist" aria-label="step by step">
+        <a href="custom-combo.html" role="tab" tabindex="-1" aria-selected="false" aria-controls="original" id="tab1">접근성 적용 안됨</a>
+        <a  role="tab" aria-selected="false" tabindex="-1" aria-controls="step1" id="tab2" href="custom-combo2.html">step 1</a>
+        <a  role="tab" aria-selected="true" aria-controls="step2" id="tab3" href="custom-combo3.html">step 2</a>
+              </div>
+
+      <div role="tabpanel" id="original" aria-labelledby="tab3">
+        <label for="ex1-input" id="ex1-label" class="combobox-label">
+          알파벳 입력
+        </label>
+        <div class="combobox-wrapper">
+          <div id="ex1-combobox">
+            <input role="combobox" aria-expanded="false" aria-owns="ex1-listbox" aria-haspopup="listbox" type="text" aria-autocomplete="list" aria-controls="ex1-listbox" id="ex1-input" aria-activedescendant="">
+          </div>
+          <ul aria-labelledby="ex1-label" role="listbox" id="ex1-listbox" class="listbox hidden"></ul>
+        </div>
+                </div>
+      </div>
+          </main>
+</div>
+</body>
+</html>
