@@ -60,28 +60,28 @@
 <script>
   $('#original').mouseover(function(){
     $('#shipping-panel1').show(500);
-    $(#shipping-toggle1).find('i').removeClass('fa-plus-square');
-    $(#shipping-toggle1).find('i').addClass('fa-minus-square');
+    $('#shipping-toggle1').find('i').removeClass('fa-plus-square');
+    $('#shipping-toggle1').find('i').addClass('fa-minus-square');
 			  });
 
 $('#original').mouseout(function() {
 $('#shipping-panel1').hide(500);
-$(#shipping-toggle1).find('i').removeClass('fa-minus-square');
-    $(#shipping-toggle1).find('i').addClass('fa-plus-square');
+$('#shipping-toggle1').find('i').removeClass('fa-minus-square');
+    $('#shipping-toggle1').find('i').addClass('fa-plus-square');
     });
 
 $('#step1').mouseover(function(){
     $('#shipping-panel').show(500);
-    $(#shipping-toggle).find('i').removeClass('fa-plus-square');
-    $(#shipping-toggle).find('i').addClass('fa-minus-square');
-			$(#shipping-toggle).attr('aria-expanded','true');
+    $('#shipping-toggle').find('i').removeClass('fa-plus-square');
+    $('#shipping-toggle').find('i').addClass('fa-minus-square');
+			$('#shipping-toggle').attr('aria-expanded','true');
   });
 
 $('#step1').mouseout(function() {
 $('#shipping-panel').hide(500);
-$(#shipping-toggle).find('i').removeClass('fa-minus-square');
-    $(#shipping-toggle).find('i').addClass('fa-plus-square');
-    $(#shipping-toggle).attr('aria-expanded','false');
+$('#shipping-toggle').find('i').removeClass('fa-minus-square');
+    $('#shipping-toggle').find('i').addClass('fa-plus-square');
+    $('#shipping-toggle').attr('aria-expanded','false');
 });
 
   $('#shipping-toggle').keydown(function(e) {
@@ -98,16 +98,16 @@ $(#shipping-toggle).find('i').removeClass('fa-minus-square');
 
   $('#step2').mouseover(function(){
     $('#shipping-panel2').show(500);
-    $(#shipping-toggle2).find('i').removeClass('fa-plus-square');
-    $(shipping-toggle2).find('i').addClass('fa-minus-square');
-			$(shipping-toggle2).attr('aria-expanded','true');
+    $('#shipping-toggle2').find('i').removeClass('fa-plus-square');
+    $('#shipping-toggle2').find('i').addClass('fa-minus-square');
+			$('#shipping-toggle2').attr('aria-expanded','true');
   });
 
 $('#step2').mouseout(function() {
 $('#shipping-panel2').hide(500);
-$(#shipping-toggle2).find('i').removeClass('fa-minus-square');
-    $(#shipping-toggle2).find('i').addClass('fa-plus-square');
-    $(#shipping-toggle2).attr('aria-expanded','false');
+$('#shipping-toggle2').find('i').removeClass('fa-minus-square');
+    $('#shipping-toggle2').find('i').addClass('fa-plus-square');
+    $('#shipping-toggle2').attr('aria-expanded','false');
 });
 
   $('#shipping-toggle2').keydown(function(e) {
