@@ -11,6 +11,15 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+function isMobile() {
+    var UserAgent = navigator.userAgent;
+    if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 var linkObjectToHTMLElement = function (element, obj) {
     Object.defineProperty(element, "getCustomClass", {
         get: function () {
@@ -170,7 +179,8 @@ var TreeItemContext = /** @class */ (function () {
             this.TreeContext.moveBrowsePointerAndFocus = getIndexFrom(this.TreeContext.getAllTreeItems, this.ItemElement);
         }.bind(this));
         if (this.hasSubTree) {
-            this.ItemElement.addEventListener('dblclick', function () {
+            var expand_event_type = isMobile() ? 'click ' : 'dblclick';
+            this.ItemElement.addEventListener(expand_event_type, function () {
                 this.state_expand = !this.state_expand;
             }.bind(this));
             this.ItemElement.addEventListener('keydown', function (e) {

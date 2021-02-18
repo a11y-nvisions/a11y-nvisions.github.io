@@ -1,3 +1,13 @@
+function isMobile(){
+	var UserAgent = navigator.userAgent;
+	if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
+	{
+		return true;
+	}else{
+		return false;
+	}
+}
+
 const linkObjectToHTMLElement = function(element,obj){
     Object.defineProperty(element,"getCustomClass",{
         get:function(){
@@ -160,7 +170,8 @@ abstract class TreeItemContext {
             this.TreeContext.moveBrowsePointerAndFocus = getIndexFrom(this.TreeContext.getAllTreeItems,this.ItemElement);
         }.bind(this))
         if(this.hasSubTree){
-            this.ItemElement.addEventListener('dblclick',function(){
+            const expand_event_type = isMobile() ? 'click ': 'dblclick';
+            this.ItemElement.addEventListener(expand_event_type,function(){
                 this.state_expand = !this.state_expand;
             }.bind(this))
             this.ItemElement.addEventListener('keydown',function(e){
