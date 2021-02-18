@@ -169,12 +169,20 @@ abstract class TreeItemContext {
         this.ItemElement.addEventListener('click',function(){
             this.TreeContext.moveBrowsePointerAndFocus = getIndexFrom(this.TreeContext.getAllTreeItems,this.ItemElement);
         }.bind(this))
+        
         if(this.hasSubTree){
-            const expand_event_type = isMobile() ? 'click ': 'dblclick';
 
-            this.ItemElement.addEventListener(expand_event_type,function(){
-                this.state_expand = !this.state_expand;
-            }.bind(this));
+            if(!isMobile()){
+                this.ItemElement.addEventListener('dblclick',function(){
+                    this.state_expand = !this.state_expand;
+                }.bind(this));
+            }
+            if(isMobile()){
+                this.ItemElement.addEventListener('click',function(){
+                    this.state_expand = !this.state_expand;
+                }.bind(this));
+            }
+
             this.ItemElement.addEventListener('keydown',function(e){
                 const code = e.code;
                 const KEY_EXPAND_SUB = 'ArrowRight';
