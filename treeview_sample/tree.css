@@ -1,0 +1,69 @@
+*{margin:0; padding:0;}
+ul[role=tree], ul[role=tree] ul[role=group]{
+    list-style-type: none;
+}
+
+ul[role=tree]{
+    width:40%;
+    height:600px;
+    border:solid 1px;
+    opacity:0.7;
+    overflow:hidden;
+    overflow-y:auto;
+}
+
+ul[role=tree].active-tree{
+    opacity:1;
+}
+
+ul[role=group]{
+    width:100%;
+}
+
+ul[role=tree] li[role=none]{
+    width:100%;
+}
+
+ul[role=tree] li[role=none]>[role=treeitem]{
+    position: relative;
+    display:inline-block;
+    width:100%; height:1.2rem; line-height:1.2rem;
+    color:currentColor;
+    overflow:hidden; text-overflow: ellipsis;
+    border:none;
+    background:transparent;
+    text-decoration: none;
+    cursor: default;
+    text-align:left;
+}
+
+.hide{
+    display: none;
+}
+
+[role=treeitem]:before{
+    content:"　";
+}
+
+.icon-visible-only:before{
+    content:"　"; height:0.9rem; width: 1rem;
+    font-family: "Material Icons";
+    vertical-align: middle;
+    font-size:0.9rem;
+}
+
+.icon-visible-only.expanded:before{
+    content:"keyboard_arrow_down";
+}
+.icon-visible-only.collapsed:before{
+    content:"keyboard_arrow_right";
+}
+
+ul[role=tree] li[role=none]>[role=treeitem].browsed-pointer{
+    background-color:rgba(35,95,175,0.7);
+    color:#fff;
+}
+
+[role=group] [role=none]{
+    margin-left:0.4rem;
+}
