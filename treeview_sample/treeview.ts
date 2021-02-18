@@ -1,5 +1,5 @@
 function isMobile(){
-	var UserAgent = navigator.userAgent;
+	const UserAgent = navigator.userAgent;
 	if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
 	{
 		return true;
@@ -171,9 +171,10 @@ abstract class TreeItemContext {
         }.bind(this))
         if(this.hasSubTree){
             const expand_event_type = isMobile() ? 'click ': 'dblclick';
+
             this.ItemElement.addEventListener(expand_event_type,function(){
                 this.state_expand = !this.state_expand;
-            }.bind(this))
+            }.bind(this));
             this.ItemElement.addEventListener('keydown',function(e){
                 const code = e.code;
                 const KEY_EXPAND_SUB = 'ArrowRight';
