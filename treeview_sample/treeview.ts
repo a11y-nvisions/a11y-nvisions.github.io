@@ -335,7 +335,9 @@ abstract class TreeItemContext {
                 element.setAttribute('aria-current','false');
             }else{
                 if(this.TreeContext.getAllTreeItems[i].getCustomClass.contentPanel){
-                    Tree.announce("Panel document Loaded");
+                    if(!isMobile()){
+                        Tree.announce("Panel document Loaded");
+                    }
                     element.setAttribute('aria-current','page');
                 }
 

@@ -332,7 +332,9 @@ var TreeItemContext = /** @class */ (function () {
             }
             else {
                 if (this.TreeContext.getAllTreeItems[i].getCustomClass.contentPanel) {
-                    Tree.announce("Panel document Loaded");
+                    if (!isMobile()) {
+                        Tree.announce("Panel document Loaded");
+                    }
                     element.setAttribute('aria-current', 'page');
                 }
                 (_d = (_c = element.getCustomClass) === null || _c === void 0 ? void 0 : _c.contentPanel) === null || _d === void 0 ? void 0 : _d.classList.remove('hide');
