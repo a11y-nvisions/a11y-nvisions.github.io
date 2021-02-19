@@ -89,12 +89,16 @@ class Tree {
 
         this.element.addEventListener('focusin',function(e){
             this.element.classList.add('active-tree');
-            Tree.announceInteraction(e.type,e.target.getCustomClass?.contentPanel !== null);
+            if(!isMobile()){
+                Tree.announceInteraction(e.type,e.target.getCustomClass?.contentPanel !== null);
+            }
         }.bind(this));
 
         this.element.addEventListener('focusout',function(e){
             this.element.classList.remove('active-tree');
-            Tree.announceInteraction(e.type,e.target.getCustomClass?.contentPanel !== null);
+            if(!isMobile()){
+                Tree.announceInteraction(e.type,e.target.getCustomClass?.contentPanel !== null);
+            }
         }.bind(this));
 
         this.element.addEventListener('keydown',function(e){

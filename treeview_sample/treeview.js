@@ -84,12 +84,16 @@ var Tree = /** @class */ (function () {
         this.element.addEventListener('focusin', function (e) {
             var _a;
             this.element.classList.add('active-tree');
-            Tree.announceInteraction(e.type, ((_a = e.target.getCustomClass) === null || _a === void 0 ? void 0 : _a.contentPanel) !== null);
+            if (!isMobile()) {
+                Tree.announceInteraction(e.type, ((_a = e.target.getCustomClass) === null || _a === void 0 ? void 0 : _a.contentPanel) !== null);
+            }
         }.bind(this));
         this.element.addEventListener('focusout', function (e) {
             var _a;
             this.element.classList.remove('active-tree');
-            Tree.announceInteraction(e.type, ((_a = e.target.getCustomClass) === null || _a === void 0 ? void 0 : _a.contentPanel) !== null);
+            if (!isMobile()) {
+                Tree.announceInteraction(e.type, ((_a = e.target.getCustomClass) === null || _a === void 0 ? void 0 : _a.contentPanel) !== null);
+            }
         }.bind(this));
         this.element.addEventListener('keydown', function (e) {
             var code = e.code;
