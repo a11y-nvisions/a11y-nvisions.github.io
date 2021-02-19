@@ -19,7 +19,7 @@ ul,ol{
 .wrapper.grid{
     display: grid;
     gap: 0.5rem;
-    grid-template-columns: 3fr 5fr;
+    grid-template-columns: 40% 1fr;
 }
 
 .wrapper.grid [role=tree]{
