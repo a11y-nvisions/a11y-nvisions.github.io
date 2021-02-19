@@ -1,7 +1,5 @@
-
-*{margin:0; padding:0;}
 ul[role=tree], ul[role=tree] ul[role=group]{
-    list-style-type: none;
+    list-style: none;
 }
 
 ul[role=tree]{
@@ -36,14 +34,15 @@ ul[role=tree] li[role=none]>[role=treeitem]{
     text-decoration: none;
     cursor: default;
     text-align:left;
+    appearance: none;
+    -ms-appearance: none;
+    -webkit-appearance: none;
+    -o-appearance: none;
+    -moz-appearance: none;
 }
 
 .hide{
     display: none;
-}
-
-[role=treeitem]:before{
-    content:"　";
 }
 
 .icon-visible-only:before{
@@ -67,4 +66,37 @@ ul[role=tree] li[role=none]>[role=treeitem].browsed-pointer{
 
 [role=group] [role=none]{
     margin-left:0.4rem;
+}
+
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none){
+    @font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url("../font/material-icons/MaterialIcons-Regular.eot"); /* For IE6-8 */
+    src: local('Material Icons'),
+            local('MaterialIcons-Regular'),
+            url("../font/material-icons/MaterialIcons-Regular.woff2") format('woff2'),
+            url("../font/material-icons/MaterialIcons-Regular.woff") format('woff'),
+            url("../font/material-icons/MaterialIcons-Regular.ttf") format('truetype');
+    }
+    .icon-visible-only:before{
+        /* fallback */
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        width:1rem; height:1rem;
+        font-feature-settings: 'liga';
+        -moz-font-feature-settings: 'liga';
+        -webkit-font-feature-settings: 'liga';
+        -webkit-font-smoothing: antialiased;
+    }
 }

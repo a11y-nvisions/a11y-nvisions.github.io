@@ -1,3 +1,27 @@
+(function (arr) {
+    arr.forEach(function (item) {
+      if (item.hasOwnProperty('prepend')) {
+        return;
+      }
+      Object.defineProperty(item, 'prepend', {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: function prepend() {
+          var argArr = Array.prototype.slice.call(arguments),
+            docFrag = document.createDocumentFragment();
+  
+          argArr.forEach(function (argItem) {
+            var isNode = argItem instanceof Node;
+            docFrag.appendChild(isNode ? argItem : document.createTextNode(String(argItem)));
+          });
+  
+          this.insertBefore(docFrag, this.firstChild);
+        }
+      });
+    });
+})([Element.prototype, Document.prototype, DocumentFragment.prototype]);
+
 function isMobile(){
 	const UserAgent = navigator.userAgent;
 	if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
@@ -8,12 +32,21 @@ function isMobile(){
 	}
 }
 
-const linkObjectToHTMLElement = function(element,obj){
+interface Element{
+    setActiveEvent?:Function,
+    getCustomClass?:any
+}
+
+function linkObjectToHTMLElement(element,obj){
     Object.defineProperty(element,"getCustomClass",{
         get:function(){
             return obj;
         }
     });
+}
+
+function linkPropertyToHTMLElement(element,obj,propName){
+    Object.defineProperty(element,propName,obj);
 }
 
 const getIndexFrom=(arrObj,element)=>{
@@ -25,7 +58,6 @@ class Tree {
     public visibleItemList:[];
     public ListObserver:MutationObserver;
     private MutationConfig:MutationObserverInit;
-
     constructor(element:HTMLUListElement|Element){
         this.element = element;
         linkObjectToHTMLElement(this.element,this);
@@ -35,9 +67,9 @@ class Tree {
             attributes:true
         };
         this.initializeTreeItem();
-        const ref_this = this;
+        const this_ref = this;
         function itemDetectionCallback(){
-            const ListAll = ref_this.getAllTreeItems;
+            const ListAll = this_ref.getAllTreeItems;
             const visibles:[] = Array.prototype.filter.call(ListAll,function(e){
                 const condition_target = e.getCustomClass.item_container.parentElement;
                 const condition = (!condition_target.classList.contains('hide'))
@@ -45,19 +77,24 @@ class Tree {
                     return e;
                 }
             });
-            ref_this.visibleItems = visibles;
+            this_ref.visibleItems = visibles;
         }
         this.ListObserver = new MutationObserver(itemDetectionCallback)
         this.ListObserver.observe(this.element,this.MutationConfig);
         itemDetectionCallback();
-        this.setBrowsePointer = 0;
-        
-        this.element.addEventListener('focusin',function(){
+
+        this.getBrowsedFocusPointer ? this.setBrowsePointer = getIndexFrom(this.getAllTreeItems,this.getBrowsedFocusPointer) : this.setBrowsePointer = 0;
+        const activeIndex = this.getBrowsedFocusPointer ? getIndexFrom(this.getAllTreeItems,this.getBrowsedFocusPointer) : 0
+        this.getAllTreeItems[activeIndex].getCustomClass.showPanel();
+
+        this.element.addEventListener('focusin',function(e){
             this.element.classList.add('active-tree');
+            Tree.announceInteraction(e.type,e.target.getCustomClass?.contentPanel !== null);
         }.bind(this));
 
-        this.element.addEventListener('focusout',function(){
+        this.element.addEventListener('focusout',function(e){
             this.element.classList.remove('active-tree');
+            Tree.announceInteraction(e.type,e.target.getCustomClass?.contentPanel !== null);
         }.bind(this));
 
         this.element.addEventListener('keydown',function(e){
@@ -65,11 +102,13 @@ class Tree {
             const item_visible = this.getVisibleItemList;
             const item_all = this.getAllTreeItems;
             const v_idx = getIndexFrom(item_visible,this.getBrowsedFocusPointer);
-            
+            clearTimeout();
             const KEY_PREV_TREE_ITEM = "ArrowUp";
             const KEY_NEXT_TREE_ITEM = "ArrowDown";
             const KEY_FIRST_TREE_ITEM = "Home";
             const KEY_LAST_TREE_ITEM = "End";
+            const KEY_GO_TO_TREE = "F6";
+
             switch(code){
                 case KEY_NEXT_TREE_ITEM:
                     if(item_visible[v_idx+1]){
@@ -86,6 +125,14 @@ class Tree {
                 break;
                 case KEY_LAST_TREE_ITEM:
                     this.moveBrowsePointerAndFocus = item_all.length-1;
+                break;
+                case KEY_GO_TO_TREE:
+                    if(e.ctrlKey && !e.shiftKey){
+                        const pointer = this.getBrowsedFocusPointer.getCustomClass;
+                        if(pointer.contentPanel){
+                            pointer.contentPanel.focus();
+                        }
+                    }
                 break;
             }
         }.bind(this))
@@ -126,24 +173,64 @@ class Tree {
         return this.visibleItemList;
     }
 
+    static announce(Text:string){
+        let timer;
+        clearTimeout(timer);
+        Tree.UrgentAnnouncerElement.innerHTML=Text;
+        timer = setTimeout(()=>{
+            Tree.UrgentAnnouncerElement.innerHTML="";
+        },500)
+    }
+
+    static announceInteraction(eventTypeString:string,isContentAvailable=false){
+        let timer;
+        if(eventTypeString === 'focusin' ){
+            if(isContentAvailable){
+                timer = setTimeout(()=>{
+                    Tree.InteractionTipElement.innerHTML=Tree.ContentAvailableText;
+                },1000)
+            }
+            timer = setTimeout(() => {
+                Tree.InteractionTipElement.innerHTML=Tree.TipText;
+            },1500);
+        }
+        if(eventTypeString === 'focusout'){
+            Tree.InteractionTipElement.innerHTML="";
+            clearTimeout(timer);
+        }
+    }
+
+    static TipText:string = "";
+    public static ContentAvailableText:string = "";
+    static InteractionTipElement:HTMLElement;
+    static UrgentAnnouncerElement:HTMLElement;
+
     static collection:Tree[] = [];
 
     static startReconfiguration(){
-        
         //reset array for preventing the bugs
         const body = document.body;
         const expected_element = body.querySelectorAll('ul[role="tree"]');
+        Tree.InteractionTipElement = document.createElement('div');
+        Tree.InteractionTipElement.classList.add('liveForA11y');
+        Tree.InteractionTipElement.setAttribute('aria-live','polite');
+        Tree.InteractionTipElement.setAttribute('aria-relevant','text');
+        Tree.UrgentAnnouncerElement = document.createElement('div');
+        Tree.UrgentAnnouncerElement.classList.add('liveForA11y');
+        Tree.UrgentAnnouncerElement.setAttribute('aria-live','polite');
+        Tree.UrgentAnnouncerElement.setAttribute('aria-relevant','text');
         Tree.collection = [];
         for(let i=0; i<expected_element.length; i++){
             const element = expected_element[i];
             Tree.collection[i] = new Tree(element);
         }
-
+        document.body.appendChild(Tree.InteractionTipElement);
+        document.body.appendChild(Tree.UrgentAnnouncerElement);
     }
 
     initializeTreeItem(){
         for(let i=0; i<this.getAllTreeItems.length; i++){
-            new TreeItemElement(this.getAllTreeItems[i],this);
+            const el = new TreeItemElement(this.getAllTreeItems[i],this);
         }
     }
 }
@@ -155,6 +242,8 @@ abstract class TreeItemContext {
     public iconElement:Element;
     public TreeContext:Tree;
     constructor(element:Element|HTMLElement,TreeContext:Tree){
+        const this_ref = this;
+        this.TreeContext = TreeContext;
         this.item_element = element;
         this.checkMarkupValidation ? 
         this.item_container = this.item_element.parentElement as HTMLLIElement : null;
@@ -163,10 +252,17 @@ abstract class TreeItemContext {
         this.iconElement.classList.add('icon-visible-only');
         this.iconElement.setAttribute('aria-hidden','true');
         this.item_element.prepend(this.iconElement);
+        linkPropertyToHTMLElement(this.ItemElement,{
+                set (cb:Function){
+                    this_ref.setActiveEvent = cb
+                }
+        },"setActiveEvent");
+        this.panelElementInitialize();
     }
 
     private addEssentialEvents(){
-        this.ItemElement.addEventListener('click',function(){
+        this.ItemElement.addEventListener('click',function(e){
+            e.preventDefault();
             this.TreeContext.moveBrowsePointerAndFocus = getIndexFrom(this.TreeContext.getAllTreeItems,this.ItemElement);
         }.bind(this))
         
@@ -204,7 +300,54 @@ abstract class TreeItemContext {
                 }
             }.bind(this));
         }
+
+        this.setActiveEvent = function(){}
+
     }
+
+    public get contentPanel(){
+        const ContentId = this.ItemElement.getAttribute('aria-controls');
+        const Element = document.getElementById(ContentId);
+        return Element ? Element : null;
+    }
+
+    panelElementInitialize(){
+        if(this.contentPanel){
+            this.contentPanel.setAttribute('tabindex','0');
+            this.contentPanel.setAttribute('role','region');
+            this.contentPanel.setAttribute('aria-roledescription',', treeview document');
+            if(this.TreeContext.element.hasAttribute('aria-label')){
+                this.contentPanel.setAttribute('aria-label',this.TreeContext.element.getAttribute('aria-label'));
+            }
+            
+        }
+    }
+
+    showPanel(){
+        for(let i=0; i<this.TreeContext.getAllTreeItems.length; i++){
+            const element = this.TreeContext.getAllTreeItems[i];
+            if(getIndexFrom(this.TreeContext.getAllTreeItems,this.ItemElement) !== i){
+                element.getCustomClass?.contentPanel?.classList.add('hide');
+                element.setAttribute('aria-current','false');
+            }else{
+                if(this.TreeContext.getAllTreeItems[i].getCustomClass.contentPanel){
+                    Tree.announce("Panel document Loaded");
+                    element.setAttribute('aria-current','page');
+                }
+
+                element.getCustomClass?.contentPanel?.classList.remove('hide');
+            }
+        }
+    }
+
+    public set setActiveEvent(callback){
+        this.ItemElement.addEventListener('click',function(){
+                if(!this.contentPanel){
+                    callback();
+                }
+                this.showPanel();
+            }.bind(this));
+        }
 
     public get checkMarkupValidation(){
         return this.item_element.parentElement instanceof HTMLLIElement;
@@ -245,8 +388,13 @@ abstract class TreeItemContext {
         if(this.hasSubTree){
             this.item_element.setAttribute('aria-expanded',String(v))
             this.getSubTreeListElement.classList.toggle('hide',!v);
-            this.iconElement.classList.toggle('expanded',v);
-            this.iconElement.classList.toggle('collapsed',!v);
+            if(v){
+                this.iconElement.classList.add('expanded');
+                this.iconElement.classList.remove('collapsed');
+            }else{
+                this.iconElement.classList.add('collapsed');
+                this.iconElement.classList.remove('expanded');
+            }
         }
     }
 }
@@ -286,3 +434,5 @@ class SubTreeList {
 }
 
 Tree.startReconfiguration();
+Tree.TipText = `You're in the Treeview, navigate with the Arrow keys.`
+Tree.ContentAvailableText = "Content's Available. Press Enter key to display at the panel area and then press the arrow down to leave the tree-view area and try to read the panel";
