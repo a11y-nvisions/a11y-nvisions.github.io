@@ -328,7 +328,7 @@ var RadioElement = /** @class */ (function (_super) {
         _this_1.RADIO_MARK_ELEMENT.setAttribute('aria-hidden', 'true');
         _this_1.ELEMENT.appendChild(_this_1.RADIO_MARK_ELEMENT);
         if (document.querySelector("[data-radio-name=\"" + _this_1.getGroupName + "\"][aria-checked=\"true\"]")) {
-            document.querySelector("[data-radio-name=\"" + _this_1.getGroupName + "\"][aria-checked=\"true\"]").checked = true;
+            document.querySelector("[data-radio-name=\"" + _this_1.getGroupName + "\"][aria-checked=\"true\"]").CustomConstructor.select(true);
         }
         else {
             _this_1.select(false);
