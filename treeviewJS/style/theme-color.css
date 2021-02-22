@@ -1,0 +1,21 @@
+@import url("../lib_external/style/theme.css");
+html,body{
+    background-color: var(--theme-background-color);
+    color: var(--theme-forground-color);
+}
+
+
+
+.wrapper [role=tree]{
+    background-color: var(--theme-background-color);
+}
+
+.ref-sections>section{
+    background-color: var(--theme-background-color);
+}
+
+#treeOpen.floating-button{
+    background-color:var(--theme-background-color);
+    color:var(--theme-forground-color);
+    border:solid 1px;
+}

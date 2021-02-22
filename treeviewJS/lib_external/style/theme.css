@@ -1,0 +1,18 @@
+
+:root{
+    --theme-background-color:#dfefef;
+    --theme-forground-color:#000;
+    --theme-state-emphasis-background-color:#336fff;
+    --theme-state-emphasis-forground-color:#fff;
+    --theme-border-color:var(--theme-forground-color);
+}
+
+@media ( prefers-color-scheme:dark ) {
+    :root{
+        --theme-background-color:#1f2f3f;
+        --theme-state-emphasis-forground-color:#9fcfdf;
+        --theme-state-emphasis-background-color:#1f3f7a;
+        --theme-forground-color:#efefef;
+        --theme-border-color:var(--theme-forground-color);
+    }
+}
