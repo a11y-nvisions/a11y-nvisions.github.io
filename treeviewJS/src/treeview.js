@@ -73,14 +73,19 @@ var Tree = /** @class */ (function () {
                     return e;
                 }
             });
-            this_ref.visibleItems = visibles;
+            return this_ref.visibleItems = visibles;
         }
         this.ListObserver = new MutationObserver(itemDetectionCallback);
         this.ListObserver.observe(this.element, this.MutationConfig);
         itemDetectionCallback();
-        this.getBrowsedFocusPointer ? this.setBrowsePointer = getIndexFrom(this.getAllTreeItems, this.getBrowsedFocusPointer) : this.setBrowsePointer = 0;
-        var activeIndex = this.getBrowsedFocusPointer ? getIndexFrom(this.getAllTreeItems, this.getBrowsedFocusPointer) : 0;
-        this.getAllTreeItems[activeIndex].getCustomClass.showPanel();
+        this.getBrowsedPonterElement ? this.setBrowsePointer = this.getBrowsedPonterIndex : this.setBrowsePointer = 0;
+        var activeIndex = this.getBrowsedPonterIndex;
+        if (!this.getDefaultActivatedElement) {
+            this.getAllTreeItems[activeIndex].getCustomClass.showPanel();
+        }
+        else {
+            this.getDefaultActivatedElement.getCustomClass.showPanel();
+        }
         this.element.addEventListener('focusin', function (e) {
             var _a;
             this.element.classList.add('active-tree');
@@ -99,8 +104,7 @@ var Tree = /** @class */ (function () {
             var code = e.code;
             var item_visible = this.getVisibleItemList;
             var item_all = this.getAllTreeItems;
-            var v_idx = getIndexFrom(item_visible, this.getBrowsedFocusPointer);
-            clearTimeout();
+            var v_idx = getIndexFrom(item_visible, this.getBrowsedPonterElement);
             var KEY_PREV_TREE_ITEM = "ArrowUp";
             var KEY_NEXT_TREE_ITEM = "ArrowDown";
             var KEY_FIRST_TREE_ITEM = "Home";
@@ -121,11 +125,11 @@ var Tree = /** @class */ (function () {
                     this.moveBrowsePointerAndFocus = 0;
                     break;
                 case KEY_LAST_TREE_ITEM:
-                    this.moveBrowsePointerAndFocus = item_all.length - 1;
+                    this.moveBrowsePointerAndFocus = getIndexFrom(item_all, item_visible[item_visible.length - 1]);
                     break;
                 case KEY_GO_TO_TREE:
                     if (e.ctrlKey && !e.shiftKey) {
-                        var pointer = this.getBrowsedFocusPointer.getCustomClass;
+                        var pointer = this.getBrowsedPonterElement.getCustomClass;
                         if (pointer.contentPanel) {
                             pointer.contentPanel.focus();
                         }
@@ -153,16 +157,23 @@ var Tree = /** @class */ (function () {
     Object.defineProperty(Tree.prototype, "moveBrowsePointerAndFocus", {
         set: function (index) {
             this.setBrowsePointer = index;
-            if (this.getBrowsedFocusPointer) {
-                this.getBrowsedFocusPointer.focus();
+            if (this.getBrowsedPonterElement) {
+                this.getBrowsedPonterElement.focus();
             }
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Tree.prototype, "getBrowsedFocusPointer", {
+    Object.defineProperty(Tree.prototype, "getBrowsedPonterElement", {
         get: function () {
             return this.element.querySelector('.browsed-pointer');
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Tree.prototype, "getBrowsedPonterIndex", {
+        get: function () {
+            return getIndexFrom(this.getAllTreeItems, this.element.querySelector('.browsed-pointer'));
         },
         enumerable: false,
         configurable: true
@@ -202,28 +213,47 @@ var Tree = /** @class */ (function () {
         if (eventTypeString === 'focusin') {
             if (isContentAvailable) {
                 timer = setTimeout(function () {
-                    Tree.InteractionTipElement.innerHTML = Tree.ContentAvailableText;
+                    Tree.AnnouncerElement.innerHTML = Tree.setContentAvailableMessage;
                 }, 1000);
             }
             timer = setTimeout(function () {
-                Tree.InteractionTipElement.innerHTML = Tree.TipText;
+                Tree.AnnouncerElement.innerHTML = Tree.setInteractionTipMessage;
             }, 1500);
         }
         if (eventTypeString === 'focusout') {
-            Tree.InteractionTipElement.innerHTML = "";
+            Tree.AnnouncerElement.innerHTML = "";
             clearTimeout(timer);
+        }
+    };
+    Object.defineProperty(Tree.prototype, "getDefaultActivatedElement", {
+        get: function () {
+            return this.element.querySelector('[aria-current="page"],[aria-current="true"],[aria-current="location"]');
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Tree.prototype.addTreeview = function (Element) {
+        if (Element.getAttribute('role') === 'tree') {
+            Tree.collection.push(new Tree(Element));
+        }
+    };
+    Tree.prototype.removeTreeview = function (TreeObject) {
+        var idx = getIndexFrom(Tree.collection, TreeObject);
+        if (idx > -1) {
+            TreeObject.element.parentElement.removeChild(TreeObject.element);
+            Tree.collection.splice(idx, idx);
         }
     };
     Tree.startReconfiguration = function () {
         //reset array for preventing the bugs
         var body = document.body;
         var expected_element = body.querySelectorAll('ul[role="tree"]');
-        Tree.InteractionTipElement = document.createElement('div');
-        Tree.InteractionTipElement.classList.add('liveForA11y');
-        Tree.InteractionTipElement.setAttribute('aria-live', 'polite');
-        Tree.InteractionTipElement.setAttribute('aria-relevant', 'text');
+        Tree.AnnouncerElement = document.createElement('div');
+        Tree.AnnouncerElement.classList.add('liveForA11y', 'delayed');
+        Tree.AnnouncerElement.setAttribute('aria-live', 'polite');
+        Tree.AnnouncerElement.setAttribute('aria-relevant', 'text');
         Tree.UrgentAnnouncerElement = document.createElement('div');
-        Tree.UrgentAnnouncerElement.classList.add('liveForA11y');
+        Tree.UrgentAnnouncerElement.classList.add('liveForA11y', 'urgent');
         Tree.UrgentAnnouncerElement.setAttribute('aria-live', 'polite');
         Tree.UrgentAnnouncerElement.setAttribute('aria-relevant', 'text');
         Tree.collection = [];
@@ -231,7 +261,7 @@ var Tree = /** @class */ (function () {
             var element = expected_element[i];
             Tree.collection[i] = new Tree(element);
         }
-        document.body.appendChild(Tree.InteractionTipElement);
+        document.body.appendChild(Tree.AnnouncerElement);
         document.body.appendChild(Tree.UrgentAnnouncerElement);
     };
     Tree.prototype.initializeTreeItem = function () {
@@ -239,8 +269,9 @@ var Tree = /** @class */ (function () {
             var el = new TreeItemElement(this.getAllTreeItems[i], this);
         }
     };
-    Tree.TipText = "";
-    Tree.ContentAvailableText = "";
+    Tree.setContentAvailableMessage = "";
+    Tree.setContentLoadedMessage = "";
+    Tree.setInteractionTipMessage = "";
     Tree.collection = [];
     return Tree;
 }());
@@ -258,9 +289,9 @@ var TreeItemContext = /** @class */ (function () {
         this.item_element.prepend(this.iconElement);
         linkPropertyToHTMLElement(this.ItemElement, {
             set: function (cb) {
-                this_ref.setActiveEvent = cb;
+                this_ref.setActivateEvent = cb;
             }
-        }, "setActiveEvent");
+        }, "setActivateEvent");
         this.panelElementInitialize();
     }
     TreeItemContext.prototype.addEssentialEvents = function () {
@@ -301,7 +332,7 @@ var TreeItemContext = /** @class */ (function () {
                 }
             }.bind(this));
         }
-        this.setActiveEvent = function () { };
+        this.setActivateEvent = function () { };
     };
     Object.defineProperty(TreeItemContext.prototype, "contentPanel", {
         get: function () {
@@ -314,7 +345,9 @@ var TreeItemContext = /** @class */ (function () {
     });
     TreeItemContext.prototype.panelElementInitialize = function () {
         if (this.contentPanel) {
-            this.contentPanel.setAttribute('tabindex', '0');
+            if (!isMobile()) {
+                this.contentPanel.setAttribute('tabindex', '0');
+            }
             this.contentPanel.setAttribute('role', 'region');
             this.contentPanel.setAttribute('aria-roledescription', ', treeview document');
             if (this.TreeContext.element.hasAttribute('aria-label')) {
@@ -323,7 +356,7 @@ var TreeItemContext = /** @class */ (function () {
         }
     };
     TreeItemContext.prototype.showPanel = function () {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         for (var i = 0; i < this.TreeContext.getAllTreeItems.length; i++) {
             var element = this.TreeContext.getAllTreeItems[i];
             if (getIndexFrom(this.TreeContext.getAllTreeItems, this.ItemElement) !== i) {
@@ -331,17 +364,17 @@ var TreeItemContext = /** @class */ (function () {
                 element.setAttribute('aria-current', 'false');
             }
             else {
-                if (this.TreeContext.getAllTreeItems[i].getCustomClass.contentPanel) {
+                if ((_c = this.TreeContext.getAllTreeItems[i].getCustomClass) === null || _c === void 0 ? void 0 : _c.contentPanel) {
                     if (!isMobile()) {
-                        Tree.announce("Panel document Loaded");
+                        Tree.announce(Tree.setContentLoadedMessage);
                     }
                     element.setAttribute('aria-current', 'page');
                 }
-                (_d = (_c = element.getCustomClass) === null || _c === void 0 ? void 0 : _c.contentPanel) === null || _d === void 0 ? void 0 : _d.classList.remove('hide');
+                (_e = (_d = element.getCustomClass) === null || _d === void 0 ? void 0 : _d.contentPanel) === null || _e === void 0 ? void 0 : _e.classList.remove('hide');
             }
         }
     };
-    Object.defineProperty(TreeItemContext.prototype, "setActiveEvent", {
+    Object.defineProperty(TreeItemContext.prototype, "setActivateEvent", {
         set: function (callback) {
             this.ItemElement.addEventListener('click', function () {
                 if (!this.contentPanel) {
@@ -452,6 +485,3 @@ var SubTreeList = /** @class */ (function () {
     };
     return SubTreeList;
 }());
-Tree.startReconfiguration();
-Tree.TipText = "You're in the Treeview, navigate with the Arrow keys.";
-Tree.ContentAvailableText = "Content's Available. Press Enter key to display at the panel area and then press the arrow down to leave the tree-view area and try to read the panel";

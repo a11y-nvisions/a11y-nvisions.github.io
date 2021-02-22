@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Treeview.js 레퍼런스 문서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
+    rel="stylesheet">
+
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/tree.css">
+    <link rel="stylesheet" href="../lib_external/style/prism.css">
+    <script defer src="../lib_external/src/prism.js"></script>
+    <script defer src="../lib_external/src/keyboard.js"></script>
+    <script defer src="../lib_external/src/scope-polyfill.js"></script>
+    <script defer src="../src/treeview.js"></script>
+    <script defer src="../src/tree.config.js"></script>
+    <script defer src="../src/EventForDocumentation.js"></script>
+    <script defer src="../src/for_example/example.js"></script>
+</head>
+<body>
+<div class="wrapper grid">
+    <div role="navigation" class="tree-nav" id="tree">
+        <button aria-label="레퍼런스 문서 트리뷰 메뉴" id="treeOpen" class="floating-button" aria-controls="Documentation-list">
+            <span class="material-icons" aria-hidden="true"></span>
+        </button>
+        <ul role="tree" id="Documentation-list" class="Documentation-list" aria-label="Treeview.js 문서 목록">
+            <li>
+                <button role="treeitem" aria-controls="gettingStarted">시작하기</button>
+                <ul>
+                    <li><button role="treeitem" aria-controls="setYourFirstTree">Step1: 당신의 첫 번째 트리뷰를 생성해보세요</button>
+                    <li><button role="treeitem" aria-controls="markupStructure">Step2: 마크업 구조</button>
+                    <li><button role="treeitem" aria-controls="markupState">Step3: HTML 마크업으로 기본 이벤트, 기본 상태 설정하기</button>
+                </ul>
+            </li>
+            <li><button role="treeitem" aria-controls="lib_ref_Intro">라이브러리 레퍼런스</button>
+                <ul>
+                    <li><button role="treeitem" aria-controls="lib_ref_ManagingFocus">트리뷰 초점 관리하기</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_SettingDefaultActivatedContent">트리 항목의 기본 이벤트 또는 커스텀 이벤트 다루기</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_ManagingStateExpanded">확장과 축소 상태 관리하기</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_CustomClickEvent">트리 항목의 커스텀 클릭 이벤트 다루기</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_SetHintMessages">스크린리더를 위한 힌트 메시지 설정하기</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_CreationTreeViewProgrammatically">프로그래밍으로 트리 추가하는 방법</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_ReferringProps">요소, 객체 참조용 속성</button></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="panels">
+        <section>
+            <div id="gettingStarted">
+                <h1>시작하기</h1>
+                <p>이 챕터는 기본 사용방법에 대해서 다룹니다.</p>
+                <p>
+                    이 챕터는 다음과 같은 하위 챕터로 구성되어 있습니다.
+                </p>
+                <ul>
+                    <li>Step1 - 당신의 첫 번째 트리뷰를 생성해보세요: 웹 문서에 대한 트리뷰 스크립트 설치 방법을 설명합니다.</li>
+                    <li>Step2 - 마크업 구조: HTML에서 트리뷰 요소를 사용하는 방법을 설명합니다.</li>
+                    <li>Step3 - HTML 마크업으로 기본 이벤트, 기본 상태 설정하기: 트리뷰 요소의 초기 기본 상태를 설정하는 방법을 설명합니다.</li>
+                </ul>
+                <p>계속 사용을 읽으려면 Shift + Tab을 눌러 이 페이지 왼쪽에 있는 트리뷰에 액세스한 다음 오른쪽 화살표 키를 눌러 1장 하위 장을 펼칩니다.</p>
+                <p>마우스 왼쪽 버튼을 클릭하여 트리 항목의 내용 패널을 활성화하고 왼쪽 버튼을 두 번 클릭하여 하위 항목을 확장할 수도 있습니다.</p>
+                
+                <p>하위 장이 확장된 경우 아래쪽 화살표를 눌러 트리 항목을 탐색한 다음 Enter 키를 눌러 내용 패널을 활성화하고 계속 읽으십시오.</p>
+                <p>트리 항목을 활성화한 경우, 이 페이지의 오른쪽에 있는 패널이 내용이 변경됩니다.</p>
+                
+                <h2>Treeview.js 패키지의 기본 파일</h2>
+                <p>문서에서 다음 파일 목록의 기본 스크립트 파일을 가져와야 합니다.</p>
+                <ol>
+                    <li>treeview.js<strong>[main file]:</strong> 주요 소스 코드가 있는 파일입니다.</li>
+                    <li>treeview.config.js<strong>[트리뷰 자동 생성 파일1]:</strong>기본 스크립트 파일이 문서의 Treeview.js 패턴을 인식하여 트리 보기 생성을 실행하도록 합니다. 트리 힌트 알림의 메시지 텍스트를 여기서 설정할 수 있습니다.</li>
+                </ol>
+            </div>
+            <div id="setYourFirstTree">
+                <h1>당신의 첫 번째 트리뷰를 생성해보세요</h1>
+                <p>HTML Docs의 첫 번째 트리뷰를 설치하고 설정해 보겠습니다.</p>
+                <p>아래 줄과 같은 스크립트 태그를 사용하여 트리뷰 패턴 스크립트를 가져올 수 있습니다.</p>
+                <pre>
+                    <code class="language-html">
+&lt;<b>script <i>src="<u>treeview.js</u>"</i>&gt;&lt;/script&gt;</b>
+&lt;<b>script <i>src="<u>treeview.config.js</u>"</i>&gt;&lt;/script&gt;</b>
+                    </code>
+                </pre>
+                <p>이게 끝입니다! 괭장히 간단하지요. 기본적으로는 추가로 스크립트를 다룰 필요가 없습니다.</p>
+                <p>스크립트를 가져와 지정된 패턴에 따라 웹 페이지에 마크업을 작성하면 됩니다.</p>
+            </div>
+            <div id="markupStructure">
+                <h1>마크업 구조</h1>
+                <p>다음에 따라 트리뷰를 마크업할 수 있습니다.</p>
+                <pre>
+                    <code class="language-html">
+&lt;ul role="tree" aria-label="tree example"&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example2&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example3&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;
+&nbsp;&nbsp;&lt;/li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;/li&gt;
+&lt;/ul&gt;
+                    </code>
+                </pre>
+                <p><strong class="emphasis-must">개발자는 반드시</strong> 위 마크업 구조에 따라서 만들어야만 합니다.</p>
+                <p>위 마크업 구조는 이 라이브러리에서 <strong class="emphasis-ref">약속된 규칙</strong>입니다.</p>
+                <p>하지만, 트리 항목 요소는 베이스 요소를 button이나 a등으로 변경할 수 있습니다.</p>
+            </div>
+            <div id="markupState">
+                <h1>HTML 마크업으로 기본 이벤트, 기본 상태 설정하기</h1>
+                <p>
+                    기본적으로는 트리뷰 마크업 시 기본값을 지정해 줄 필요는 없습니다.
+                </p>
+                <p>
+                    하지만, 개발자가 특정 상황에 따라 기본값 설정을 원할 수 있습니다.
+                </p>
+                <p>
+                    그래서, Treeview.js는 아래 코드처럼 HTML 마크업으로 기본 상태를 설정하는 기능을 제공합니다.
+                </p>
+                <pre>
+<code class="language-html">
+&lt;ul role="tree" aria-label="select directory"&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-expanded="true"&gt;This PC&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-controls="C_Directory_Panel" class="browsed-pointer" aria-current="page"&gt;C:&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-controls="D_Directory_Panel"&gt;D:&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-controls="E_Directory_Panel"&gt;E:&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-controls="F_Directory_Panel"&gt;F:&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;
+&nbsp;&nbsp;&lt;/li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Desktop&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;NetWork-Drive&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Document&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Picture&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Video&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Music&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;
+&nbsp;&nbsp;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="panel"&gt;&lt;!--for example--&gt;
+&nbsp;&nbsp;&lt;div id="C_Directory_Panel"&gt;...&lt;/div&gt;
+&nbsp;&nbsp;&lt;div id="D_Directory_Panel"&gt;...&lt;/div&gt;
+&nbsp;&nbsp;&lt;div id="E_Directory_Panel"&gt;...&lt;/div&gt;
+&nbsp;&nbsp;&lt;div id="F_Directory_Panel"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+                    </code>
+                </pre>
+                <div role="complementary" class="ref-sections">
+                    <h2>References</h2>
+                    <section>
+                        <h3>aria-expanded="boolean"(state)</h3>
+                        <p><strong>속성 적용 대상: </strong> 하위 트리 항목이 있는 트리 항목</p>
+                        <p>문서가 준비되었을 때, 하위 항목이 있는 트리 항목의 확장/축소 상태를 지정할 수 있습니다.</p>
+                    </section>
+                    <section>
+                        <h3>class="browsed-pointer"(상태):</h3>
+                        <p><strong>속성 적용 대상: </strong>현재 보이는 트리 항목 중 한 개</p>
+                        <p>트리뷰 항목 초점 기본값을 설정할 수 있습니다.</p>
+                        <p>이 클래스 이름을 사용하면 유저가 당신이 원하는 트리 항목부터 탐색을 시작하도록 할 수 있습니다.</p>
+                        <p>숨겨진 트리 항목에 <strong class="emphasis-must not">절대로</strong> 사용하지 마세요.</p>
+                    </section>
+                    <section>
+                        <h3>aria-controls="panel-content-id"(기본 기능 설정용))</h3>
+                        <p><strong>속성 적용 대상: </strong>읽을 수 있는 콘텐츠와 연결할 트리 항목 요소</p>
+                        <p>읽을 수 있는 콘텐츠를 지정할 수 있습니다. 기본 활성화 이벤트가 자동으로 설정됩니다.</p>
+                        <p>기본 이벤트와 커스텀 클릭 이벤트는 동시에 <strong class="emphasis-must not">사용 할 수 없습니다.</strong></p>
+                    </section>
+                    <section>
+                        <h3>aria-current="page"</h3>
+                        <p><strong>속성 적용 대상: </strong>초기값으로 활성화할 트리 항목</p>
+                            <p>사용자가 처음에 페이지를 열었을 때 특정 트리 항목을 활성화시킬 수 있습니다.</p>
+                    </section>
+                </div>
+            </div>
+            <div id="lib_ref_Intro">
+                <h1>라이브러리 레퍼런스: 소개</h1>
+                <p>
+                    Treeview.js에서 제공하는 Treeview 요소를 프로그래밍 방식으로 제어하는 방법을 설명합니다.
+                </p>
+                <p>
+                    트리뷰 객체는 다음 세 가지 주요 객체로 구성됩니다.
+                </p>
+                <ol>
+                    <li>Tree (class: Tree)</li>
+                    <li>TreeItem (class: TreeItemElement)</li>
+                    <li>SubTree (class: SubTreeElement)</li>
+                </ol>
+            </div>
+            <div id="lib_ref_ManagingFocus">
+                <h1>트리뷰 초점 관리하기</h1>
+                <p>
+                    이 참조 페이지는 포커스를 관리하는 모든 속성값에 대해 다룹니다.
+                </p>
+                <div class="ref-sections">
+                    <h2>Setters</h2>
+                    <section>
+                        <h3>Tree.setBrowsedPointer</h3>
+<pre><code class="language-ts">TreeInstance.setBrowsedPointer = index:number (Seetter)</code></pre>
+                        <p>지정한 인덱스 값에 해당하는 트리뷰 항목 요소를 초점을 받을 수 있는 요소로 설정합니다.</p>
+                    </section>
+
+                    <section>
+                        <h3>Tree.moveBrowsePointerAndFocus</h3>
+
+<pre><code class="language-ts">
+TreeInstance.moveBrowsePointerAndFocus=number (Setter)</code></pre>
+                        <p>트리뷰 항목을 초점을 받을 수 있는 요소로 설정하고, 바로 초점을 보냅니다. 사용방법은 TreeInstance.setBrowsePointer와 동일합니다.</p>
+                    </section>
+
+                    <h2>Getters</h2>
+                    <section>
+                        <h3>Tree.getBrowsedPointerElement</h3>
+<pre><code class="language-ts">TreeInstance.getBrowsedPointerElement:Element (Getter)</code></pre>
+                    <p>현재 초점을 보낼 수 있는 트리 항목 요소를 가져옵니다.</p>
+
+                    </section>
+                    <section>
+                        <h3>Tree.getBrowsedPointerIndex</h3>
+
+<pre><code class="language-ts">TreeInstance.getBrowsedPointerIndex:number (Getter)</code></pre>
+                        <p>현재 초점을 보낼 수 있는 트리 항목 요소의 인덱스 값을 가져옵니다.</p>
+                    </section>
+                </div>
+            </div>
+            <div id="lib_ref_SettingDefaultActivatedContent">
+                <h1>트리 항목의 기본 이벤트 또는 커스텀 이벤트 다루기</h1>
+                <div class="ref-sections" role="complementary">
+                    <h2>기본 이벤트 메소드</h2>
+                    <section>
+                        <h3>Treeitem.showPanel():void</h3>
+<pre><code class="language-ts">TreeItemInstance.showPanel();</code></pre>
+                        <p class="emphasis-ref">
+                            aria-controls 속성이 있는 트리 항목 전용
+                        </p>
+                        <p>
+                            이 메소드는 트리 항목의 읽을 수 있는 내용을 활성화시킵니다.
+                            커스텀 클릭 이벤트를 설정했다면 <strong class="emphasis-must not">이 메소드는 작동하지 않습니다</strong>.
+                        </p>
+                    </section>
+                    <h2>네이티브 메소드</h2>
+                    <section>
+                        <h3>Element.click()</h3>
+<pre><code class="language-js">
+const treeitem = document.querySelectorAll('li[role="none"]>[role="treeitem"]')
+treeitem[1].click();
+</code></pre>
+                        <p>
+                            또한 단순하게 트리 항목을 DOM 요소 객체의 click() 메소드를 사용하여 활성화할 수 있습니다.
+                        </p>
+                    </section>
+                </div>
+            </div>
+            <div id="lib_ref_ManagingStateExpanded">
+                <h1>확장과 축소 상태 관리하기</h1>
+                <p>이 곳은 aria-expanded를 프로그래밍 방식으로 설정하는 방법을 설명하기 위한 페이지입니다.</p>
+                <div role="complementary" class="ref-sections">
+                    <h2>Getter와 Setter</h2>
+                    <section>
+                        <h3>Treeitem.state_expand=boolean (Setter)</h3>
+<pre><code class="language-ts">TreeItemInstance.state_expand = boolean</code></pre>
+                        <p class="emphasis-ref">
+                            하위 트리 항목을 가진 요소 전용
+                        </p>
+                        <p>
+                            이 속성은 트리 항목 오브젝트에 있는 하위 트리를 펼치거나 접습니다.
+                        </p>
+                        <p>
+                            하위 트리가 확장되기를 원한다면 true, 아니라면 false 값을 설정하세요.
+                        </p>
+                    </section>
+                    <section>
+                        <h3>Treeitem.state_expand:boolean (Getter)</h3>
+<pre><code class="language-ts">TreeItemInstance.state_expand:boolean</code></pre>
+                        <p>이 속성은 부울 값을 반환합니다. aria-expanded 속성의 값이 null이나 'false' 값이라면, false 부울 값을 반환합니다. 그리고 null이나 false가 아니라면 true 부울 값을 반환합니다.</p>
+                    </section>
+                </div>
+            </div>
+            <div id="lib_ref_CustomClickEvent">
+                <h1>트리 항목의 커스텀 클릭 이벤트 다루기</h1>
+                <p>다음 코드의 메소드를 사용하여 커스텀 트리 항목 이벤트를 정의할 수 있습니다.</p>
+<pre class="language-js">
+<code>
+var customClick = Tree.collection[0].getAllTreeItems[0].setActivateEvent = handler;
+</code>
+</pre>
+                <p>하지만, 콘텐츠를 나타나게 하는 기능을 설정해 놓았다면 커스텀 클릭 이벤트를 사용할 수 없습니다.</p>
+            </div>
+            <div id="lib_ref_SetHintMessages">
+                <h1>스크린리더를 위한 힌트 메시지 설정하기</h1>
+                <p>
+                    treeview.config.js의 다음 정적 속성을 수정하여 트리뷰 상호작용 힌트 메시지를 수정할 수 있습니다.
+                </p>
+<pre class="language-ts"><code>
+if(document.documentElement.lang === 'en'){
+    Tree.setInteractionTipMessage = "You're in the Treeview, navigate with the Arrow keys.";
+    Tree.ContentAvailableText = "Content's Available. Press Enter key to display at the panel area and then press the arrow down to leave the tree-view area and try to read the panel";
+    Tree.setContentLoadedMessage = "Content loaded";
+}
+if(document.documentElement.lang === 'ko'){
+    Tree.setInteractionTipMessage = "현재 트리뷰 항목에 있습니다. 방향키로 탐색하세요";
+    Tree.setContentAvailableMessage = "읽을 수 있는 컨텐츠가 있습니다. 엔터 키를 눌러 패널에 내용을 표시하고, 탭 키로 트리뷰에서 벗어나 내용을 읽을 수 있습니다.";
+    Tree.setContentLoadedMessage = "콘텐츠 로드됨";
+}
+</code></pre>   
+            </div>
+            <div id="lib_ref_CreationTreeViewProgrammatically">
+                <h1>프로그래밍으로 트리 추가하는 방법</h1>
+                <p>
+                    다음 코드의 메소드를 사용하여 트리뷰를 동적으로 프로그래밍 방식으로 추가할 수 있습니다.
+                </p>
+<pre class="language-ts"><code>
+const tree = document.createElement('ul');
+const install_target = document.querySelector('.my-tree-container');
+tree.setAttribute('role','tree');
+tree.innerHTML=`
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example2&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example3&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;
+&nbsp;&nbsp;&lt;/li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;/li&gt;  
+`;
+install_target.appendChild(tree);
+Tree.collection[0].addTreeview(tree);
+</code></pre>
+            </div>
+            <div id="lib_ref_ReferringProps">
+                <h1>요소, 객체 참조용 속성</h1>
+                <p>아래 동적으로 생성된 트리뷰에서 참조용 속성을 확인할 수 있습니다.</p>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

@@ -2,17 +2,20 @@ ul[role=tree], ul[role=tree] ul[role=group]{
     list-style: none;
 }
 
+.hide-tree{
+    display:none;
+}
+
+.hide{
+    display: none;
+}
+
 ul[role=tree]{
     width:40%;
     height:600px;
     border:solid 1px;
-    opacity:0.7;
     overflow:hidden;
     overflow-y:auto;
-}
-
-ul[role=tree].active-tree{
-    opacity:1;
 }
 
 ul[role=group]{
@@ -39,10 +42,11 @@ ul[role=tree] li[role=none]>[role=treeitem]{
     -webkit-appearance: none;
     -o-appearance: none;
     -moz-appearance: none;
+    opacity: 0.7;
 }
 
-.hide{
-    display: none;
+ul[role=tree].active-tree [role=none]>[role=treeitem]{
+    opacity:1;
 }
 
 .icon-visible-only:before{
@@ -67,7 +71,6 @@ ul[role=tree] li[role=none]>[role=treeitem].browsed-pointer{
 [role=group] [role=none]{
     margin-left:0.4rem;
 }
-
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none){
     @font-face {

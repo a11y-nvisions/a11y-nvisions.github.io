@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treeview.js</title>
+    <link rel="stylesheet" href="lib_external/style/common.css">
+    <link rel="stylesheet" href="lib_external/style/checkbox.css">
+    <link rel="stylesheet" href="lib_external/style/radio.css">
+    <style>
+        *{margin:0; padding:0; box-sizing:border-box;}
+        html,body,.wrapper{
+            height:100%; width:100%;
+            font-size:1.1rem; position:relative;}
+        p,a{margin:0.5rem 0;}
+        .wrapper>div{padding:1%;}
+        .wrapper>*{
+            margin:0 auto;
+        }
+        .wrapper h1,.wrapper [role=heading]{
+            text-align: center;
+        }
+        h1,h2,h3,h4,h5,h6,[role="heading"]{
+            position: relative; z-index: 99;
+            padding:1.5%;
+        }
+
+        nav,header,main,aside,section,article{
+            margin-top:1rem;
+        }
+
+        *:lang(en){
+            font-family: "맑은 고딕";
+            word-break: keep-all;
+            word-wrap: break-word;
+            letter-spacing: 1px;
+        }
+        *:lang(ko){
+            font-family: "맑은 고딕";
+            word-break: keep-all;
+            word-wrap: break-word;
+            letter-spacing: 0.5px;
+        }
+
+        .small{
+            display:block;
+            font-size:60%;
+            font-weight:bold;
+        }
+
+        .language-settings {
+            position:relative;
+            border:solid 1px;
+            padding:1.5rem;
+        }
+
+        #title_lang_set{
+            position: absolute;
+            display:inline-block; text-align: center;
+            margin:0; padding:0;
+            top:-1rem; left:50%; z-index: 0;
+            margin-bottom:1em;
+            transform: translateX(-50%);
+            background: #fff;
+        }
+
+        .language-settings ul{
+            padding-top:1rem;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .language-settings [role=radio]{
+            width:3rem;
+            height:3rem;
+        }
+        .language-settings [role=radio] .radio-selected:after{
+            box-shadow: inset 1px 2px 0.1rem 0.1rem rgba(0,0,0,0.5);
+        }
+        [role=radio][aria-checked=true].lang-ko .radio-selected:after{
+            background-image: url('./img/ko.png');
+            background-color:transparent;
+            background-size:contain;
+            background-repeat: no-repeat;
+        }
+        [role=radio][aria-checked=true].lang-en .radio-selected:after{
+            background-image: url('./img/usa.png');
+            background-color:transparent;
+            background-repeat: no-repeat;
+            background-size:cover;
+        }
+
+        main{
+            height:100%;
+            display:flex;
+            flex-flow:column;
+            place-items: center;
+        }
+
+        #GoToDocumentation{
+            padding:1vh;
+            display: inline-block;
+            text-align:center;
+            margin:0 auto;
+            border:solid 1px;
+            color:#fff;
+            text-decoration: none;
+            border-radius: 0.4rem;
+            box-shadow:0 0 0 1px #000;
+            background:rgba(50,87,215,1);
+            font-size:2rem;
+        }
+    </style>
+    <script defer src="src/LoadMainPage.js"></script>
+    <script defer src="lib_external/src/checkables.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>TreeView.js</h1>
+            <nav class="language-settings">
+                <strong id="title_lang_set" role="heading" aria-level="2">Language Select Menu</strong>
+                <ul>
+                    <li>
+                        <span lang="en" id="en_label" data-role="label"> English </span>
+                        <button data-radio-name="lang-selector" role="radio" class="lang-en" aria-labelledby="en_label" aria-checked="true"></button>
+                    </li>
+                    <li>
+                        <span lang="ko" id="ko_label" data-role="label"> 한국어 </span>
+                        <button data-radio-name="lang-selector" role="radio" aria-labelledby="ko_label" class="lang-ko"></button>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="middle-wrapper">
+
+        </div>
+    </div>
+</body>
+</html>

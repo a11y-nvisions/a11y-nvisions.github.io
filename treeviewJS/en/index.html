@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TreeView Sample</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
+    rel="stylesheet">
+
+    <link rel="stylesheet" href="../style/layout.css">
+    <link rel="stylesheet" href="../style/tree.css">
+    <link rel="stylesheet" href="../lib_external/style/prism.css">
+    <script defer src="../lib_external/src/prism.js"></script>
+    <script defer src="../lib_external/src/keyboard.js"></script>
+    <script defer src="../lib_external/src/scope-polyfill.js"></script>
+    <script defer src="../src/treeview.js"></script>
+    <script defer src="../src/tree.config.js"></script>
+    <script defer src="../src/EventForDocumentation.js"></script>
+    <script defer src="../src/for_example/example.js"></script>
+</head>
+<body>
+<div class="wrapper grid">
+    <div role="navigation" class="tree-nav" id="tree">
+        <button aria-label="Documentation menu treeview" id="treeOpen" class="floating-button" aria-controls="Documentation-list">
+            <span class="material-icons" aria-hidden="true"></span>
+        </button>
+        <ul role="tree" id="Documentation-list" class="Documentation-list" aria-label="Treeview.js Documentation List">
+            <li>
+                <button role="treeitem" aria-controls="gettingStarted">Getting Started</button>
+                <ul>
+                    <li><button role="treeitem" aria-controls="setYourFirstTree">Step1: Set your First Treeview</button>
+                    <li><button role="treeitem" aria-controls="markupStructure">Step2: Markup structure</button>
+                    <li><button role="treeitem" aria-controls="markupState">Step3: Markup HTML to set default state and default event</button>
+                </ul>
+            </li>
+            <li><button role="treeitem" aria-controls="lib_ref_Intro">Library References</button>
+                <ul>
+                    <li><button role="treeitem" aria-controls="lib_ref_ManagingFocus">Managing focus of the Treeview</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_SettingDefaultActivatedContent">Handling Display of the Content Panel or activate treeitem</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_ManagingStateExpanded">Managing Expand and Collapse State</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_CustomClickEvent">Handling the Custom Click Event</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_SetHintMessages">Setting the Hint Messages for the Screen Readers</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_CreationTreeViewProgrammatically">About Treeview Creation programmatically</button></li>
+                    <li><button role="treeitem" aria-controls="lib_ref_ReferringProps">Referring properties for the elements or objects</button></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="panels">
+        <section>
+            <div id="gettingStarted">
+                <h1>Getting Started</h1>
+                <p>This chapter is for explaining the basic usage.</p>
+                <p>
+                    This chapter is configured the next steps:
+                </p>
+                <ul>
+                    <li>Step1 - Set Your First Treeview: explain the method of installing a Treeview script for your web document</li>
+                    <li>Step2 - Markup structure: explain the method how to use the treeview element on HTML</li>
+                    <li>Step3 - Markup HTML to set default state and default event : explain the method how to set the initial default state of a treeview element</li>
+                </ul>
+                <p>If you want to read the usage continue, press Shift + Tab to access Treeview that on the left side of this page, and then press the right arrow key to expand chapter 1 sub-chapter.</p>
+                <p>You can also activate the content panel of the tree-item by clicking the mouse left button and expand sub items by the left button double-clicking.</p>
+                
+                <p>And if subchapters expanded, press the arrow down key to navigate to browse tree item, and then press Enter key to activate the content panel and read it continue.</p>
+                <p>if you activated the tree item, the content will be changed that panel on the right side of this page.</p>
+                
+                <h2>the basic files of Treeview.js package</h2>
+                <p>You must import the basic script files of the next file list at your document.</p>
+                <ol>
+                    <li>treeview.js<strong>[main file]:</strong>Treeview object sources are in here</li>
+                    <li>treeview.config.js<strong>[running auto-creation of the treeview]:</strong>It makes the main script file run the creation of the Treeviews by recognizing the Treeview.js pattern on your document. And you can set the message text of tree hint announcement here</li>
+                </ol>
+            </div>
+            <div id="setYourFirstTree">
+                <h1>Set Your First TreeView</h1>
+                <p>Let's get install and set your first Treeview in HTML Docs.</p>
+                <p>You can import the Treeview material-pattern script by using the script tag such as the below line.</p>
+                <pre>
+                    <code class="language-html">
+&lt;<b>script <i>src="<u>treeview.js</u>"</i>&gt;&lt;/script&gt;</b>
+&lt;<b>script <i>src="<u>treeview.config.js</u>"</i>&gt;&lt;/script&gt;</b>
+                    </code>
+                </pre>
+                <p>It's the End! It's very simple! You don't need to work the script handling additional basically!</p>
+                <p>You should just import the script and write the markup on your webpage according to the specified pattern.</p>
+            </div>
+            <div id="markupStructure">
+                <h1>Markup Structure</h1>
+                <p>You can markup HTML according to the below code structrue to create the tree list.</p>
+                <pre>
+                    <code class="language-html">
+&lt;ul role="tree" aria-label="tree example"&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example2&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example3&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;
+&nbsp;&nbsp;&lt;/li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;/li&gt;
+&lt;/ul&gt;
+                    </code>
+                </pre>
+                <p><strong class="emphasis-must">The Developers must</strong> create a Treeview according to the above structrue.</p>
+                <p>Above code structure is the <strong class="emphasis-ref">promised rule</strong> in pattern library.</p>
+                <p>But the tree-item element might be allowed to changing the base element to use. for example, you don't need to use the Button tag likes the above structure example necessarily. You might use an A(anchor) Tag,</p>
+            </div>
+            <div id="markupState">
+                <h1>Markup HTML to set default state and default event</h1>
+                <p>
+                    Basically, you don't need to set state-related attributes in HTML.
+                </p>
+                <p>
+                    But, I know some developers may want the optional function that sets an initial default state of the elements in a particular process of the page.
+                </p>
+                <p>
+                    So, the markup pattern of the treeview.js is supports the setting method that sets the initial default value on HTML like the below code.
+                </p>
+                <pre>
+<code class="language-html">
+&lt;ul role="tree" aria-label="select directory"&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-expanded="true"&gt;This PC&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-controls="C_Directory_Panel" class="browsed-pointer" aria-current="page"&gt;C:&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-controls="D_Directory_Panel"&gt;D:&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-controls="E_Directory_Panel"&gt;E:&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem" aria-controls="F_Directory_Panel"&gt;F:&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;
+&nbsp;&nbsp;&lt;/li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Desktop&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;NetWork-Drive&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Document&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Picture&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Video&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Music&lt;/button&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;
+&nbsp;&nbsp;&lt;/li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="panel"&gt;&lt;!--for example--&gt;
+&nbsp;&nbsp;&lt;div id="C_Directory_Panel"&gt;...&lt;/div&gt;
+&nbsp;&nbsp;&lt;div id="D_Directory_Panel"&gt;...&lt;/div&gt;
+&nbsp;&nbsp;&lt;div id="E_Directory_Panel"&gt;...&lt;/div&gt;
+&nbsp;&nbsp;&lt;div id="F_Directory_Panel"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+                    </code>
+                </pre>
+                <div role="complementary" class="ref-sections">
+                    <h2>References</h2>
+                    <section>
+                        <h3>aria-expanded="boolean"(state)</h3>
+                        <p><strong>Attribute target: </strong> tree-items that has sub-tree items</p>
+                        <p>You can make the tree item set to expanded that has sub-tree-items when the document is ready.</p>
+                    </section>
+                    <section>
+                        <h3>class="browsed-pointer"(state):</h3>
+                        <p><strong>Attribute target: </strong>One of the tree-items that users-visible currently</p>
+                        <p>You can set default focus of the Treeview items</p>
+                        <p>You can make users will be beginning navigate a specific item that was set to this class name.</p>
+                        <p><strong class="emphasis-must not">DO NOT</strong> use to a hidden sub tree-item.</p>
+                    </section>
+                    <section>
+                        <h3>aria-controls="panel-content-id"(set default function)</h3>
+                        <p><strong>Attribute target: </strong>the tree-item you want links to the readable panel content.</p>
+                        <p>You can set the readable content container. It'll be set the activate-event automatically.</p>
+                        <p><strong class="emphasis-must not">You can't</strong> use the custom event with the aria-controls at the same time..</p>
+                    </section>
+                    <section>
+                        <h3>aria-current="page"</h3>
+                        <p><strong>Attribute target: </strong>the tree-item you want that will be activated panel content initially.</p>
+                        <p>You can make the specific tree-item activated when users opened your page</p>
+                    </section>
+                </div>
+            </div>
+            <div id="lib_ref_Intro">
+                <h1>Library References: Introduction</h1>
+                <p>
+                    This is for explaining how to programmatically control the Treeview elements provided by Treeview.js.
+                </p>
+                <p>
+                    The treeview object is configured into the next three major objects.
+                </p>
+                <ol>
+                    <li>Tree (class: Tree)</li>
+                    <li>TreeItem (class: TreeItemElement)</li>
+                    <li>SubTree (class: SubTreeElement)</li>
+                </ol>
+            </div>
+            <div id="lib_ref_ManagingFocus">
+                <h1>Focus Management</h1>
+                <p>
+                    This reference page is for addressing all properties that manage the focus of tree-items.
+                </p>
+                <div class="ref-sections">
+                    <h2>Setters</h2>
+                    <section>
+                        <h3>Tree.setBrowsedPointer</h3>
+<pre>
+    <code class="language-ts">
+        TreeInstance.setBrowsePointer = index:number (Seetter)
+    </code>
+</pre>
+                        <p>You can set a tree item of the specific index to be focusable in the Treeview. keyboard navigation events are running powered by this setter property.</p>
+                    </section>
+                    <section>
+                        <h3>Tree.setBrowsePointer</h3>
+
+<pre><code class="language-ts">
+TreeInstance.moveBrowsePointerAndFocus=number (Setter)</code></pre>
+                        <p>This property sets the focusable tree-item and then send focus directly, you can use it the same as TreeInstance.setBrowsePointer</p>
+                    </section>
+
+                    <h2>Getters</h2>
+                    <section>
+                        <h3>Tree.getBrowsedPointerElement</h3>
+
+<pre>
+    <code class="language-ts">
+        TreeInstance.getBrowsedPointerElement:Element (Getter)
+    </code>
+</pre>
+                    <p>This property returns the currently focusable element.</p>
+
+                    </section>
+                </div>
+            </div>
+            <div id="lib_ref_SettingDefaultActivatedContent">
+                <h1>Handling default event or activate custom event of the tree-items</h1>
+                <div class="ref-sections" role="complementary">
+                    <h2>Default Event Method</h2>
+                    <section>
+                        <h3>Treeitem.showPanel():void</h3>
+<pre><code class="language-ts">TreeItemInstance.showPanel();</code></pre>
+                        <p class="emphasis-ref">
+                            available method for tree-items only that has aria-controls
+                        </p>
+                        <p>
+                            This property makes the content of this tree-item object activated.
+                            If treeitem has the custom click event, it <strong class="emphasis-must not">won't working</strong>.
+                        </p>
+                    </section>
+                    <h2>Native Method</h2>
+                    <section>
+                        <h3>Element.click()</h3>
+<pre><code class="language-js">
+const treeitem = document.querySelectorAll('li[role="none"]>[role="treeitem"]')
+treeitem[1].click();
+</code></pre>
+                        <p>
+                            You can also simply make the content activated by using the click event method of DOM Element.
+                        </p>
+                    </section>
+                </div>
+            </div>
+            <div id="lib_ref_ManagingStateExpanded">
+                <h1>Managing Expand and Collapse State</h1>
+                <p>This page is for explaining property that get and set the aria-expanded state</p>
+                <div role="complementary" class="ref-sections">
+                    <h2>Getter And Setter</h2>
+                    <section>
+                        <h3>Treeitem.state_expand=boolean (Setter)</h3>
+<pre><code class="language-ts">TreeItemInstance.state_expand = boolean</code></pre>
+                        <p class="emphasis-ref">
+                            available method for tree-items only that has sub-tree items.
+                        </p>
+                        <p>
+                            This property makes the sub-tree of this tree-item object expanded or collapsed.
+                        </p>
+                        <p>
+                            If you want to make the sub-tree expanded, put the "true" boolean value here. Or not, put the "false" boolean value here.
+                        </p>
+                    </section>
+                    <section>
+                        <h3>Treeitem.state_expand:boolean (Getter)</h3>
+<pre><code class="language-ts">TreeItemInstance.state_expand:boolean //>> true</code></pre>
+                        <p>This property returns a boolean type value. If aria-expanded Attribute is null or 'false', it will return a false boolean. and if is not null or false, will return true boolean.</p>
+                    </section>
+                </div>
+            </div>
+            <div id="lib_ref_CustomClickEvent">
+                <h1>Handling Click Event For Treeitems</h1>
+                <p>You can use your custom event handler function for the Treeitems as the below line.</p>
+<pre class="language-js">
+<code>
+var customClick = Tree.collection[0].getAllTreeItems[0].setActivateEvent = handler;
+</code>
+</pre>
+                <p>But, remember! You can't set the custom click if you set the default function that displays the content.</p>
+            </div>
+            <div id="lib_ref_SetHintMessages">
+                <h1>Setting the Hint Messages for the Screen Readers</h1>
+                <p>
+                    You can set the interaction hint messages for the screen readers by using next static properties in treeview.config.js.
+                </p>
+<pre class="language-ts"><code>
+if(document.documentElement.lang === 'en'){
+    Tree.setInteractionTipMessage = "You're in the Treeview, navigate with the Arrow keys.";
+    Tree.ContentAvailableText = "Content's Available. Press Enter key to display at the panel area and then press the arrow down to leave the tree-view area and try to read the panel";
+    Tree.setContentLoadedMessage = "Content loaded";
+}
+if(document.documentElement.lang === 'ko'){
+    Tree.setInteractionTipMessage = "현재 트리뷰 항목에 있습니다. 방향키로 탐색하세요";
+    Tree.setContentAvailableMessage = "읽을 수 있는 컨텐츠가 있습니다. 엔터 키를 눌러 패널에 내용을 표시하고, 탭 키로 트리뷰에서 벗어나 내용을 읽을 수 있습니다.";
+    Tree.setContentLoadedMessage = "콘텐츠 로드됨";
+}
+</code></pre>   
+            </div>
+            <div id="lib_ref_CreationTreeViewProgrammatically">
+                <h1>About Treeview Creation programmatically</h1>
+                <p>
+                    You can create the Treeview programmatically by using the methods of the below codes.
+                </p>
+<pre class="language-ts"><code>
+const tree = document.createElement('ul');
+const install_target = document.querySelector('.my-tree-container');
+tree.setAttribute('role','tree');
+tree.innerHTML=`
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example2&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example3&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;
+&nbsp;&nbsp;&lt;/li&gt;
+&nbsp;&nbsp;&lt;li&gt;&lt;button role="treeitem"&gt;Example1&lt;/button&gt;&lt;/li&gt;
+`;
+install_target.appendChild(tree);
+Tree.collection[0].addTreeview(tree);
+</code></pre>
+            </div>
+            <div id="lib_ref_ReferringProps">
+                <h1>Referring properties of the elements or objects</h1>
+                <p>You can learn some properties that refer to the elements or objects In the below dynamically created Treeview.</p>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

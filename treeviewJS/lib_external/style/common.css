@@ -1,0 +1,18 @@
+[aria-disabled=true], .disabled-label{
+    opacity: 0.4;
+}
+
+[data-role=label]{
+    user-select:none;
+    display:inline-block;
+}
+
+[data-role=label],[role=checkbox]{
+    margin:0.3rem;
+    vertical-align: middle;
+}
+[data-role=label],[role=radio]{
+    margin:0.3rem;
+    vertical-align: middle;   
+}
+

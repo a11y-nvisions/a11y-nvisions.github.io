@@ -33,7 +33,7 @@ function isMobile(){
 }
 
 interface Element{
-    setActiveEvent?:Function,
+    setActivateEvent?:Function,
     getCustomClass?:any
 }
 
@@ -72,20 +72,24 @@ class Tree {
             const ListAll = this_ref.getAllTreeItems;
             const visibles:[] = Array.prototype.filter.call(ListAll,function(e){
                 const condition_target = e.getCustomClass.item_container.parentElement;
-                const condition = (!condition_target.classList.contains('hide'))
+                const condition = (!condition_target.classList.contains('hide'));
                 if(condition){
                     return e;
                 }
             });
-            this_ref.visibleItems = visibles;
+            return this_ref.visibleItems = visibles;
         }
         this.ListObserver = new MutationObserver(itemDetectionCallback)
         this.ListObserver.observe(this.element,this.MutationConfig);
         itemDetectionCallback();
-
-        this.getBrowsedFocusPointer ? this.setBrowsePointer = getIndexFrom(this.getAllTreeItems,this.getBrowsedFocusPointer) : this.setBrowsePointer = 0;
-        const activeIndex = this.getBrowsedFocusPointer ? getIndexFrom(this.getAllTreeItems,this.getBrowsedFocusPointer) : 0
-        this.getAllTreeItems[activeIndex].getCustomClass.showPanel();
+        this.getBrowsedPonterElement ? this.setBrowsePointer = this.getBrowsedPonterIndex : this.setBrowsePointer = 0;
+        const activeIndex = this.getBrowsedPonterIndex;
+        
+        if(!this.getDefaultActivatedElement){
+            this.getAllTreeItems[activeIndex].getCustomClass.showPanel();
+        }else{
+            this.getDefaultActivatedElement.getCustomClass.showPanel();
+        }
 
         this.element.addEventListener('focusin',function(e){
             this.element.classList.add('active-tree');
@@ -105,8 +109,7 @@ class Tree {
             const code = e.code;
             const item_visible = this.getVisibleItemList;
             const item_all = this.getAllTreeItems;
-            const v_idx = getIndexFrom(item_visible,this.getBrowsedFocusPointer);
-            clearTimeout();
+            const v_idx = getIndexFrom(item_visible,this.getBrowsedPonterElement);
             const KEY_PREV_TREE_ITEM = "ArrowUp";
             const KEY_NEXT_TREE_ITEM = "ArrowDown";
             const KEY_FIRST_TREE_ITEM = "Home";
@@ -128,11 +131,11 @@ class Tree {
                     this.moveBrowsePointerAndFocus = 0;
                 break;
                 case KEY_LAST_TREE_ITEM:
-                    this.moveBrowsePointerAndFocus = item_all.length-1;
+                    this.moveBrowsePointerAndFocus = getIndexFrom(item_all,item_visible[item_visible.length-1]);
                 break;
                 case KEY_GO_TO_TREE:
                     if(e.ctrlKey && !e.shiftKey){
-                        const pointer = this.getBrowsedFocusPointer.getCustomClass;
+                        const pointer = this.getBrowsedPonterElement.getCustomClass;
                         if(pointer.contentPanel){
                             pointer.contentPanel.focus();
                         }
@@ -156,13 +159,17 @@ class Tree {
 
     public set moveBrowsePointerAndFocus(index:number){
         this.setBrowsePointer = index;
-        if(this.getBrowsedFocusPointer){
-            this.getBrowsedFocusPointer.focus();
+        if(this.getBrowsedPonterElement){
+            this.getBrowsedPonterElement.focus();
         }
     }
 
-    public get getBrowsedFocusPointer(){
+    public get getBrowsedPonterElement(){
         return this.element.querySelector('.browsed-pointer') as HTMLElement;
+    }
+
+    public get getBrowsedPonterIndex(){
+        return getIndexFrom(this.getAllTreeItems,this.element.querySelector('.browsed-pointer'));
     }
 
     public set visibleItems(a:[]){
@@ -177,7 +184,8 @@ class Tree {
         return this.visibleItemList;
     }
 
-    static announce(Text:string){
+
+    public static announce(Text:string){
         let timer;
         clearTimeout(timer);
         Tree.UrgentAnnouncerElement.innerHTML=Text;
@@ -186,41 +194,59 @@ class Tree {
         },500)
     }
 
-    static announceInteraction(eventTypeString:string,isContentAvailable=false){
+    public static announceInteraction(eventTypeString:string,isContentAvailable=false){
         let timer;
         if(eventTypeString === 'focusin' ){
             if(isContentAvailable){
                 timer = setTimeout(()=>{
-                    Tree.InteractionTipElement.innerHTML=Tree.ContentAvailableText;
+                    Tree.AnnouncerElement.innerHTML=Tree.setContentAvailableMessage;
                 },1000)
             }
             timer = setTimeout(() => {
-                Tree.InteractionTipElement.innerHTML=Tree.TipText;
+                Tree.AnnouncerElement.innerHTML=Tree.setInteractionTipMessage;
             },1500);
         }
         if(eventTypeString === 'focusout'){
-            Tree.InteractionTipElement.innerHTML="";
+            Tree.AnnouncerElement.innerHTML="";
             clearTimeout(timer);
         }
     }
 
-    static TipText:string = "";
-    public static ContentAvailableText:string = "";
-    static InteractionTipElement:HTMLElement;
-    static UrgentAnnouncerElement:HTMLElement;
+    get getDefaultActivatedElement(){
+        return this.element.querySelector('[aria-current="page"],[aria-current="true"],[aria-current="location"]');
+    }
 
-    static collection:Tree[] = [];
+    public static setContentAvailableMessage:string = "";
+    public static setContentLoadedMessage:string = "";
+    public static setInteractionTipMessage:string = "";
+    public static AnnouncerElement:HTMLElement;
+    public static UrgentAnnouncerElement:HTMLElement;
 
-    static startReconfiguration(){
+    public static collection:Tree[] = [];
+
+    public addTreeview(Element:HTMLUListElement){
+        if(Element.getAttribute('role') === 'tree'){
+            Tree.collection.push(new Tree(Element));
+        }
+    }
+    public removeTreeview(TreeObject:Tree){
+        const idx = getIndexFrom(Tree.collection,TreeObject);
+        if(idx > -1){
+            TreeObject.element.parentElement.removeChild(TreeObject.element);
+            Tree.collection.splice(idx,idx);
+        }
+    }
+
+    public static startReconfiguration(){
         //reset array for preventing the bugs
         const body = document.body;
         const expected_element = body.querySelectorAll('ul[role="tree"]');
-        Tree.InteractionTipElement = document.createElement('div');
-        Tree.InteractionTipElement.classList.add('liveForA11y');
-        Tree.InteractionTipElement.setAttribute('aria-live','polite');
-        Tree.InteractionTipElement.setAttribute('aria-relevant','text');
+        Tree.AnnouncerElement = document.createElement('div');
+        Tree.AnnouncerElement.classList.add('liveForA11y','delayed');
+        Tree.AnnouncerElement.setAttribute('aria-live','polite');
+        Tree.AnnouncerElement.setAttribute('aria-relevant','text');
         Tree.UrgentAnnouncerElement = document.createElement('div');
-        Tree.UrgentAnnouncerElement.classList.add('liveForA11y');
+        Tree.UrgentAnnouncerElement.classList.add('liveForA11y','urgent');
         Tree.UrgentAnnouncerElement.setAttribute('aria-live','polite');
         Tree.UrgentAnnouncerElement.setAttribute('aria-relevant','text');
         Tree.collection = [];
@@ -228,7 +254,7 @@ class Tree {
             const element = expected_element[i];
             Tree.collection[i] = new Tree(element);
         }
-        document.body.appendChild(Tree.InteractionTipElement);
+        document.body.appendChild(Tree.AnnouncerElement);
         document.body.appendChild(Tree.UrgentAnnouncerElement);
     }
 
@@ -258,9 +284,9 @@ abstract class TreeItemContext {
         this.item_element.prepend(this.iconElement);
         linkPropertyToHTMLElement(this.ItemElement,{
                 set (cb:Function){
-                    this_ref.setActiveEvent = cb
+                    this_ref.setActivateEvent = cb
                 }
-        },"setActiveEvent");
+        },"setActivateEvent");
         this.panelElementInitialize();
     }
 
@@ -305,8 +331,7 @@ abstract class TreeItemContext {
             }.bind(this));
         }
 
-        this.setActiveEvent = function(){}
-
+        this.setActivateEvent = function(){}
     }
 
     public get contentPanel(){
@@ -317,7 +342,9 @@ abstract class TreeItemContext {
 
     panelElementInitialize(){
         if(this.contentPanel){
-            this.contentPanel.setAttribute('tabindex','0');
+            if(!isMobile()){
+                this.contentPanel.setAttribute('tabindex','0');
+            }
             this.contentPanel.setAttribute('role','region');
             this.contentPanel.setAttribute('aria-roledescription',', treeview document');
             if(this.TreeContext.element.hasAttribute('aria-label')){
@@ -334,9 +361,9 @@ abstract class TreeItemContext {
                 element.getCustomClass?.contentPanel?.classList.add('hide');
                 element.setAttribute('aria-current','false');
             }else{
-                if(this.TreeContext.getAllTreeItems[i].getCustomClass.contentPanel){
+                if(this.TreeContext.getAllTreeItems[i].getCustomClass?.contentPanel){
                     if(!isMobile()){
-                        Tree.announce("Panel document Loaded");
+                        Tree.announce(Tree.setContentLoadedMessage);
                     }
                     element.setAttribute('aria-current','page');
                 }
@@ -346,7 +373,7 @@ abstract class TreeItemContext {
         }
     }
 
-    public set setActiveEvent(callback){
+    public set setActivateEvent(callback){
         this.ItemElement.addEventListener('click',function(){
                 if(!this.contentPanel){
                     callback();
@@ -438,7 +465,3 @@ class SubTreeList {
         this.ParentObject.TreeContext.moveBrowsePointerAndFocus = getIndexFrom(this.ParentObject.TreeContext.getAllTreeItems,this.ParentObject.ItemElement);
     }
 }
-
-Tree.startReconfiguration();
-Tree.TipText = `You're in the Treeview, navigate with the Arrow keys.`
-Tree.ContentAvailableText = "Content's Available. Press Enter key to display at the panel area and then press the arrow down to leave the tree-view area and try to read the panel";
