@@ -192,7 +192,38 @@ try{
     };
   })();
 }catch(err){  
-  document.body.innerHTML = "<div class=\"warning\">\
-  <span class=\"angry\"></span>\
-  <h1>이 브라우저는 지원하지 않는 예제입니다.</h1></div>"
+  document.body.innerHTML = "\
+  <div class=\"warning\">\
+    <div class=\"angry ie\"></div>\
+    <div class=\"content\">\
+      <h1>이 브라우저는 지원하지 않는 예제입니다.</h1>\
+      <p>이제 보안성이 높고 빠른 편리한 최신 브라우저를 이용해주세요!</p>\
+      <div class=\"icons\">\
+        <a class=\"meet-link\" href=\"https://www.google.com/chrome/\">\
+          <div class=\"br-icon\">\
+            <div class=\"smile chrome\"></div>\
+          </div>\
+          <div class=\"hint\">Chrome 만나러 가기</div>\
+        </a>\
+        <a class=\"meet-link\" href=\"https://www.microsoft.com/ko-kr/edge\">\
+          <div class=\"br-icon\">\
+            <div class=\"smile edge\"></div>\
+          </div>\
+          <div class=\"hint\">Edge 만나러 가기</div>\
+        </a>\
+        <a class=\"meet-link\" href=\"https://www.mozilla.org/ko/firefox/new/\">\
+          <div class=\"br-icon\">\
+            <div class=\"smile firefox\"></div>\
+          </div>\
+          <div class=\"hint\">Firefox 만나러 가기</div>\
+        </a>\
+        <a class=\"meet-link\" href=\"https://whale.naver.com/\">\
+          <div class=\"br-icon\">\
+            <div class=\"smile whale\"></div>\
+          </div>\
+          <div class=\"hint\">Whale 만나러 가기</div>\
+        </a>\
+      \</div>\
+    </div>\
+  </div>"
 }

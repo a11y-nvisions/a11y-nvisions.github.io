@@ -12,6 +12,22 @@
     html,body,.warning{
       width: 100%; height:100%;
     }
+    .blind{
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    .global-wrapper{
+      height:100%; width:100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .angry{
       display: flex;
       position:relative;
@@ -27,6 +43,95 @@
       pointer-events: none;
       box-shadow:inset 0 0 0 10px #f00;
     }
+
+    .smile{
+      display: flex;
+      position:relative;
+      align-items: center;
+      justify-content: center;
+      height:3em; width:3em;
+      border-radius: 50%; border:solid 0.1em #000;
+      background-size:contain;
+      overflow: hidden;
+      user-select: none;
+      pointer-events: none;
+      box-shadow:inset 0 0 0 2.5px #06f;
+    }
+
+    
+    .meet-link{
+      width:4.5em; height:4.5em;
+      display: flex;
+      flex-flow: column;
+      text-decoration: none;
+    }
+
+    .meet-link .br-icon{
+      flex:1; display:flex;
+      align-items:center;
+      justify-content: center;
+      justify-self: center;
+      align-self:center;
+    }
+    .meet-link .hint{
+      display: block;
+      opacity: 0;
+      height:1.5em;
+      color:rgba(255,255,255,0);
+      width:100%;
+    }
+
+    .meet-link:hover .smile,.meet-link:focus .smile{
+      position: relative;
+      animation:jump 0.8s linear;
+      animation-iteration-count: 1;
+      animation-fill-mode: both;
+    }
+    .meet-link:hover .hint,.meet-link:focus .hint{
+      font-size:0.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin:auto; overflow:auto;
+      position:relative;
+      color:white; background-color:rgba(0,0,0,0.7);
+      opacity: 1;
+      transition:background-color 0.3s, opacity 0.3s;
+    }
+
+
+    .icons{display: flex;}
+    .smile.chrome{
+      background-image: url(https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Chrome_icon_%28September_2014%29.svg);
+    }
+    .smile.edge{
+      background-image:url(edge.png);
+    }
+    .smile.firefox{
+      background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/800px-Firefox_logo%2C_2019.svg.png)
+    }
+    .smile.whale{
+      background-image:url(https://w.namu.la/s/1ecd9d98e849872b3fa5a0f9f3add277d373212aabc10d9ef1e705847324abb342e420df735182b9db9f4ef20e6a0a2dbdd9b5d27c4d61dae4d3cfcd0f21c54648155d24e767e728739395d9f8b589e9ed39f7e643611b12681899ea176bbeed)
+    }
+    .warning .smile::before{
+      content:":)";
+      -ms-user-select: none;
+      pointer-events:none;
+      user-select: none;
+      background:
+      linear-gradient(to top left, rgba(200,225,255,0.45),rgba(255,255,255,0.35));
+      background-size:cover, 100% 100%;
+      background-position: center, center;
+      position:relative;
+      z-index: 3;
+      top:0; left:-50%;
+      text-align: center;
+      line-height: 1.3em;
+      color:rgba(0,0,0,0.9);
+      width:4em; font-size:2.5em;
+      transform: rotate(90deg) translateY(-50%);
+    }
+
     .warning .angry::after{
       content:"";
       width:1em; height:110%;
@@ -35,6 +140,7 @@
       transform: rotate(45deg) translateX(-60%);
       background: #f00;
     }
+
     .warning .angry::before{
       content:":(";
       -ms-user-select: none;
@@ -53,16 +159,14 @@
       width:9em; font-size:8em;
       transform: rotate(90deg) translateY(-50%);
     }
-    .warning{display:flex; align-items:center; justify-content: center;}
-    .blind{
-      border: 0;
-      clip: rect(0 0 0 0);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
+
+    .warning{display:flex;
+    align-items:center; justify-content: center;
+    font-size:1.4rem;}
+    .content{
+      display: flex;
+      flex-flow: column;
+      align-items:center; justify-content: center;
     }
     table{ padding:0;
     box-sizing: border-box;
@@ -73,7 +177,6 @@
     min-width:6em;
     border:solid 0.01em rgba(55,25,15,0.7); padding:0.1em 0.4em;}
     th{
-      border:solid 1px #000;
       background:#9a6c3d;
       color:#fdd89f;
     }
@@ -138,117 +241,141 @@
     td.sorted{
       background-color:lemonchiffon;
     }
+
+    @keyframes jump {
+      from{
+        top:0%;
+      }
+      35%{
+        top:-35%;
+      }
+
+      65%{
+        top:0;
+      }
+
+      80%{
+        top:-45%;
+      }
+
+      to{
+        top:0;
+      }
+    }
   </style>
 </head>
 <body>
-  <table id="c_table">
-    <span id="sortAnnouncer" class="blind" role="alert"></span>
-    <caption>Contact List
-    </caption>
-    <thead>
-      <tr>
-        <th>
-          <button>
-            <span class="header_name">Index</span>
-            <span aria-hidden="true" class="indicator"></span>
-          </button>
-        </th>
-        <th>
-          <button>
-            <span class="header_name">Name</span>
-            <span aria-hidden="true" class="indicator"></span>
-          </button>
-        </th>
-        <th>
-          <button>
-            <span class="header_name">Gender</span>
-            <span aria-hidden="true" class="indicator"></span>
-          </button>
-        </th>
-        <th>
-          <button>
-            <span class="header_name">Birth Day</span>
-            <span aria-hidden="true" class="indicator"></span>
-          </button>
-        </th>
-        <th>
-          <button>
-            <span class="header_name">Phone Number</span>
-            <span aria-hidden="true" class="indicator"></span>
-          </button>
-        </th>
-      </tr>
+  <div class="global-wrapper">
 
-    </thead>
-    <tbody>
-
-      <tr>
-        <th>1</th>
-        <td>Joseph Park</td>
-        <td>Male</td>
-        <td>1994. 03. 17</td>
-        <td>010-0000-0000</td>
-      </tr>
-
-      <tr>
-        <th>2</th>
-        <td>Gildong Hong</td>
-        <td>Male</td>
-        <td>1999. 09. 19</td>
-        <td>010-8111-4222</td>
-      </tr>
-
-      <tr>
-        <th>3</th>
-        <td>Jacob Brandon Lee</td>
-        <td>Male</td>
-        <td>1995. 02. 12</td>
-        <td>010-0100-0100</td>
-      </tr>
-
-      <tr>
-        <th>4</th>
-        <td>Roella Park</td>
-        <td>Female</td>
-        <td>1991. 04. 25</td>
-        <td>010-0124-0000</td>
-      </tr>
-
-      <tr>
-        <th>5</th>
-        <td>Catalina Park</td>
-        <td>Female</td>
-        <td>1992. 07. 06</td>
-        <td>010-2112-2222</td>
-      </tr>
-
-      <tr>
-        <th>6</th>
-        <td>Leona Han</td>
-        <td>Female</td>
-        <td>1969. 04. 05</td>
-        <td>010-1111-1111</td>
-      </tr>
-
-      <tr>
-        <th>7</th>
-        <td>Laurencio Park</td>
-        <td>Male</td>
-        <td>1963. 05. 30</td>
-        <td>010-1111-1121</td>
-      </tr>
-
-      <tr>
-        <th>8</th>
-        <td>Sua An</td>
-        <td>Female</td>
-        <td>2011. 09. 10</td>
-        <td>010-1111-1121</td>
-      </tr>
-
-    </tbody>
-
-  </table>
+    <table id="c_table">
+      <span id="sortAnnouncer" class="blind" role="alert"></span>
+      <caption>Contact List
+      </caption>
+      <thead>
+        <tr>
+          <th>
+            <button>
+              <span class="header_name">Index</span>
+              <span aria-hidden="true" class="indicator"></span>
+            </button>
+          </th>
+          <th>
+            <button>
+              <span class="header_name">Name</span>
+              <span aria-hidden="true" class="indicator"></span>
+            </button>
+          </th>
+          <th>
+            <button>
+              <span class="header_name">Gender</span>
+              <span aria-hidden="true" class="indicator"></span>
+            </button>
+          </th>
+          <th>
+            <button>
+              <span class="header_name">Birth Day</span>
+              <span aria-hidden="true" class="indicator"></span>
+            </button>
+          </th>
+          <th>
+            <button>
+              <span class="header_name">Phone Number</span>
+              <span aria-hidden="true" class="indicator"></span>
+            </button>
+          </th>
+        </tr>
+  
+      </thead>
+      <tbody>
+  
+        <tr>
+          <th>1</th>
+          <td>Joseph Park</td>
+          <td>Male</td>
+          <td>1994. 03. 17</td>
+          <td>010-0000-0000</td>
+        </tr>
+  
+        <tr>
+          <th>2</th>
+          <td>Gildong Hong</td>
+          <td>Male</td>
+          <td>1999. 09. 19</td>
+          <td>010-8111-4222</td>
+        </tr>
+  
+        <tr>
+          <th>3</th>
+          <td>Jacob Brandon Lee</td>
+          <td>Male</td>
+          <td>1995. 02. 12</td>
+          <td>010-0100-0100</td>
+        </tr>
+  
+        <tr>
+          <th>4</th>
+          <td>Roella Park</td>
+          <td>Female</td>
+          <td>1991. 04. 25</td>
+          <td>010-0124-0000</td>
+        </tr>
+  
+        <tr>
+          <th>5</th>
+          <td>Catalina Park</td>
+          <td>Female</td>
+          <td>1992. 07. 06</td>
+          <td>010-2112-2222</td>
+        </tr>
+  
+        <tr>
+          <th>6</th>
+          <td>Leona Han</td>
+          <td>Female</td>
+          <td>1969. 04. 05</td>
+          <td>010-1111-1111</td>
+        </tr>
+  
+        <tr>
+          <th>7</th>
+          <td>Laurencio Park</td>
+          <td>Male</td>
+          <td>1963. 05. 30</td>
+          <td>010-1111-1121</td>
+        </tr>
+  
+        <tr>
+          <th>8</th>
+          <td>Sua An</td>
+          <td>Female</td>
+          <td>2011. 09. 10</td>
+          <td>010-1111-1121</td>
+        </tr>
+  
+      </tbody>
+  
+    </table>
+  </div>
   <script src="tableParser.js"></script>
 </body>
 </html>
