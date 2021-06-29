@@ -194,9 +194,12 @@ try{
 }catch(err){  
   document.body.innerHTML = "\
   <div class=\"warning\">\
+    <div class=\"br-icon\">\
     <div class=\"angry ie\"></div>\
+    </div>\
     <div class=\"content\">\
-      <h1>이 브라우저는 지원하지 않는 예제입니다.</h1>\
+      <h1>앗! 이런...</h1>\
+      <p>이 예제는 해당 브라우저를 지원하지 않습니다.</p>\
       <p>이제 보안성이 높고 빠른 편리한 최신 브라우저를 이용해주세요!</p>\
       <div class=\"icons\">\
         <a class=\"meet-link\" href=\"https://www.google.com/chrome/\">\
