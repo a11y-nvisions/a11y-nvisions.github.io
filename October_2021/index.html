@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <style>
+    
+    .art-wrapper fieldset{
+      forced-color-adjust: none;
+      display: flex;
+      width:920px;
+      flex-flow: column;
+      align-items: center;
+      font-weight: bold;
+      text-align: center;
+      background-color:#2f3f4f;
+      color:white;
+      position: relative;
+      margin: 3rem auto;
+      border:solid 1px;
+      border-radius: 1.5em;
+      padding-bottom: 2.5em;
+    }
+    legend{
+      forced-color-adjust: none;
+      display: block;
+      background-color:#2f3f4f;
+      border-top:solid 1px #000;
+      border-left:solid 1px #000;
+      border-right:solid 1px #000;
+      border-top-right-radius: 0.5em;
+      border-top-left-radius: 0.5em;
+      position: absolute;
+      margin-top:-2.7em;
+      padding:0.5em;
+    }
+    .imgbox{
+      width:900px;
+      height:600px;
+    }
+    .imgbox img{
+      width:900px;
+      height:600px;
+      border: solid 1px;
+    }
+  
+    .hide{
+      display: none;
+    }
+    [type="radio"]+label{
+      forced-color-adjust: none;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
+      -moz-user-select: none;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.6);
+      background-blend-mode: multiply;
+      background-repeat: no-repeat;
+      background-size: cover;
+      width:150px;
+      height:150px; border:solid 1px;
+      color:white;
+    }
+
+    .radio-list{
+      width:900px;
+      display: flex;
+      margin:1em 0;
+      align-items: center;
+      justify-content: center;
+    }
+    .radio-list label{
+      gap:0.2em;
+    }
+
+    [type="radio"]:checked+label{
+      background-color:transparent;
+      border:#26f solid 5px;
+      box-shadow: inset 0 0 1px 1px #000;
+      color: transparent;
+    }
+    [type=radio]{
+      forced-color-adjust: none;
+      appearance: none;
+      color:transparent;
+    }
+  </style>
+  <div class="art-wrapper">
+    <h1>Windows 11에서 변경된 고대비 모드 소개</h1>
+    <p>안녕하세요, <a href="https://nvisions.co.kr/">엔비전스</a>입니다.</p>
+    <p>더운 여름이 지나가고, 가을이 찾아오고 있습니다. 올 여름, 지난 6월에는 Windows 11 출시가 발표되었습니다.</p>
+    <p>Windows 11은 6년만에 출시되는 Microsoft의 차기 운영체제입니다. 정말 오랫동안 Windows 10을 꾸준히 업데이트해 왔는데요.</p>
+    <p>이번 Windows 11 접근성 기능 중에 가장 크게 바뀐 것은 고대비 모드라고 할 수 있겠습니다. 이번 시간에는 간단하게 고대비 테마를 한 번 살펴보도록 합시다.</p>
+    <p>Windows 11의 고대비 모드는 크게 네 가지 테마를 가지고 있습니다. 지금부터 하나씩 구경하러 가 보시지요.</p>
+    
+    <fieldset>
+      <legend>사진 표시기</legend>
+      <p>라디오 버튼으로 원하는 사진을 표시하세요.</p>
+      <div class="radio-list">
+        <input type="radio" name="themes" aria-controls="themeIMG1" id="theme1" checked>
+        <label for="theme1">수생(Aquatic)</label>
+        <input type="radio" name="themes" aria-controls="themeIMG2" id="theme2">
+        <label for="theme2">사막(Desert)</label>
+        <input type="radio" name="themes" aria-controls="themeIMG3" id="theme3">
+        <label for="theme3">황혼(Dusk)</label>
+        <input type="radio" name="themes" aria-controls="themeIMG4" id="theme4">
+        <label for="theme4">밤하늘(NightSky)</label>
+      </div>
+      <div class="imgbox">
+        <img class="show" id="themeIMG1" src="https://a11y-nvisions.github.io/Agust_2021/Themes/Aquatic.png" alt="테마1 - 수생(Aquatic)">
+        <img class="hide" id="themeIMG2" src="https://a11y-nvisions.github.io/Agust_2021/Themes/Desert.png" alt="테마2 - 사막(Desert)">
+        <img class="hide" id="themeIMG3" src="https://a11y-nvisions.github.io/Agust_2021/Themes/Dusk.png" alt="테마3 - 황혼(Dusk)">
+        <img class="hide" id="themeIMG4" src="https://a11y-nvisions.github.io/Agust_2021/Themes/NightSky.png" alt="테마4 - 밤하늘(NightSky)">
+      </div>
+    </fieldset>
+    
+    <h2>수생(Aquatic)</h2>
+    <p>푸른 빛이 도는 매우 어두운 회색을 기본 바탕으로 하는 수생 고대비 테마입니다. 이번 Windows 고대비 테마는 대비만 높은 것이 아니라, 오랫동안 보기 편한 색상, 조금 더 단조롭지 않은 새로운 디자인을 추구한 것 같습니다.</p>
+    <h2>사막(Desert)</h2>
+    <p>기존의 White 테마를 대체하는 테마입니다. White 고대비 테마는 밝은 바탕에 어두운 글씨를 좋아하는 사람일지라도, 대비가 너무 극명하게 높다보니, 오래 보면 눈이 아프다는 단점이 있었습니다. 이번에 추가된 고대비 테마들은 대비를 약간 낮춘 대신, 눈의 피로를 줄이려고 한 것 같습니다.</p>
+    <p>약간의 노란빛이 도는 흰색, 베이지색이나 상아색 계통의 바탕을 사용해서, 상대적으로 눈이 덜 부신걸 알 수 있습니다.</p>
+    <h2>황혼(Dusk)</h2>
+    <p>위에서 설명한 수생과 비슷하면서 다-른 테마입니다. 수생보다 더 무채색에 가까운 배경색을 사용하며, 한층 더 밝은 느낌을 줍니다. 너무 어두운 화면이 싫은 사람에게 이 ‘황혼’ 테마가 많은 사랑을 받을 것 같습니다. 언뜻 보기에는 다크모드를 적용한 것 처럼 보이기도 하네요.</p>
+    <h2>밤하늘(Night Sky)</h2>
+    <p>말은 밤하늘이라고 적어놓았지만, 아마 클래식이라는 명칭을 붙혀도 어울리지 않을까 싶은 테마입니다.</p>
+    <p>가장 흔히, ’고대비’라는 이미지 하면 떠오르는 테마로, 검정 바탕에 흰색 또는 노랑색 등의 글씨를 사용한 테마입니다.</p>
+    <p>밤하늘 테마는 기존 Black 테마라고 보아도 무방할 것 같습니다. White 테마가 사라진 것에 반해, Black 테마는 전통적으로 저시력자 사이에서 사랑받던 고대비 테마로 ‘밤하늘’ 이라는 명칭을 얻었습니다.</p>
+    <h2>설정 방법(Windows 11 Insder Preview)</h2>
+    <p>Windows 11(한글 기준) 현재 프리뷰 버전에서는 고대비 테마, 고대비 모드의 명칭이 “대비 테마”로 변경되었습니다.</p>
+    <p>Windows 11 Insider Preview가 깔려있다면 아래와 같이 설정할 수 있습니다.</p>
+    <p>새로운 고대비 테마의 테마 설정은 설정 앱에서 가능하며, 단순한 일반 테마와의 토글은 이전과 동일한 Alt + Shift + Print Screen을 통해 할 수 있습니다.</p>
+    <h3>고대비 테마 설정하기</h3>
+    <dl>
+      <dt><strong>설정 경로 찾아가기</strong></dt>
+      <dd>
+        <ol type="1">
+          <li>Logo + I를 눌러 설정을 여세요.</li>
+          <li>아래 화살표 키를 눌러 ‘접근성’ 항목을 찾아 누르세요.</li>
+          <li>Tab 키를 눌러 우측의 “쩝근성” 제목이 있는 패널로 이동합니다.</li>
+          <li>아래 화살표 키를 눌러, “대비 테마” 항목을 찾아 누르세요.</li>
+          <li>Tab 키를 눌러 콤보상자로 이동한 다음, Space 키를 눌러 펼치고, 위 도는 아래 화살표 키로 원하는 테마로 변경하세요.</li>
+        </ol>
+      </dd>
+      <dt><strong>검색 사용하기</strong></dt>
+      <dd>
+        <ol type="1">
+          <li>Logo 키 또는 Logo + S 단축키를 눌러 시작메뉴를 엽니다.</li>
+          <li>“대비 테마”를 검색합니다.</li>
+          <li>Tab 키를 눌러, 콤보상자로 이동한 다음, Space키를 눌러 펼치고, 위 도는 아래 화살표 키로 원하는 테마로 변경하세요.</li>
+        </ol>
+      </dd>
+      <dt><strong>스크린샷으로 따라하기</strong></dt>
+      <dd>
+        <fieldset>
+          <legend>사진 표시기</legend>
+          <p>라디오 버튼으로 원하는 사진을 표시하세요.</p>
+          <div class="radio-list">
+            <input type="radio" name="steps" aria-controls="stepIMG1" id="steps1" checked>
+            <label for="steps1">STEP1</label>
+            <input type="radio" name="steps" aria-controls="stepIMG2" id="steps2">
+            <label for="steps2">STEP2</label>
+            <input type="radio" name="steps" aria-controls="stepIMG3" id="steps3">
+            <label for="steps3">STEP3</label>
+            <input type="radio" name="steps" aria-controls="stepIMG4" id="steps4">
+            <label for="steps4">STEP4</label>
+            <input type="radio" name="steps" aria-controls="stepIMG5" id="steps5">
+            <label for="steps5">STEP5</label>
+          </div>
+          <div class="imgbox">
+            <img class="show" id="stepIMG1" src="https://a11y-nvisions.github.io/Agust_2021/Themes/Steps/Step1.png" alt="Step1: 마우스 오른쪽 버튼으로 시작 버튼을 클릭하여 메뉴를 여세요. 또는 Logo + X로도 가능해요.">
+            <img class="hide" id="stepIMG2" src="https://a11y-nvisions.github.io/Agust_2021/Themes/Steps/Step2.png" alt="Step2: 메뉴에서 설정을 찾아 여세요. Step1과 2를 건너뛰려면 Logo + I를 누르면 설정창이 열려요.">
+            <img class="hide" id="stepIMG3" src="https://a11y-nvisions.github.io/Agust_2021/Themes/Steps/Step3.png" alt="Step3: 측면 사이드 목록에서 접근성 항목을 찾아 누르세요.">
+            <img class="hide" id="stepIMG4" src="https://a11y-nvisions.github.io/Agust_2021/Themes/Steps/Step4.png" alt="Step4: 좌측 패널의 비전 섹션에서 대비 테마 항목을 누르세요.">
+            <img class="hide" id="stepIMG5" src="https://a11y-nvisions.github.io/Agust_2021/Themes/Steps/Step5.png" alt="Step5: 밑에 초록색으로 표시된 콤보상자를 눌러 선택하고 적용 버튼을 누르세요.">
+          </div>
+        </fieldset>
+      </dd>
+      
+    </dl>
+  </div>
+  
+  <h2>고대비 테마를 위해 우리가 대비해야 하는 것</h2>
+  <p>다양한 OS 환경설정에 따라 웹 환경도 맞춰서 변화하고 있습니다.
+    최근에는 많이 대중화된 prefers-color-scheme을 통한 다크모드 지원만 보더라도 알 수 있습니다.</p>
+  <p>
+    이런 고대비 모드는 prefers-color-scheme처럼 선택적으로 지원해야 하는 것이 아닌
+    반드시 대응해야만 사용자가 불편함없이 웹사이트를 탐색할 수 있게 됩니다.
+  </p>
+  <p>이번 대비 테마는 Windows의 기능이기는 하지만, 이전처럼 Microsoft 브라우저에서만 지원하는 기능이 아닙니다.
+    Edge뿐만아니라, Chrome이나 Firefox에서도 적용하고 있습니다. Windows에 종속된 기능이지만, 많은 브라우저에서 이에 대한 대응을 지원하는 만큼
+    널리 사용될 것입니다.
+  </p>
+  <p>
+    위 테마 사진들을 잠깐 예로 들어보자면, 어두운 테마에서 NULi 사이트를 방문했을 때,
+    NULi 로고가 안 보이는 부작용이 있습니다. PNG 파일이기 때문에, 투명한 배경에 갈색 글씨로 로고가 쓰여져 있는 로고여서
+    밝은 화면으로 봤을 때는 아주 눈에 잘 뛰지만 이렇게 어두운 고대비 테마를 적용하면 잘 안보이게 됩니다.
+  </p>
+  <p>
+     로고나, 아이콘 등에는 SVG의 사용이 더더욱 필요해지게 되었고, 우리는 이에 맞춰 대응해야 합니다.
+     물론 SVG가 아니라, 로고의 색상을 테마에 맞게 여러개 준비해두거나 필터를 사용하는 것도 방법이 되겠네요.
+     이에 대한 대응방법에 대해서는 다음 시간에 더욱 심도있게 다를 수 있도록 준비할 예정입니다.
+  </p>
+  <p>
+    이번 시간에는 짧게 Windows 11의 새로운 대비 테마를 살펴봤습니다. 유익한 정보가 되셨으면 합니다.
+    앞으로도 새로운 소식을 갖고 찾아뵙겠습니다. 감사합니다.
+  </p>
+  <script>
+
+    function setImagePicker(name){
+      var StepGroup = document.querySelectorAll('[name="'+name+'"]');
+      for (var i=0; i<StepGroup.length; i++){
+        var El=StepGroup[i];
+        El.labels[0].style.backgroundImage = "url("+document.getElementById(El.getAttribute('aria-controls')).src+")";
+  
+        El.addEventListener('input',function(e){
+          var target = e.target;
+          var controls = document.querySelector("#"+target.getAttribute('aria-controls'));
+            StepGroup.forEach(function(el){
+              var controls = document.querySelector("#"+el.getAttribute('aria-controls') );
+              controls.classList.toggle('hide',el !== target);
+              controls.classList.toggle('show',el === target);
+            });
+        })
+      }
+    }
+
+    setImagePicker('steps');
+    setImagePicker('themes');
+
+  </script>
+</body>
+</html>
