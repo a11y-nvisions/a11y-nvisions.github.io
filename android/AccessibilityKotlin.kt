@@ -31,9 +31,11 @@ object AccessibilityKotlin {
                 super.onInitializeAccessibilityNodeInfo(host, info)
                 info?.className = RadioButton::class.java.name
                 info?.isCheckable = true
-                if (view.isSelected || isChecked) {
+                if (view.isSelected) {
                     info?.isChecked = true
                     info?.isSelected = false
+                } else if (isChecked) {
+                    info?.isChecked = true
                 } else {
                     info?.isChecked = false
                 }
@@ -50,9 +52,11 @@ object AccessibilityKotlin {
                 super.onInitializeAccessibilityNodeInfo(host, info)
                 info?.className = CheckBox::class.java.name
                 info?.isCheckable = true
-                if (view.isSelected || isChecked) {
+                if (view.isSelected) {
                     info?.isChecked = true
                     info?.isSelected = false
+                } else if (isChecked) {
+                    info?.isChecked = true
                 } else {
                     info?.isChecked = false
                 }
@@ -70,6 +74,8 @@ object AccessibilityKotlin {
                 info?.roleDescription = "tab"
                 if (isSelected) {
                     info?.isSelected = true
+                } else if (view.isSelected) {
+
                 } else {
                     info?.isSelected = false
                 }
@@ -86,9 +92,11 @@ object AccessibilityKotlin {
                 super.onInitializeAccessibilityNodeInfo(host, info)
                 info?.className = ToggleButton::class.java.name
                 info?.isCheckable = true
-                if (view.isSelected || isChecked) {
+                if (view.isSelected) {
                     info?.isChecked = true
                     info?.isSelected = false
+                } else if (isChecked) {
+                    info?.isChecked = true
                 } else {
                     info?.isChecked = false
                 }
