@@ -1,6 +1,7 @@
 package com.nvisions.solutionsforaccessibility.AccessibilityUtil
 import android.view.View
 import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.ToggleButton
@@ -9,6 +10,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 
 object AccessibilityKotlin {
+    fun setAsButton(view: View) {
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View?,
+                info: AccessibilityNodeInfo?
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info?.className = Button::class.java.name
+            }
+        }
+    }
+
     fun setAsRadioButton(view: View, isChecked: Boolean) {
         view.accessibilityDelegate = object : View.AccessibilityDelegate() {
             override fun onInitializeAccessibilityNodeInfo(
