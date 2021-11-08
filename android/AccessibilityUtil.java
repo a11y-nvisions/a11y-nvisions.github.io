@@ -1,6 +1,8 @@
 package com.nvisions.solutionsforaccessibility.AccessibilityUtil;
 
+import android.content.Context;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,6 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 public class AccessibilityUtil {
+
     public static void setAsButton(View view) {
         view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override
@@ -67,9 +70,12 @@ public class AccessibilityUtil {
                 super.onInitializeAccessibilityNodeInfo(host, info);
                 info.setRoleDescription("tab");
                 if (view.isSelected()) {
-
+                    info.setClickable(false);
+                    info.removeAction(AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK);
                 } else if (isSelected) {
                     info.setSelected(true);
+                    info.setClickable(false);
+                    info.removeAction(AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK);
                 } else {
                     info.setSelected(false);
                 }
@@ -94,6 +100,23 @@ public class AccessibilityUtil {
                 }
             }
         });
+    }
+
+    public static void removeClickHintMsg(View view) {
+        view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setClickable(false);
+                info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK);
+            }
+        });
+    }
+
+    public static boolean isTalkBackOn(Context context) {
+        AccessibilityManager accessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+        boolean isTalkBackOn = accessibilityManager.isTouchExplorationEnabled();
+        return isTalkBackOn;
     }
 }
 
