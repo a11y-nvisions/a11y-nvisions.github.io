@@ -1,6 +1,7 @@
 package com.nvisions.solutionsforaccessibility.AccessibilityUtil
 import android.accessibilityservice.AccessibilityService
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import android.view.accessibility.AccessibilityManager
 import android.view.accessibility.AccessibilityNodeInfo
@@ -127,5 +128,34 @@ object AccessibilityKotlin {
         return isTalkBackOn
     }
 
+    fun expandCollapseButton(view: View, isExpanded: Boolean) {
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun performAccessibilityAction(
+                host: View?,
+                action: Int,
+                args: Bundle?
+            ): Boolean {
+                if (action == AccessibilityNodeInfo.ACTION_COLLAPSE || action == AccessibilityNodeInfo.ACTION_EXPAND) {
+                    view.performClick()
+                }
+                return super.performAccessibilityAction(host, action, args)
+            }
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View?,
+                info: AccessibilityNodeInfo?
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info?.className = Button::class.java.name
+                if (isExpanded) {
+                    info?.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_COLLAPSE)
+                } else if (view.isSelected) {
+                    info?.isSelected = false
+                    info?.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_COLLAPSE)
+                } else {
+                    info?.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_EXPAND)
+                }
+            }
+        }
+    }
 }
 

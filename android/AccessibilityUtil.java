@@ -1,6 +1,7 @@
 package com.nvisions.solutionsforaccessibility.AccessibilityUtil;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -117,6 +118,32 @@ public class AccessibilityUtil {
         AccessibilityManager accessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
         boolean isTalkBackOn = accessibilityManager.isTouchExplorationEnabled();
         return isTalkBackOn;
+    }
+
+    public static void expandCollapseButton(View view, boolean isExpanded) {
+        view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setClassName(Button.class.getName());
+                if (isExpanded) {
+                    info.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_COLLAPSE);
+                } else if (view.isSelected()) {
+                    info.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_COLLAPSE);
+                    info.setSelected(false);
+                } else {
+                    info.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_EXPAND);
+                }
+            }
+
+            @Override
+            public boolean performAccessibilityAction(View host, int action, Bundle args) {
+                if (action == AccessibilityNodeInfo.ACTION_COLLAPSE || action == AccessibilityNodeInfo.ACTION_EXPAND) {
+                view.performClick();
+                }
+                return super.performAccessibilityAction(host, action, args);
+            }
+        });
     }
 }
 
