@@ -15,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 public class AccessibilityUtil {
-
     public static void setAsButton(View view) {
         view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override
@@ -116,7 +115,7 @@ public class AccessibilityUtil {
 
     public static boolean isTalkBackOn(Context context) {
         AccessibilityManager accessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-        boolean isTalkBackOn = accessibilityManager.isTouchExplorationEnabled();
+         boolean isTalkBackOn = accessibilityManager.isTouchExplorationEnabled();
         return isTalkBackOn;
     }
 
@@ -140,6 +139,36 @@ public class AccessibilityUtil {
             public boolean performAccessibilityAction(View host, int action, Bundle args) {
                 if (action == AccessibilityNodeInfo.ACTION_COLLAPSE || action == AccessibilityNodeInfo.ACTION_EXPAND) {
                 view.performClick();
+                }
+                return super.performAccessibilityAction(host, action, args);
+            }
+        });
+    }
+
+    public static void collapseExpandRadioButton(View view, boolean isChecked) {
+        view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+            info.setClassName(RadioButton.class.getName());
+                info.setCheckable(true);
+                if (view.isSelected()) {
+                    info.setChecked(true);
+                    info.setSelected(false);
+                    info.addAction(AccessibilityNodeInfo.ACTION_COLLAPSE);
+                } else if (isChecked) {
+                    info.setChecked(true);
+                    info.addAction(AccessibilityNodeInfo.ACTION_COLLAPSE);
+                } else {
+                    info.setChecked(false);
+                    info.addAction(AccessibilityNodeInfo.ACTION_EXPAND);
+                }
+                            }
+
+            @Override
+            public boolean performAccessibilityAction(View host, int action, Bundle args) {
+                if (action == AccessibilityNodeInfo.ACTION_COLLAPSE || action == AccessibilityNodeInfo.ACTION_EXPAND) {
+                    view.performClick();
                 }
                 return super.performAccessibilityAction(host, action, args);
             }
