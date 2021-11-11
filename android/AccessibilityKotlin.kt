@@ -2,6 +2,7 @@ package com.nvisions.solutionsforaccessibility.AccessibilityUtil
 import android.accessibilityservice.AccessibilityService
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.view.accessibility.AccessibilityManager
 import android.view.accessibility.AccessibilityNodeInfo
@@ -190,6 +191,12 @@ object AccessibilityKotlin {
                 return super.performAccessibilityAction(host, action, args)
             }
         }
+    }
+
+    fun sendFocusThisView(view: View) {
+        Handler().postDelayed( {
+            view.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
+        }, 500)
     }
 }
 

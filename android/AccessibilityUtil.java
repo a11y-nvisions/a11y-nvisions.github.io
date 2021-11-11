@@ -2,6 +2,8 @@ package com.nvisions.solutionsforaccessibility.AccessibilityUtil;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -174,5 +176,16 @@ public class AccessibilityUtil {
             }
         });
     }
+
+    public static void sendFocusThisView(View view) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                view.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+            };
+        }, 500);
+    }
+
 }
 
