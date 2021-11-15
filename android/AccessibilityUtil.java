@@ -188,7 +188,7 @@ public class AccessibilityUtil {
         }, 500);
     }
 
-    public void setAsDropdown(View view) {
+    public static void setAsDropdown(View view) {
         view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override
             public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
@@ -197,5 +197,7 @@ public class AccessibilityUtil {
             }
         });
     }
+
+
 }
 
