@@ -197,13 +197,13 @@ object AccessibilityKotlin {
     }
 
     fun setAsDropdown(view: View) {
-        view.accessibilityDelegate object :View.AccessibilityDelegate() {
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
             override fun onInitializeAccessibilityNodeInfo(
                 host: View?,
                 info: AccessibilityNodeInfo?
             ) {
                 super.onInitializeAccessibilityNodeInfo(host, info)
-                info?.className(Spinner::class.java.name)
+                info?.className = Spinner::class.java.name
             }
         }
     }
