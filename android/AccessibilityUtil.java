@@ -198,6 +198,14 @@ public class AccessibilityUtil {
         });
     }
 
-
+    public static void setEditTextHint(View view, String hintMessage) {
+        view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setHintText(hintMessage);
+            }
+        });
+    }
 }
 

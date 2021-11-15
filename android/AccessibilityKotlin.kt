@@ -207,5 +207,17 @@ object AccessibilityKotlin {
             }
         }
     }
+
+    fun setAsEditTextHint(view: View, hintMessage: String) {
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View?,
+                info: AccessibilityNodeInfo?
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info?.hintText = hintMessage
+            }
+        }
+    }
 }
 
