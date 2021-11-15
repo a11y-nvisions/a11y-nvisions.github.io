@@ -6,10 +6,7 @@ import android.os.Handler
 import android.view.View
 import android.view.accessibility.AccessibilityManager
 import android.view.accessibility.AccessibilityNodeInfo
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.RadioButton
-import android.widget.ToggleButton
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat
@@ -197,6 +194,18 @@ object AccessibilityKotlin {
         Handler().postDelayed( {
             view.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
         }, 500)
+    }
+
+    fun setAsDropdown(view: View) {
+        view.accessibilityDelegate object :View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View?,
+                info: AccessibilityNodeInfo?
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info?.className(Spinner::class.java.name)
+            }
+        }
     }
 }
 

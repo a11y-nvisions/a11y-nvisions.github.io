@@ -10,6 +10,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.ToggleButton;
 
 import androidx.core.view.AccessibilityDelegateCompat;
@@ -187,5 +188,14 @@ public class AccessibilityUtil {
         }, 500);
     }
 
+    public void setAsDropdown(View view) {
+        view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setClassName(Spinner.class.getName());
+            }
+        });
+    }
 }
 
