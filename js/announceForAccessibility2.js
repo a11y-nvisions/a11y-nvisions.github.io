@@ -39,9 +39,9 @@ function announceForAccessibility(message) {
 
   setTimeout(function () { // 0.3초 후 p 태그에 message 추가
     $("[name='p_announceForAccessibility']").text(message);
-  }, 200);
+  }, 20);
 
-  setTimeout(removeAnnounceForAccessibility, 2000); // 2초 후 div_announceForAccessibility 삭제
+  setTimeout(removeAnnounceForAccessibility, 200); // 2초 후 div_announceForAccessibility 삭제
 }
 
 /**
