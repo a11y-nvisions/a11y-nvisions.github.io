@@ -30,7 +30,7 @@ if (!check){
  */
 function announceForAccessibility(message) {
   var html = '' +
-    '<div aria-live="polite" name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
+    '<div aria-live="assertive" name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
     'position: absolute !important;' + 'height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px); ' +
     'clip: rect(1px, 1px, 1px, 1px);' + 'clip-path: inset(50%); white-space: nowrap;">' +
     '<p name="p_announceForAccessibility"></p></div>';
@@ -39,7 +39,7 @@ function announceForAccessibility(message) {
 
   setTimeout(function () { // 0.3초 후 p 태그에 message 추가
     $("[name='p_announceForAccessibility']").text(message);
-  }, 300);
+  }, 200);
 
   setTimeout(removeAnnounceForAccessibility, 2000); // 2초 후 div_announceForAccessibility 삭제
 }
