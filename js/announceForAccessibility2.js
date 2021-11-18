@@ -20,8 +20,12 @@ if (!check){
   var btns = document.querySelectorAll('[screen-reader-live]');
   btns.forEach(function (btn) {
     btn.addEventListener('click', function() {
-      announceForAccessibility(btn.textContent);
-    });
+      if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+        announceForAccessibility("");
+      } else {
+        announceForAccessibility(btn.textContent);
+      };
+          });
   });
 
 /**
@@ -30,7 +34,7 @@ if (!check){
  */
 function announceForAccessibility(message) {
   var html = '' +
-    '<div aria-live="assertive" name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
+    '<div aria-live="polite" name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
     'position: absolute !important;' + 'height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px); ' +
     'clip: rect(1px, 1px, 1px, 1px);' + 'clip-path: inset(50%); white-space: nowrap;">' +
     '<p name="p_announceForAccessibility"></p></div>';
