@@ -39,11 +39,11 @@ function announceForAccessibility(message) {
 
   $("body").append(html); // body 끝에 div_announceForAccessibility 추가
 
-  setTimeout(function () { // 0.3초 후 p 태그에 message 추가
+  setTimeout(function () { // 0.02초 후 p 태그에 message 추가
     $("[name='p_announceForAccessibility']").text(message);
-  }, 300);
+  }, 20);
 
-  setTimeout(removeAnnounceForAccessibility, 2000); // 2초 후 div_announceForAccessibility 삭제
+  setTimeout(removeAnnounceForAccessibility, 200); // 0.2초 후 div_announceForAccessibility 삭제
 }
 
 /**
