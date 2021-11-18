@@ -21,8 +21,12 @@ window.addEventListener('load', function() {
   var btns = document.querySelectorAll('[screen-reader-live]');
   btns.forEach(function (btn) {
     btn.addEventListener('click', function() {
-      announceForAccessibility(btn.textContent);
-    });
+      if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+        announceForAccessibility("");
+      } else {
+        announceForAccessibility(btn.textContent);
+      };
+          });
   });
 });
 
