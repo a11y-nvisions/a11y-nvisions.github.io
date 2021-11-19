@@ -26,8 +26,8 @@ window.addEventListener('load', function() {
       if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
         announceForAccessibility("");
       } else {
-        if (btn.attr("aria-label")) {
-announceForAccessibility(btn.attr("aria-label"));
+        if (this.attr("aria-label")) {
+announceForAccessibility(this.attr("aria-label"));
         } else {
         announceForAccessibility(btn.textContent);
         };
