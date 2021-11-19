@@ -27,7 +27,13 @@ window.addEventListener('load', function() {
         announceForAccessibility("");
       } else {
         if (btn.getAttribute("aria-label")) {
-announceForAccessibility(btn.getAttribute("aria-label"));
+          var ua = navigator.userAgent.toLowerCase();
+          var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+          if(isAndroid) {
+            announceForAccessibility(btn.getAttribute("aria-label"));
+          } else {
+            announceForAccessibility("");
+          };
         } else {
         announceForAccessibility(btn.textContent);
         };
