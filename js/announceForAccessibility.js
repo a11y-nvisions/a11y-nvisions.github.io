@@ -30,7 +30,9 @@ window.addEventListener('load', function() {
           var ua = navigator.userAgent.toLowerCase();
           var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
           if(isAndroid) {
-            announceForAccessibility(btn.getAttribute("aria-label"));
+            setTimeout(function() {
+              announceForAccessibility(btn.getAttribute("aria-label"));
+            }, 200);
           } else {
             announceForAccessibility("");
           };
