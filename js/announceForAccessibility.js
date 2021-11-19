@@ -47,7 +47,7 @@ function announceForAccessibility(message) {
     $("[name='p_announceForAccessibility']").text(message);
   }, 20);
 
-  setTimeout(removeAnnounceForAccessibility, 200); // 0.2초 후 div_announceForAccessibility 삭제
+  setTimeout(removeAnnounceForAccessibility, 500); // 0.5초 후 div_announceForAccessibility 삭제
 }
 
 /**
