@@ -27,7 +27,7 @@ window.addEventListener('load', function() {
         announceForAccessibility("");
       } else {
         if (btn.getAttribute("aria-label")) {
-announceForAccessibility(btn.attr("aria-label"));
+announceForAccessibility(btn.getAttribute("aria-label"));
         } else {
         announceForAccessibility(btn.textContent);
         };
