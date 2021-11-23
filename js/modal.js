@@ -36,6 +36,9 @@ function initialize(event) {
         $firstTab = $modal.querySelector('.firstTab'),
         $lastTab = $modal.querySelector('.lastTab');
         setHiddenExceptForThis($modal);
+        if (!$modal.getAttribute('aria-label') || $modal.getAttribute('aria-labelledby')) {
+          $modal.setAttribute('aria-label', $targetArea.textContent);
+        }
         $modal.addEventListener('keydown', bindKeyEvt);
         $modal.addEventListener('click', function () {
           setHiddenExceptForThis($modal,'off');
