@@ -6,11 +6,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
-<<<<<<< HEAD
 import android.view.accessibility.AccessibilityEvent;
-=======
 import android.view.ViewGroup;
->>>>>>> 76d7aa615ec76671b779af98753dc4c14117b262
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
