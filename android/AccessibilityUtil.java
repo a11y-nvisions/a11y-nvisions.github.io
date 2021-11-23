@@ -4,7 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
+<<<<<<< HEAD
+import android.view.accessibility.AccessibilityEvent;
+=======
+import android.view.ViewGroup;
+>>>>>>> 76d7aa615ec76671b779af98753dc4c14117b262
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
@@ -47,10 +53,27 @@ public class AccessibilityUtil {
         });
     }
 
+    public static boolean isChildAccessibilityFocused(ViewGroup viewGroup) {
+        boolean isFocused = false;
+        View view = null;
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            view = viewGroup.getChildAt(i);
+            if (view.isAccessibilityFocused()) {
+                isFocused = true;
+                break;
+            }
+        }
+
+        return isFocused;
+    }
+
     public static void setAsRadioButton(View view, boolean isChecked) {
+
+        view.isAccessibilityFocused();
         view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override
             public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                Log.d("plusapps", "setAsRadioButton onInitializeAccessibilityNodeInfo");
                 super.onInitializeAccessibilityNodeInfo(host, info);
                 info.setClassName(RadioButton.class.getName());
                 info.setCheckable(true);
@@ -118,7 +141,7 @@ public class AccessibilityUtil {
 
     public static boolean isTalkBackOn(Context context) {
         AccessibilityManager accessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-         boolean isTalkBackOn = accessibilityManager.isTouchExplorationEnabled();
+        boolean isTalkBackOn = accessibilityManager.isTouchExplorationEnabled();
         return isTalkBackOn;
     }
 
@@ -141,7 +164,7 @@ public class AccessibilityUtil {
             @Override
             public boolean performAccessibilityAction(View host, int action, Bundle args) {
                 if (action == AccessibilityNodeInfo.ACTION_COLLAPSE || action == AccessibilityNodeInfo.ACTION_EXPAND) {
-                view.performClick();
+                    view.performClick();
                 }
                 return super.performAccessibilityAction(host, action, args);
             }
@@ -153,7 +176,7 @@ public class AccessibilityUtil {
             @Override
             public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
                 super.onInitializeAccessibilityNodeInfo(host, info);
-            info.setClassName(RadioButton.class.getName());
+                info.setClassName(RadioButton.class.getName());
                 info.setCheckable(true);
                 if (view.isSelected()) {
                     info.setChecked(true);
@@ -166,7 +189,7 @@ public class AccessibilityUtil {
                     info.setChecked(false);
                     info.addAction(AccessibilityNodeInfo.ACTION_EXPAND);
                 }
-                            }
+            }
 
             @Override
             public boolean performAccessibilityAction(View host, int action, Bundle args) {
@@ -217,5 +240,21 @@ public class AccessibilityUtil {
             }
         });
     }
+
+    public static void announceToast(Context context, String toastMessage) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AccessibilityManager accessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+                AccessibilityEvent accessibilityEvent = AccessibilityEvent.obtain();
+                accessibilityEvent.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                accessibilityEvent.getText().add(toastMessage);
+                if (accessibilityManager != null) {
+                    accessibilityManager.sendAccessibilityEvent(accessibilityEvent);
+                }
+            }
+        }, 500);
     }
+
+}
 
