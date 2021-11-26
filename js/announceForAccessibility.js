@@ -32,12 +32,14 @@ window.addEventListener('load', function() {
           if(isAndroid) {
             setTimeout(function() {
               announceForAccessibility(btn.getAttribute("aria-label"));
-            }, 200);
+            }, 150);
           } else {
             announceForAccessibility("");
           };
         } else {
+			setTimeout(function() {
         announceForAccessibility(btn.textContent);
+		}, 80);
         };
       };
           });
@@ -59,7 +61,7 @@ function announceForAccessibility(message) {
 
   setTimeout(function () { // 0.02초 후 p 태그에 message 추가
     $("[name='p_announceForAccessibility']").text(message);
-  }, 20);
+  }, 200);
 
   setTimeout(removeAnnounceForAccessibility, 500); // 0.5초 후 div_announceForAccessibility 삭제
 }
