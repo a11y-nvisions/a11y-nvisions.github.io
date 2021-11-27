@@ -12,7 +12,6 @@ function expandedEvent(btn) {
 		setTimeout(function() {
 			var expandEl = document.querySelector("#" + btn.getAttribute("aria-controls"));
 			if (!expandEl) return;
-	
 			expandButtons.forEach(function (expandButton) {
 				var ariaControls = expandButton.getAttribute("aria-controls")
 				var expandEls = document.querySelector("#" + ariaControls);
@@ -23,6 +22,16 @@ function expandedEvent(btn) {
 				expandedClose(btn, expandEl);
 			} else if (btn.getAttribute("aria-expanded") === 'false' && window.getComputedStyle(expandEl).display === 'block') {
 				expandedOpen(btn, expandEl);
+			}
+			if (expandEl) {
+				expandEl.addEventListener('click', function() {
+					setTimeout(function() {
+						if (window.getComputedStyle(expandEl).display === 'none') {
+							expandedClose(btn, expandEl);
+							btn.focus();
+						}
+					}, 200);
+				})
 			}
 		}, 200);
 	});
