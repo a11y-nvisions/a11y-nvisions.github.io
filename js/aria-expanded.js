@@ -33,7 +33,7 @@ function expandedEvent(btn) {
 					}, 200);
 				})
 			}
-		}, 200);
+		}, 500);
 	});
 }
 function expandedClose(btn, expandEl) {
