@@ -1,20 +1,22 @@
 /**
- * Jquery 라이브러리 최신 버전 호출
- * 이미 최신 버전이 존재할 경우 호출하지 않음
+ * jQuery 라이브러리 버전이 1.7.0 미만이거나 없을 경우 jQuery 최신 버전 적용
  */
-var headScript = document.getElementsByTagName("head")[0].getElementsByTagName("script");
-for (var i = 0, check = false; i < headScript.length; i++){
-  if ("https://code.jquery.com/jquery-latest.min.js" === headScript[i].src){
-    check = true;
-    break;
+ try {
+  var jScript = document.createElement("script");
+  jScript.type = "text/javascript";
+  jScript.charset = "utf-8";
+  jScript.src = "https://code.jquery.com/jquery-latest.min.js";
+  
+  var jQuery_version = jQuery.fn.jquery.split(".").map(Number); // 페이지에 적용된 jQuery 버전을 가져옴
+  var jQuery_minimum_version = 17; // jQuery 최소 버전 1.7.0
+  
+  jQuery_version = jQuery_version[0] * 10 + jQuery_version[1];
+  if (!(jQuery_version >= jQuery_minimum_version)){
+	  document.getElementsByTagName("head")[0].appendChild(jScript);
   }
-}
-if (!check){
-  var oScript = document.createElement("script");
-  oScript.type = "text/javascript";
-  oScript.charset = "utf-8";
-  oScript.src = "https://code.jquery.com/jquery-latest.min.js";
-  document.getElementsByTagName("head")[0].appendChild(oScript);
+  
+} catch { // jQuery가 없을 경우 예외처리 하여 최신 버전을 적용함
+	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
   var btns = document.querySelectorAll('[screen-reader-live]');
@@ -23,7 +25,21 @@ if (!check){
       if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
         announceForAccessibility("");
       } else {
+        if (btn.getAttribute("aria-label")) {
+          var ua = navigator.userAgent.toLowerCase();
+          var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+          if(isAndroid) {
+            setTimeout(function() {
+              announceForAccessibility(btn.getAttribute("aria-label"));
+            }, 150);
+          } else {
+            announceForAccessibility("");
+          };
+        } else {
+			setTimeout(function() {
         announceForAccessibility(btn.textContent);
+		}, 80);
+        };
       };
           });
   });
@@ -43,9 +59,9 @@ function announceForAccessibility(message) {
 
   setTimeout(function () { // 0.02초 후 p 태그에 message 추가
     $("[name='p_announceForAccessibility']").text(message);
-  }, 20);
+  }, 200);
 
-  setTimeout(removeAnnounceForAccessibility, 500); // 0.2초 후 div_announceForAccessibility 삭제
+  setTimeout(removeAnnounceForAccessibility, 500); // 0.5초 후 div_announceForAccessibility 삭제
 }
 
 /**
