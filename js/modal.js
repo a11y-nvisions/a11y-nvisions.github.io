@@ -40,15 +40,21 @@ function initialize(event) {
           $modal.setAttribute('aria-label', $targetArea.textContent);
         }
         $modal.addEventListener('keydown', bindKeyEvt);
-        $modal.addEventListener('click', function () {
+        let observer = new MutationObserver((mutations) => {
           setHiddenExceptForThis($modal,'off');
           setTimeout(function() {
             if (window.getComputedStyle($modal).display === "none") {
                 $targetArea.focus();
                 $modal.removeEventListener("keydown", bindKeyEvt, false);
+                observer.disconnect();
             }
           }, 500);            
         });
+        let option = {
+          attributes: true,
+          CharacterData: true
+        };
+        observer.observe($modal, option);
     }
   }, 500);
 }
