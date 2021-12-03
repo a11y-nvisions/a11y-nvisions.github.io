@@ -1,7 +1,7 @@
 /**
  * jQuery 라이브러리 버전이 1.7.0 미만이거나 없을 경우 jQuery 최신 버전 적용
  */
-try {
+ try {
   var jScript = document.createElement("script");
   jScript.type = "text/javascript";
   jScript.charset = "utf-8";
@@ -26,16 +26,41 @@ try {
    * aria-pressed = "true" or "false"
    */
   var beforeOuterHtml; // 클릭한 버튼의 outerHtml
-  $(document).on("focus", ":button, [type='button'], [role='button']", function (e) {
-    if ($(this).attr("aria-pressed") === undefined) { return; }
-    beforeOuterHtml = this.outerHTML;
-    console.log(this.outerHTML);
-  });
+  var ua = navigator.userAgent.toLowerCase();
+  var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+  if (isAndroid) {
+    $("[aria-pressed]").each(function() {
+      var $pressed = (this);
+      $($pressed).attr("aria-checked", $pressed.getAttribute('aria-pressed'));
+      $($pressed).removeAttr("aria-pressed");
+        $($pressed).removeAttr("role");
+        $($pressed).attr("role","switch");
+    });
+    $(document).on("mousedown", ":button, [role='switch'], [type='button'], [role='button']", function (e) {
+      if ($(this).attr("aria-pressed") === undefined) { return; } else if ($(this).attr("aria-checked") === undefined) {
+        return;
+      }
+      beforeOuterHtml = this.outerHTML;
+    });
+  } else {
+    $(document).on("focus", ":button, [type='button'], [role='button']", function (e) {
+      if ($(this).attr("aria-pressed") === undefined) { return; }
+      beforeOuterHtml = this.outerHTML;
+    });
+  }
 
-  $(document).on("click", ":button, [type='button'], [role='button']", function (e) {
+  $(document).on("click", ":button, [role='switch'], [type='button'], [role='button']", function (e) {
 	var $this = $(this); // 클릭한 요소의 Object
 	var _this = this; // 클릭한 요소의 태그 요소
 	var timeout = setTimeout(function() {
+    if (isAndroid) {
+      if (beforeOuterHtml === _this.outerHTML){ return; }
+      if ($this.attr("aria-checked") === "true") {
+      $this.attr("aria-checked", "false");
+      } else {
+        $this.attr("aria-checked","true");
+    } 
+  } else {
 		if (beforeOuterHtml === _this.outerHTML){ return; }
 		if ($this.attr("aria-pressed") === "true") { // aria-pressed 가 true(누름 상태)면 false 로 변경
 		  //$(this).attr("aria-pressed", "false");
@@ -44,6 +69,8 @@ try {
 		  //$(this).attr("aria-pressed", "true");
 		  $this.attr("aria-pressed", "true");
 		}
+  }
 	}, 500);
+
   });
   
