@@ -1,4 +1,4 @@
-var expandButtons = document.querySelectorAll('[role="button"][aria-expanded][aria-controls], button[aria-expanded][aria-controls]');
+var expandButtons = document.querySelectorAll('[role="button"][aria-expanded][aria-controls], [role="checkbox"][aria-expanded][aria-controls], [type="checkbox][aria-expanded][aria-controls], button[aria-expanded][aria-controls]');
 expandButtons.forEach(function (expandButton) {
     expandedEvent(expandButton);
 });
