@@ -22,7 +22,7 @@ function initialize(event) {
     $targetArea = event.target;
     modals.forEach(function($el) {
         if (
-          $targetArea.getAttribute('aria-controls') && $targetArea.getAttribute('aria-controls') == $el.getAttribute('id') && 'true' == $el.getAttribute('aria-modal') && window.getComputedStyle($el).display === "block"
+          $targetArea.getAttribute('aria-controls') && $targetArea.getAttribute('aria-controls') == $el.getAttribute('id') && 'true' == $el.getAttribute('aria-modal') && window.getComputedStyle($el).display === "block" || $el.getAttribute('aria-hidden') === 'false'
         ) {
             $modal = $el;
             if ($modal.querySelector(".autoFocus")) {
@@ -43,7 +43,7 @@ function initialize(event) {
         let observer = new MutationObserver((mutations) => {
           setHiddenExceptForThis($modal,'off');
           setTimeout(function() {
-            if (window.getComputedStyle($modal).display === "none") {
+            if (window.getComputedStyle($modal).display === "none" || $modal.getAttribute('aria-hidden') === 'true') {
                 $targetArea.focus();
                 $modal.removeEventListener("keydown", bindKeyEvt, false);
                 observer.disconnect();
