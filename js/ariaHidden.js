@@ -37,9 +37,9 @@ function checkHiddenEvent(btn) {
     var ua = navigator.userAgent.toLowerCase();
     var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
     if ($(hiddenEl).attr("aria-hidden") === "false") {
-        $(hiddenEl).find("a, button, input, select").removeAttr("tabindex");
+        $(hiddenEl).find("a[href], button, input, select, [role='button'], [role='link'], [role='checkbox'], [role='tab'], [role='radiobutton'], [role='combobox']").removeAttr("tabindex");
     } else if ($(hiddenEl).attr("aria-hidden") === "true") {
-        $(hiddenEl).find("a, button, input, select").attr("tabindex", "-1");
+        $(hiddenEl).find("a[href], button, input, select, [role='button'], [role='link'], [role='checkbox'], [role='tab'], [role='radiobutton'], [role='combobox']").attr("tabindex", "-1");
     };
 
     if (isAndroid) {
@@ -83,10 +83,11 @@ function checkHiddenEvent(btn) {
 
 function hiddenTrue(btn, hiddenEl) {
 	hiddenEl.setAttribute("aria-hidden", true);
-    $(hiddenEl).find('a, button, input, select').attr("tabindex", "-1");
+    $(hiddenEl).find("a[href], button, input, select, [role='button'], [role='link'], [role='checkbox'], [role='tab'], [role='radiobutton'], [role='combobox']").attr("tabindex", "-1");
 }
 function hiddenFalse(btn, hiddenEl) {
 	hiddenEl.setAttribute("aria-hidden", false);
-    $(hiddenEl).find('a, button, input, select').removeAttr("tabindex");
+    $(hiddenEl).find("a[href], button, input, select, [role='button'], [role='link'], [role='checkbox'], [role='tab'], [role='radiobutton'], [role='combobox']").removeAttr("tabindex");
     }
+
   });
