@@ -38,20 +38,20 @@ window.addEventListener('load', function() {
         $($pressed).removeAttr("role");
         $($pressed).attr("role","switch");
     });
-    $(document).on("mousedown", ":button, [role='switch'], [type='button'], [role='button']", function (e) {
+    $(document).on("mousedown", ":button[aria-pressed], [role='switch'][aria-checked], [type='button'][aria-pressed], [role='button'][aria-pressed]", function (e) {
       if ($(this).attr("aria-pressed") === undefined) { return; } else if ($(this).attr("aria-checked") === undefined) {
         return;
       }
       beforeOuterHtml = this.outerHTML;
     });
   } else {
-    $(document).on("focus", ":button, [type='button'], [role='button']", function (e) {
+    $(document).on("focus", ":button[aria-pressed], [type='button'][aria-pressed], [role='button'][aria-pressed]", function (e) {
       if ($(this).attr("aria-pressed") === undefined) { return; }
       beforeOuterHtml = this.outerHTML;
     });
   }
 
-  $(document).on("click", ":button, [role='switch'], [type='button'], [role='button']", function (e) {
+  $(document).on("click", ":button[aria-pressed], [role='switch'][aria-checked], [type='button'][aria-pressed], [role='button'][aria-pressed]", function (e) {
 	var $this = $(this); // 클릭한 요소의 Object
 	var _this = this; // 클릭한 요소의 태그 요소
 	var timeout = setTimeout(function() {
