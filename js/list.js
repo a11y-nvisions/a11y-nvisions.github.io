@@ -27,7 +27,7 @@ if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
     $("[timer]").each(function() {
       $(this).attr({
         "role" : "progressbar",
-        "aria-valuetext" : "$(this).innerTEXT"
+        "aria-valuetext" : $(this).text()
       });
     });
     }
