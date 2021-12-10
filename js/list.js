@@ -24,5 +24,11 @@
   
 if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
     $("ul").attr("role", "list");
+    $([timer]).each(function() {
+      $(this).attr({
+        "role" : "progressbar",
+        "aria-valuetext" : "$(this).innerTEXT"
+      });
+    });
     }
   });
