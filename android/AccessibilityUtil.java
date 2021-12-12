@@ -1,6 +1,7 @@
 package com.nvisions.solutionsforaccessibility.AccessibilityUtil;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -253,5 +254,16 @@ public class AccessibilityUtil {
         }, 500);
     }
 
+    public static void setAsKeyboardKey(View view) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+                @Override
+                public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                    super.onInitializeAccessibilityNodeInfo(host, info);
+                    info.setTextEntryKey(true);
+                }
+            });
+        }
+    }
 }
 
