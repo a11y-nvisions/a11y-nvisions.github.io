@@ -265,5 +265,15 @@ public class AccessibilityUtil {
             });
         }
     }
+
+    public static void setAsNone(View view) {
+        ViewCompat.setAccessibilityDelegate(view, new AccessibilityDelegateCompat() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setRoleDescription(" ");
+            }
+        });
+    }
 }
 
