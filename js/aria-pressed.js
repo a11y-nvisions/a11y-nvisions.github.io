@@ -31,17 +31,8 @@ window.addEventListener('load', function() {
   var ua = navigator.userAgent.toLowerCase();
   var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
   if (isAndroid) {
-    $("[aria-pressed]").each(function() {
-      var $pressed = (this);
-      $($pressed).attr("aria-checked", $pressed.getAttribute('aria-pressed'));
-      $($pressed).removeAttr("aria-pressed");
-        $($pressed).removeAttr("role");
-        $($pressed).attr("role","switch");
-    });
-    $(document).on("mousedown", ":button[aria-pressed], [role='switch'][aria-checked], [type='button'][aria-pressed], [role='button'][aria-pressed]", function (e) {
-      if ($(this).attr("aria-pressed") === undefined) { return; } else if ($(this).attr("aria-checked") === undefined) {
-        return;
-      }
+    $(document).on("mousedown", ":button[aria-pressed], [type='button'][aria-pressed], [role='button'][aria-pressed]", function (e) {
+      if ($(this).attr("aria-pressed") === undefined) { return; } 
       beforeOuterHtml = this.outerHTML;
     });
   } else {
@@ -51,26 +42,15 @@ window.addEventListener('load', function() {
     });
   }
 
-  $(document).on("click", ":button[aria-pressed], [role='switch'][aria-checked], [type='button'][aria-pressed], [role='button'][aria-pressed]", function (e) {
+  $(document).on("click", ":button[aria-pressed], [type='button'][aria-pressed], [role='button'][aria-pressed]", function (e) {
 	var $this = $(this); // 클릭한 요소의 Object
 	var _this = this; // 클릭한 요소의 태그 요소
 	var timeout = setTimeout(function() {
-    if (isAndroid) {
-      if (beforeOuterHtml === _this.outerHTML){ return; }
-      if ($this.attr("aria-checked") === "true") {
-      $this.attr("aria-checked", "false");
-      } else {
-        $this.attr("aria-checked","true");
-    } 
-  } else {
 		if (beforeOuterHtml === _this.outerHTML){ return; }
 		if ($this.attr("aria-pressed") === "true") { // aria-pressed 가 true(누름 상태)면 false 로 변경
-		  //$(this).attr("aria-pressed", "false");
 		  $this.attr("aria-pressed", "false");
 		} else { // aria-pressed 가 undefined 거나 false 면 true 로 변경
-		  //$(this).attr("aria-pressed", "true");
 		  $this.attr("aria-pressed", "true");
-		}
   }
 	}, 500);
 
