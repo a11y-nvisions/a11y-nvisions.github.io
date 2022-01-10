@@ -1,4 +1,5 @@
-var expandButtons = document.querySelectorAll('[aria-expanded][aria-controls]');
+window.addEventListener("load", function() {
+	var expandButtons = document.querySelectorAll('[aria-expanded][aria-controls]');
 expandButtons.forEach(function (expandButton) {
     expandedEvent(expandButton);
 });
@@ -50,3 +51,4 @@ function expandedClose(btn, expandEl) {
 function expandedOpen(btn, expandEl) {
 	btn.setAttribute("aria-expanded", true);
 }
+});
