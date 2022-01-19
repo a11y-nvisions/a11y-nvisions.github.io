@@ -16,6 +16,16 @@ try {
     document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
+function isMobile() {
+    var UserAgent = navigator.userAgent;
+    if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 /**
  * 토글 버튼 이벤트
  * DOM의 모든 버튼 (<Button>, <input type="button">,<a role="button"> 등) 클릭 시 발생하는 이벤트 (누름 상태 변경)
@@ -502,7 +512,7 @@ function linkFocusTogetherForMobile() {
         document.querySelectorAll('a[href]').forEach((el, index) => {
             const text = el.innerText;
             el.setAttribute('aria-label', text);
-            el.querySelectorAll('*:not(img)').forEach((el, index) => {
+            el.querySelectorAll('*:not(img, h1, h2, h3, h4, h5, h6)').forEach((el, index) => {
                 el.setAttribute('role', 'none');
                 el.setAttribute('aria-hidden', 'true');
             });
@@ -512,15 +522,6 @@ function linkFocusTogetherForMobile() {
 
 //aria tab
 function ariaTab() {
-    function isMobile() {
-        var UserAgent = navigator.userAgent;
-        if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
     /*
         [WARNING]
         This script should be import to last script file.
