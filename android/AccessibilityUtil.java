@@ -5,10 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
-import android.view.accessibility.AccessibilityEvent;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
@@ -66,20 +65,21 @@ public class AccessibilityUtil {
     }
 
     public static void setAsRadioButton(View view, boolean isChecked) {
-
-        view.isAccessibilityFocused();
         view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override
             public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
-                Log.d("plusapps", "setAsRadioButton onInitializeAccessibilityNodeInfo");
                 super.onInitializeAccessibilityNodeInfo(host, info);
                 info.setClassName(RadioButton.class.getName());
                 info.setCheckable(true);
                 if (view.isSelected()) {
                     info.setChecked(true);
                     info.setSelected(false);
+                    info.setClickable(false);
+                    info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK);
                 } else if (isChecked) {
                     info.setChecked(true);
+                    info.setClickable(false);
+                    info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK);
                 } else {
                     info.setChecked(false);
                 }
