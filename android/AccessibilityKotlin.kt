@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.*
@@ -245,6 +246,55 @@ object AccessibilityKotlin {
                 info?.isSelected = false
             }
         }
+    }
+
+    fun setTooltipText(view: View, textMessage: String) {
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View?,
+                info: AccessibilityNodeInfo?
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info?.tooltipText = textMessage
+            }
+        }
+    }
+
+    fun setAsKeyboardKey(view: View) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            view.accessibilityDelegate = object : View.AccessibilityDelegate() {
+                override fun onInitializeAccessibilityNodeInfo(
+                    host: View?,
+                    info: AccessibilityNodeInfo?
+                ) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+                    info?.isTextEntryKey = true
+                }
+            }
+        }
+    }
+
+    fun setAsNone(view: View?) {
+        ViewCompat.setAccessibilityDelegate(view!!, object : AccessibilityDelegateCompat() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfoCompat
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.roleDescription = " "
+            }
+        })
+    }
+
+    fun announceToast(context: Context, toastMessage: String?) {
+        Handler().postDelayed({
+            val accessibilityManager =
+                context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+            val accessibilityEvent = AccessibilityEvent.obtain()
+            accessibilityEvent.eventType = AccessibilityEvent.TYPE_ANNOUNCEMENT
+            accessibilityEvent.text.add(toastMessage)
+            accessibilityManager?.sendAccessibilityEvent(accessibilityEvent)
+        }, 500)
     }
 }
 
