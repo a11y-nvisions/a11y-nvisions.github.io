@@ -507,7 +507,7 @@ function createElementsId(targetValue1, targetValue2, ariaProperty) {
 }
 
 //모바일에서의 링크 초점 분리 해결
-function linkFocusTogetherForMobile() {
+function focusTogetherForMobile() {
     if (isMobile) {
         document.querySelectorAll('a[href]').forEach((el, index) => {
             const text = el.innerText;
@@ -516,10 +516,116 @@ function linkFocusTogetherForMobile() {
                 el.setAttribute('role', 'none');
                 el.setAttribute('aria-hidden', 'true');
             });
-        })
+        });
+        document.querySelectorAll('p > span').forEach((el, index) => {
+            el.setAttribute("role", "text");
+        });
+
+        document.querySelectorAll('p > span > span').forEach((el, index) => {
+            el.setAttribute("role", "text");
+        });
     };
 };
 
+// radio
+function ariaRadio() {
+	var radioGroups = document.querySelectorAll('[role="radiogroup"]');
+	radioGroups.forEach(function (radioGroup) {
+		var radioBox = radioGroup.querySelectorAll('[role="radio"]');
+		var firstRadio = radioBox[0];
+		var lastRadio = radioBox[radioBox.length - 1];
+		var hasChecked = false;
+
+		var _loop = function _loop(i) {
+			if (radioBox[i].getAttribute("aria-checked") == "true") {
+				radioBox[i].tabIndex = 0;
+				hasChecked = true;
+			} else {
+				radioBox[i].tabIndex = -1;
+			}
+
+			radioBox[i].addEventListener("click", function (e) {
+				var target = e.currentTarget;
+				radioBox.forEach(function (radio) {
+					if (radio !== target) {
+						radio.setAttribute("aria-checked", false);
+						radio.tabIndex = -1;
+					}
+				});
+				target.setAttribute("aria-checked", true);
+				target.tabIndex = 0;
+			});
+
+			radioBox[i].addEventListener("keydown", function (e) {
+				var target = e.currentTarget;
+				if (e.keyCode === 37 || e.keyCode === 38) {
+					// previous : left,up
+					target.setAttribute("aria-checked", false);
+					target.tabIndex = -1;
+					if (target == firstRadio) {
+						if (lastRadio.getAttribute("aria-disabled", "true")) {
+							lastRadio.setAttribute("aria-checked", "false");
+						} else {
+							lastRadio.setAttribute("aria-checked", true);
+							lastRadio.click();
+						};
+						lastRadio.tabIndex = 0;
+						lastRadio.focus();
+					} else {
+						if (radioBox[i - 1].getAttribute("aria-disabled", "true")) {
+							radioBox[i - 1].setAttribute("aria-checked", "false");
+						} else {
+							radioBox[i - 1].setAttribute("aria-checked", true);
+							radioBox[i - 1].click();
+						};
+						radioBox[i - 1].tabIndex = 0;
+						radioBox[i - 1].focus();
+					}
+					e.preventDefault();
+				}
+				if (e.keyCode === 39 || e.keyCode === 40) {
+					// next : right,down
+					target.setAttribute("aria-checked", false);
+					target.tabIndex = -1;
+					if (target == lastRadio) {
+						if (firstRadio.getAttribute("aria-disabled", "true")) {
+							firstRadio.setAttribute("aria-checked", "false");
+						} else {
+							firstRadio.setAttribute("aria-checked", true);
+							firstRadio.click();
+						};
+						firstRadio.tabIndex = 0;
+						firstRadio.focus();
+					} else {
+						if (radioBox[i + 1].getAttribute("aria-disabled", "true")) {
+							radioBox[i + 1].setAttribute("aria-checked", "false");
+						} else {
+							radioBox[i + 1].setAttribute("aria-checked", true);
+							radioBox[i + 1].click();
+						};
+						radioBox[i + 1].tabIndex = 0;
+						radioBox[i + 1].focus();
+					}
+					e.preventDefault();
+				}
+
+				if (e.keyCode === 32) {
+					// select: space
+					if (target.getAttribute("aria-checked") !== 'true') {
+						target.setAttribute("aria-checked", true);
+						target.click();
+					}
+					e.preventDefault();
+				}
+			});
+		};
+
+		for (var i = 0; i < radioBox.length; i++) {
+			_loop(i);
+		}
+		if (!hasChecked) radioBox[0].tabIndex = 0;
+	});
+};
 //aria tab
 function ariaTab() {
     /*
