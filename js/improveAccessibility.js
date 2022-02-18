@@ -16,36 +16,39 @@ try {
     document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
-function setAriaHiddenExceptForThis(element, turn = 'on') {
-    var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
-    allElems.forEach(function (el) {
-        el.removeAttribute('aria-hidden');
-    })
-
-    var _allElems = [];
-    for (var i = 0; i < allElems.length; i++) {
-        _allElems.push(allElems[i]);
-    }
-
-    var notImportants = _allElems.filter(function (el) {
-        if (element.contains(el) === false && el.contains(element) === false) {
-            return el
-        }
-    })
-
-    if (turn === 'on') {
-        notImportants.forEach(function (el) {
-            el.setAttribute('aria-hidden', 'true');
-            el.classList.add('is-sr-hidden');
-        })
-    }
-
-    if (turn === 'off') {
-        document.querySelectorAll('.is-sr-hidden').forEach(function (el) {
-            el.classList.remove('is-sr-hidden');;
+function setAriaHiddenExceptForThis(element) {
+    setHiddenExceptForThis(element);
+    function setHiddenExceptForThis(element, turn = 'on') {
+        var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
+        allElems.forEach(function (el) {
             el.removeAttribute('aria-hidden');
         })
-    }
+
+        var _allElems = [];
+        for (var i = 0; i < allElems.length; i++) {
+            _allElems.push(allElems[i]);
+        }
+
+        var notImportants = _allElems.filter(function (el) {
+            if (element.contains(el) === false && el.contains(element) === false) {
+                return el
+            }
+        })
+
+        if (turn === 'on') {
+            notImportants.forEach(function (el) {
+                el.setAttribute('aria-hidden', 'true');
+                el.classList.add('is-sr-hidden');
+            })
+        }
+
+        if (turn === 'off') {
+            document.querySelectorAll('.is-sr-hidden').forEach(function (el) {
+                el.classList.remove('is-sr-hidden');;
+                el.removeAttribute('aria-hidden');
+            })
+        }
+    };
     let observer = new MutationObserver((mutations) => {
         setHiddenExceptForThis(element, "off");
         observer.disconnect();
