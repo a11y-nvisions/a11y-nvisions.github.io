@@ -90,4 +90,4 @@ function hiddenFalse(btn, hiddenEl) {
     $(hiddenEl).find("a[href], button, input, select, [role='button'], [role='link'], [role='checkbox'], [role='tab'], [role='radiobutton'], [role='combobox']").removeAttr("tabindex");
     }
 
-  });
+ });
