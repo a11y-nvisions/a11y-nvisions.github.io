@@ -1021,36 +1021,6 @@ function ariaTab() {
 
         TAB.Initialization();//tab creation start(default usage)
 
-        /*
-            [READ ME]
-            This is an example code for setting the tab object when you make the tab dynamically by using javascript.
-            When you use it on your services, Please delete the below code lines that are surrounded by the '<Example>' Mark.
-        */
-        //<Example START>
-        var DynamicCreatedTab = document.createElement('div');
-        DynamicCreatedTab.innerHTML += `
-        <div class="DynamicTest_WRAPPER">
-        <ul role="tablist">
-            <li role="tab" aria-controls="DynamicTabTest1">Tab A</li>
-            <li role="tab" aria-controls="DynamicTabTest2">Tab B</li>
-            <li role="tab" aria-controls="DynamicTabTest3">Tab C</li>
-        </ul>
-            <div class="panel-wrapper" data-role="panelList">
-                <div id="DynamicTabTest1">
-                    Panel A
-                </div>
-                <div id="DynamicTabTest2">
-                    Panel B
-                </div>
-                <div id="DynamicTabTest3">
-                    Panel C
-                </div>
-            </div>
-        </div>
-    `;
-        document.body.append(DynamicCreatedTab);
-        TAB.createTabByManual(document.querySelector('.DynamicTest_WRAPPER [role=tablist]'))
-        //</Example END>
 
     })();//self calling function for Security
 };
