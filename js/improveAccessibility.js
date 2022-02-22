@@ -18,36 +18,36 @@ try {
 
 /* Element 확장 메소드로 추가 */
 
-Element.prototype.setAriaHiddenExceptForThis=function ( turn = 'on' ) {
+Element.prototype.setAriaHiddenExceptForThis = function (turn = 'on') {
     // 다른 라이브러리로 인해 aria-hidden이 추가된 요소를 제외한 모든 요소를 가져옵니다. (버그 방지를 위해 aria-hidden이 없는 요소만을 가져옵니다)
     var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
     // 혹시 모를 버그를 방지하기 위해 aria-hidden을 초기화합니다.
-    allElems.forEach(function(el){
+    allElems.forEach(function (el) {
         el.removeAttribute('aria-hidden');
     })
     // Array.from과 같은 간단한 방법으로 Array로 바꿀 수 있으나 호환성 이슈로 NodeList에서 Array로 바꾸는 작업에 반복문을 사용합니다.
     var _allElems = [];
-    for(var i = 0; i<allElems.length; i++){
+    for (var i = 0; i < allElems.length; i++) {
         _allElems.push(allElems[i]);
     }
     // 숨겨질, 중요하지 않은 요소들과 그렇지 않은 대화상자 요소를 걸러내어, 대화상자와 관계없는 요소들을 모두 추려냅니다.
-    var notImportants = _allElems.filter(function(el){
-        if ( this.contains(el) === false && el.contains(this) === false ){
+    var notImportants = _allElems.filter(function (el) {
+        if (this.contains(el) === false && el.contains(this) === false) {
             return el
         }
     })
     // 'on'일 때 notImportants안에 들어있는 요소들을 모두 aria-hidden="true" 처리하고, is-sr-hidden 클래스를 추가합니다.
-    if( turn === 'on' ){
-        notImportants.forEach(function(el){
-            el.setAttribute('aria-hidden','true');
-            el.classList.add('is-sr-hidden');
+    if (turn === 'on') {
+        notImportants.forEach(function (el) {
+            el.setAttribute('aria-hidden', 'true');
+            el.setAttribute('is-sr-hidden', 'true');
         })
     }
-    
+
     // 'off'일 때 'is-sr-hidden'클래스를 가진 요소 목록을 가져와서 aria-hidden과 식별용 is-sr-hidden 클래스를 제거합니다.
-    if( turn === 'off' ){
-        document.querySelectorAll('.is-sr-hidden').forEach(function(el){
-            el.classList.remove('is-sr-hidden');;
+    if (turn === 'off') {
+        document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+            el.removeAttribute('is-sr-hidden');;
             el.removeAttribute('aria-hidden');
         })
     }
@@ -85,13 +85,13 @@ function setAriaHiddenExceptForThis(element) {
         if (turn === 'on') {
             notImportants.forEach(function (el) {
                 el.setAttribute('aria-hidden', 'true');
-                el.classList.add('is-sr-hidden');
+                el.setAttribute('is-sr-hidden', 'true');
             })
         }
 
         if (turn === 'off') {
-            document.querySelectorAll('.is-sr-hidden').forEach(function (el) {
-                el.classList.remove('is-sr-hidden');;
+            document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+                el.removeAttribute('is-sr-hidden');;
                 el.removeAttribute('aria-hidden');
             })
         }
@@ -350,6 +350,7 @@ function ariaExpanded() {
     };
 };
 
+
 //modal.js
 function modalDialog() {
     /*
@@ -395,13 +396,9 @@ function modalDialog() {
                 $modal.addEventListener('keydown', bindKeyEvt);
                 let observer = new MutationObserver((mutations) => {
                     setHiddenExceptForThis($modal, 'off');
-                    setTimeout(function () {
-                        if (window.getComputedStyle($modal).display === "none" || $modal.getAttribute('aria-hidden') === 'true') {
                             $targetArea.focus();
                             $modal.removeEventListener("keydown", bindKeyEvt, false);
                             observer.disconnect();
-                        }
-                    }, 500);
                 });
                 let option = {
                     attributes: true,
@@ -479,19 +476,111 @@ function modalDialog() {
         if (turn === 'on') {
             notImportants.forEach(function (el) {
                 el.setAttribute('aria-hidden', 'true');
-                el.classList.add('is-sr-hidden');
+                el.setAttribute('is-sr-hidden', 'true');
             })
         }
 
         // 'off'일 때 'is-sr-hidden'클래스를 가진 요소 목록을 가져와서 aria-hidden과 식별용 is-sr-hidden 클래스를 제거합니다.
         if (turn === 'off') {
-            document.querySelectorAll('.is-sr-hidden').forEach(function (el) {
-                el.classList.remove('is-sr-hidden');;
+            document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+                el.removeAttribute('is-sr-hidden');;
                 el.removeAttribute('aria-hidden');
             })
         }
     };
 };
+
+function setAsModal($modal) {
+    $closeModal = $modal.querySelector('.closeModal'),
+        $firstTab = $modal.querySelector('.firstTab'),
+        $lastTab = $modal.querySelector('.lastTab');
+    $firstTab.focus();
+    setHiddenExceptForThis($modal);
+    $modal.addEventListener('keydown', bindKeyEvt);
+    let observer = new MutationObserver((mutations) => {
+        setHiddenExceptForThis($modal, 'off');
+                $modal.removeEventListener("keydown", bindKeyEvt, false);
+                observer.disconnect();
+    });
+    let option = {
+        attributes: true,
+        CharacterData: true
+    };
+    observer.observe($modal, option);
+};
+function bindKeyEvt(event) {
+    event = event || window.event;
+    var keycode = event.keycode || event.which;
+    var $target = event.target;
+
+    switch (keycode) {
+        case 9:  // tab key
+            if ($firstTab && $lastTab) {
+                if (event.shiftKey) {
+                    if ($firstTab && $target == $firstTab) {
+                        event.preventDefault();
+                        if ($lastTab) $lastTab.focus();
+                    }
+                } else {
+                    if ($lastTab && $target == $lastTab) {
+                        event.preventDefault();
+                        if ($firstTab) $firstTab.focus();
+                    }
+                }
+            } else {
+                event.preventDefault();
+            }
+            break;
+        case 27:  // esc key
+            event.preventDefault();
+            $closeModal.click();
+            break;
+        default:
+            break;
+    }
+}
+
+function setHiddenExceptForThis(element, turn = 'on') {
+
+    // 다른 라이브러리로 인해 aria-hidden이 추가된 요소를 제외한 모든 요소를 가져옵니다. (버그 방지를 위해 aria-hidden이 없는 요소만을 가져옵니다)
+    var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
+
+    // 혹시 모를 버그를 방지하기 위해 aria-hidden을 초기화합니다.
+    allElems.forEach(function (el) {
+        el.removeAttribute('aria-hidden');
+    })
+
+    // Array.from과 같은 간단한 방법으로 Array로 바꿀 수 있으나 호환성 이슈로 NodeList에서 Array로 바꾸는 작업에 반복문을 사용합니다.
+    var _allElems = [];
+    for (var i = 0; i < allElems.length; i++) {
+        _allElems.push(allElems[i]);
+    }
+
+    // 숨겨질, 중요하지 않은 요소들과 그렇지 않은 대화상자 요소를 걸러내어, 대화상자와 관계없는 요소들을 모두 추려냅니다.
+    var notImportants = _allElems.filter(function (el) {
+        if (element.contains(el) === false && el.contains(element) === false) {
+            return el
+        }
+    })
+
+
+    // 'on'일 때 notImportants안에 들어있는 요소들을 모두 aria-hidden="true" 처리하고, is-sr-hidden 클래스를 추가합니다.
+    if (turn === 'on') {
+        notImportants.forEach(function (el) {
+            el.setAttribute('aria-hidden', 'true');
+            el.setAttribute('is-sr-hidden', 'true');
+        })
+    }
+
+    // 'off'일 때 'is-sr-hidden'클래스를 가진 요소 목록을 가져와서 aria-hidden과 식별용 is-sr-hidden 클래스를 제거합니다.
+    if (turn === 'off') {
+        document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+            el.removeAttribute('is-sr-hidden');
+            el.removeAttribute('aria-hidden');
+        })
+    }
+};
+
 
 //role button
 function ariaButton() {
