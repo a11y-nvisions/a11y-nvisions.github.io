@@ -317,16 +317,20 @@ function ariaExpanded() {
                         expandButton.setAttribute("aria-expanded", false);
                     } else if (expandEls.getAttribute('aria-hidden') === true) {
                         expandButton.setAttribute("aria-expanded", false);
+                    } else if (window.getComputedStyle(expandEls).display === 'block' && !expandEls.firstChild) {
+                        expandButton.setAttribute("aria-expanded", false);
                     }
                 });
                 if (btn.getAttribute("aria-expanded") === 'true' && window.getComputedStyle(expandEl).display === 'none') {
                     expandedClose(btn, expandEl);
-                } else if (btn.getAttribute("aria-expanded") === 'false' && window.getComputedStyle(expandEl).display === 'block') {
+                } else if (btn.getAttribute("aria-expanded") === 'false' && window.getComputedStyle(expandEl).display === 'block' && expandEl.firstChild) {
                     expandedOpen(btn, expandEl);
                 } else if (btn.getAttribute("aria-expanded") === 'true' && expandEl.getAttribute('aria-hidden') === 'true') {
                     expandedClose(btn, expandEl);
                 } else if (btn.getAttribute('aria-expanded') === 'false' && expandEl.getAttribute('aria-hidden') === 'false') {
                     expandedOpen(btn, expandEl);
+                } else if (btn.getAttribute("aria-expanded") === 'true' && window.getComputedStyle(expandEl).display === 'block' && !expandEl.firstChild) {
+                    expandedClose(btn, expandEl);
                 };
 
                 if (expandEl) {
@@ -396,9 +400,9 @@ function modalDialog() {
                 $modal.addEventListener('keydown', bindKeyEvt);
                 let observer = new MutationObserver((mutations) => {
                     setHiddenExceptForThis($modal, 'off');
-                            $targetArea.focus();
-                            $modal.removeEventListener("keydown", bindKeyEvt, false);
-                            observer.disconnect();
+                    $targetArea.focus();
+                    $modal.removeEventListener("keydown", bindKeyEvt, false);
+                    observer.disconnect();
                 });
                 let option = {
                     attributes: true,
@@ -499,8 +503,8 @@ function setAsModal($modal) {
     $modal.addEventListener('keydown', bindKeyEvt);
     let observer = new MutationObserver((mutations) => {
         setHiddenExceptForThis($modal, 'off');
-                $modal.removeEventListener("keydown", bindKeyEvt, false);
-                observer.disconnect();
+        $modal.removeEventListener("keydown", bindKeyEvt, false);
+        observer.disconnect();
     });
     let option = {
         attributes: true,
