@@ -141,24 +141,18 @@ function ariaPressed() {
         var timeout = setTimeout(function () {
             if (isAndroid) {
                 if (beforeOuterHtml === _this.outerHTML) {
-                    $this.attr("aria-disabled", "true");
                 } else if ($this.attr("aria-pressed") === "true") {
-                    $this.removeAttr("aria-disabled");
                     $this.attr("aria-pressed", "false");
                     announceForAccessibility("꺼짐");
                 } else {
-                    $this.removeAttr("aria-disabled");
                     $this.attr("aria-pressed", "true");
                     announceForAccessibility("켜짐");
                 };
             } else {
                 if (beforeOuterHtml === _this.outerHTML) {
-                    $this.attr("aria-disabled", "true");
                 } else if ($this.attr("aria-pressed") === "true") {
-                    $this.removeAttr("aria-disabled");
                     $this.attr("aria-pressed", "false");
                 } else {
-                    $this.removeAttr("aria-disabled");
                     $this.attr("aria-pressed", "true");
                 };
             };
