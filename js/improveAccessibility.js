@@ -673,13 +673,13 @@ function ariaHidden() {
 * document를 읽는 순서대로 속성을 주기 때문에 변경할 수 없음
 * targetValue2 값이 여러개일 경우 var targetValue2 = ['값1','값2','값3'~] 형태로 주입
 */
-function createElementsId(element, targetValue1, targetValue2, ariaProperty) {
+function createElementsId(element, targetValue1, idName, targetValue2, ariaProperty) {
     var elements1 = element.querySelectorAll("." + targetValue1 + ", [name=" + targetValue1 + "]");
 
     if (elements1 != null && targetValue2 != null) {
 
         Array.from(elements1).forEach(function (els, idx) {
-            var id = targetValue1 + "_" + idx;
+            var id = idName + "_" + idx;
             els.setAttribute("id", id);
             if (Array.isArray(targetValue2)) { // targetValue2가 여러개일 경우
                 for (var target2Index in targetValue2) {
