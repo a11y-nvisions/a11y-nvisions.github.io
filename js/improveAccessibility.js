@@ -1121,3 +1121,101 @@ function ariaTab() {
 
     })();//self calling function for Security
 };
+
+// waiAriaListBox
+var waiAriaListBox = function waiAriaListBox() {
+    var boxBtns = document.querySelectorAll('[aria-haspopup="listbox"]');
+    boxBtns.forEach(function (boxBtn) {
+        var ariaListBox = document.querySelector('#' + boxBtn.getAttribute("aria-controls"));
+        var listOptions = ariaListBox.querySelectorAll('[role="option"]');
+
+        boxBtn.addEventListener("click", function (e) {
+            setTimeout(function () {
+                if (boxBtn.getAttribute("aria-expanded", "true")) {
+                    const listSelected = ariaListBox.querySelector('[role="option"][aria-selected="true"]');
+                    if (listSelected) {
+                        listSelected.focus();
+                    } else {
+                        listOptions[0].focus();
+                    }
+                }
+            }, 500);
+        });
+
+        boxBtn.addEventListener("keydown", function (e) {
+            if (e.keyCode === 38) {
+                // up
+                boxBtn.click();
+                e.preventDefault();
+            }
+            if (e.keyCode === 40) {
+                // down
+                boxBtn.click();
+                e.preventDefault();
+            }
+        });
+
+        var _loop = function _loop(i) {
+            listOptions[i].tabIndex = -1;
+            const listSelected = ariaListBox.querySelector('[role="option"][aria-selected="true"]');
+            if (listSelected) {
+                listSelected.tabIndex = 0;
+            } else {
+                listOptions[0].tabIndex = 0;
+            }
+
+            listOptions[i].addEventListener("click", function () {
+                listSelectEvent(ariaListBox, listOptions[i]);
+            });
+
+            listOptions[i].addEventListener("keydown", function (e) {
+                if (e.keyCode === 13) {
+                    // enter
+                    listOptions[i].click();
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                if (e.keyCode === 38) {
+                    // up
+                    if (i == 0) {
+                        listOptions[listOptions.length - 1].focus();
+                    } else {
+                        listOptions[i - 1].focus();
+                    }
+                    e.preventDefault();
+                }
+                if (e.keyCode === 40) {
+                    // down
+                    if (i == listOptions.length - 1) {
+                        listOptions[0].focus();
+                    } else {
+                        listOptions[i + 1].focus();
+                    }
+                    e.preventDefault();
+                }
+                if (e.keyCode === 9 || e.keyCode === 27) {
+                    // tab, esc
+                    boxBtn.click();
+                    boxBtn.focus();
+                    e.preventDefault();
+                }
+            });
+        };
+
+        for (var i = 0; i < listOptions.length; i++) {
+            _loop(i);
+        }
+    });
+
+
+    function listSelectEvent(ariaListBox, listOption) {
+        const selected = ariaListBox.querySelector('[role="option"][aria-selected="true"]');
+        if (!selected) {
+            listOption.setAttribute("aria-selected", true);
+        }
+        if (selected !== listOption) {
+            selected.setAttribute("aria-selected", false);
+            listOption.setAttribute("aria-selected", true);
+        }
+    }
+};
