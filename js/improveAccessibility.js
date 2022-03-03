@@ -1207,7 +1207,6 @@ var waiAriaListBox = function waiAriaListBox() {
         }
     });
 
-
     function listSelectEvent(ariaListBox, listOption) {
         const selected = ariaListBox.querySelector('[role="option"][aria-selected="true"]');
         if (!selected) {
@@ -1219,3 +1218,26 @@ var waiAriaListBox = function waiAriaListBox() {
         }
     }
 };
+
+// ariaCurrent
+function ariaCurrent(element) {
+    var ariaCurrentElements = element.querySelectorAll('[aria-current]')
+    var _loop = function (i) {
+        ariaCurrentElements[i].addEventListener("click", function () {
+            ariaCurrentEvent(element, ariaCurrentElements[i])
+        })
+    }
+    for (var i = 0; i < ariaCurrentElements.length; i++) {
+        _loop(i)
+    }
+    function ariaCurrentEvent(element, ariaCurrentElement) {
+        const currentTrue = element.querySelector('[aria-current="true"]')
+        if (!currentTrue) {
+            ariaCurrentElement.setAttribute("aria-current", "true")
+        }
+        if (currentTrue !== ariaCurrentElement) {
+            currentTrue.setAttribute("aria-current", "false")
+            ariaCurrentElement.setAttribute("aria-current", "true")
+        }
+    }
+}
