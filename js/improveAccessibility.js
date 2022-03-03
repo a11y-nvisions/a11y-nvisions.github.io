@@ -1213,8 +1213,12 @@ var waiAriaListBox = function waiAriaListBox() {
             listOption.setAttribute("aria-selected", true);
         }
         if (selected !== listOption) {
-            selected.setAttribute("aria-selected", false);
-            listOption.setAttribute("aria-selected", true);
+            if (selected !== null) {
+                selected.setAttribute("aria-selected", false);
+                listOption.setAttribute("aria-selected", true);
+            } else {
+                listOption.setAttribute("aria-selected", true);
+            }
         }
     }
 };
@@ -1236,8 +1240,12 @@ function ariaCurrent(element) {
             ariaCurrentElement.setAttribute("aria-current", "true")
         }
         if (currentTrue !== ariaCurrentElement) {
-            currentTrue.setAttribute("aria-current", "false")
-            ariaCurrentElement.setAttribute("aria-current", "true")
+            if (currentTrue !== null) {
+                currentTrue.setAttribute("aria-current", "false")
+                ariaCurrentElement.setAttribute("aria-current", "true")
+            } else {
+                ariaCurrentElement.setAttribute("aria-current", "true")
+            }
         }
     }
 }
