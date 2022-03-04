@@ -58,9 +58,10 @@ Element.prototype.setAriaHiddenExceptForThis = function (turn = 'on') {
     });
     let option = {
         attributes: true,
-        CharacterData: true
+        childList: true
     };
     observer.observe(element, option);
+    observer.observe(element.parentNode, option)
 };
 
 function setAriaHiddenExceptForThis(element) {
@@ -102,9 +103,10 @@ function setAriaHiddenExceptForThis(element) {
     });
     let option = {
         attributes: true,
-        CharacterData: true
+        childList: true
     };
     observer.observe(element, option);
+    observer.observe(element.parentNode, option)
 };
 
 function isMobile() {
@@ -400,7 +402,6 @@ function modalDialog() {
                 });
                 let option = {
                     attributes: true,
-                    CharacterData: true
                 };
                 observer.observe($modal, option);
             }
@@ -492,7 +493,7 @@ function setAsModal($modal) {
     $closeModal = $modal.querySelector('.closeModal'),
         $firstTab = $modal.querySelector('.firstTab'),
         $lastTab = $modal.querySelector('.lastTab');
-    $firstTab.focus();
+        if ($firstTab) $firstTab.focus();
     setHiddenExceptForThis($modal);
     $modal.addEventListener('keydown', bindKeyEvt);
     let observer = new MutationObserver((mutations) => {
@@ -502,9 +503,10 @@ function setAsModal($modal) {
     });
     let option = {
         attributes: true,
-        CharacterData: true
+        childList: true
     };
     observer.observe($modal, option);
+    observer.observe($modal.parentNode, option)
 };
 function bindKeyEvt(event) {
     event = event || window.event;
@@ -648,7 +650,6 @@ function ariaHidden() {
                     });
                     let option = {
                         attributes: true,
-                        CharacterData: true
                     };
                     observer.observe(hiddenEl, option);
                 }, 1000);
