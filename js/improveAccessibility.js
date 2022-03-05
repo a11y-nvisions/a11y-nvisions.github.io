@@ -493,7 +493,7 @@ function setAsModal($modal) {
     $closeModal = $modal.querySelector('.closeModal'),
         $firstTab = $modal.querySelector('.firstTab'),
         $lastTab = $modal.querySelector('.lastTab');
-        if ($firstTab) $firstTab.focus();
+    if ($firstTab) $firstTab.focus();
     setHiddenExceptForThis($modal);
     $modal.addEventListener('keydown', bindKeyEvt);
     let observer = new MutationObserver((mutations) => {
@@ -612,6 +612,7 @@ function ariaHidden() {
         btn.checkHiddenEvent = true;
         var hiddenEl = document.querySelector("#" + btn.getAttribute("screen-reader-hidden"));
         var beforeOuterHtml;
+        var beforeOuterHtml2;
         var ua = navigator.userAgent.toLowerCase();
         var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
         if ($(hiddenEl).attr("aria-hidden") === "false") {
@@ -623,15 +624,17 @@ function ariaHidden() {
         if (isAndroid) {
             btn.addEventListener('mousedown', function () {
                 beforeOuterHtml = hiddenEl.outerHTML;
+                beforeOuterHtml2 = btn.parentNode.outerHTML;
             });
         } else {
             btn.addEventListener('focus', function () {
                 beforeOuterHtml = hiddenEl.outerHTML;
+                beforeOuterHtml2 = btn.parentNode.outerHTML;
             });
         };
         btn.addEventListener('click', function () {
             setTimeout(function () {
-                if (beforeOuterHtml === hiddenEl.outerHTML) {
+                if (beforeOuterHtml === hiddenEl.outerHTML && beforeOuterHtml2 === btn.parentNode.outerHTML) {
                     return;
                 } else if ($(hiddenEl).attr("aria-hidden") === "false") {
                     hiddenTrue(btn, hiddenEl);
@@ -639,7 +642,9 @@ function ariaHidden() {
                     hiddenFalse(btn, hiddenEl);
                 };
             }, 500);
-            if (hiddenEl) {
+        });
+        hiddenEl.addEventListener("click", function () {
+            if (hiddenEl && hiddenEl.getAttribute("aria-hidden", "false")) {
                 setTimeout(function () {
                     let observer = new MutationObserver((mutations) => {
                         hiddenEl.removeAttribute('aria-hidden',);
@@ -652,7 +657,7 @@ function ariaHidden() {
                         attributes: true,
                     };
                     observer.observe(hiddenEl, option);
-                }, 1000);
+                }, 500);
             };
         });
     }
@@ -691,7 +696,6 @@ function createElementsId(element, targetValue1, idName, targetValue2, ariaPrope
             }
         });
     }
-
 }
 
 
