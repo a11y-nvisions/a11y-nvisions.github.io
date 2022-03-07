@@ -51,20 +51,6 @@ Element.prototype.setAriaHiddenExceptForThis = function (turn = 'on') {
             el.removeAttribute('aria-hidden');
         })
     }
-<<<<<<< HEAD
-=======
-
-    let observer = new MutationObserver((mutations) => {
-        setHiddenExceptForThis(element, "off");
-        observer.disconnect();
-    });
-    let option = {
-        attributes: true,
-        childList: true
-    };
-    observer.observe(element, option);
-    observer.observe(element.parentNode, option)
->>>>>>> e77a918ae3ce945b876a37553db98f072dd2dfea
 };
 
 function createMutationObserver(callback) {
