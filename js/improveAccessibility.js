@@ -18,39 +18,53 @@ try {
 
 /* Element 확장 메소드로 추가 */
 
-Element.prototype.setAriaHiddenExceptForThis=function ( turn = 'on' ) {
+Element.prototype.setAriaHiddenExceptForThis = function (turn = 'on') {
     // 다른 라이브러리로 인해 aria-hidden이 추가된 요소를 제외한 모든 요소를 가져옵니다. (버그 방지를 위해 aria-hidden이 없는 요소만을 가져옵니다)
     var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
     // 혹시 모를 버그를 방지하기 위해 aria-hidden을 초기화합니다.
-    allElems.forEach(function(el){
+    allElems.forEach(function (el) {
         el.removeAttribute('aria-hidden');
     })
     // Array.from과 같은 간단한 방법으로 Array로 바꿀 수 있으나 호환성 이슈로 NodeList에서 Array로 바꾸는 작업에 반복문을 사용합니다.
     var _allElems = [];
-    for(var i = 0; i<allElems.length; i++){
+    for (var i = 0; i < allElems.length; i++) {
         _allElems.push(allElems[i]);
     }
     // 숨겨질, 중요하지 않은 요소들과 그렇지 않은 대화상자 요소를 걸러내어, 대화상자와 관계없는 요소들을 모두 추려냅니다.
-    var notImportants = _allElems.filter(function(el){
-        if ( this.contains(el) === false && el.contains(this) === false ){
+    var notImportants = _allElems.filter(function (el) {
+        if (this.contains(el) === false && el.contains(this) === false) {
             return el
         }
     })
     // 'on'일 때 notImportants안에 들어있는 요소들을 모두 aria-hidden="true" 처리하고, is-sr-hidden 클래스를 추가합니다.
-    if( turn === 'on' ){
-        notImportants.forEach(function(el){
-            el.setAttribute('aria-hidden','true');
-            el.classList.add('is-sr-hidden');
+    if (turn === 'on') {
+        notImportants.forEach(function (el) {
+            el.setAttribute('aria-hidden', 'true');
+            el.setAttribute('is-sr-hidden', 'true');
         })
     }
-    
+
     // 'off'일 때 'is-sr-hidden'클래스를 가진 요소 목록을 가져와서 aria-hidden과 식별용 is-sr-hidden 클래스를 제거합니다.
-    if( turn === 'off' ){
-        document.querySelectorAll('.is-sr-hidden').forEach(function(el){
-            el.classList.remove('is-sr-hidden');;
+    if (turn === 'off') {
+        document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+            el.removeAttribute('is-sr-hidden');;
             el.removeAttribute('aria-hidden');
         })
     }
+<<<<<<< HEAD
+=======
+
+    let observer = new MutationObserver((mutations) => {
+        setHiddenExceptForThis(element, "off");
+        observer.disconnect();
+    });
+    let option = {
+        attributes: true,
+        childList: true
+    };
+    observer.observe(element, option);
+    observer.observe(element.parentNode, option)
+>>>>>>> e77a918ae3ce945b876a37553db98f072dd2dfea
 };
 
 function createMutationObserver(callback) {
@@ -79,13 +93,13 @@ function setAriaHiddenExceptForThis(element) {
         if (turn === 'on') {
             notImportants.forEach(function (el) {
                 el.setAttribute('aria-hidden', 'true');
-                el.classList.add('is-sr-hidden');
+                el.setAttribute('is-sr-hidden', 'true');
             })
         }
 
         if (turn === 'off') {
-            document.querySelectorAll('.is-sr-hidden').forEach(function (el) {
-                el.classList.remove('is-sr-hidden');;
+            document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+                el.removeAttribute('is-sr-hidden');;
                 el.removeAttribute('aria-hidden');
             })
         }
@@ -96,9 +110,10 @@ function setAriaHiddenExceptForThis(element) {
     });
     let option = {
         attributes: true,
-        CharacterData: true
+        childList: true
     };
     observer.observe(element, option);
+    observer.observe(element.parentNode, option)
 };
 
 function isMobile() {
@@ -135,24 +150,18 @@ function ariaPressed() {
         var timeout = setTimeout(function () {
             if (isAndroid) {
                 if (beforeOuterHtml === _this.outerHTML) {
-                    $this.attr("aria-disabled", "true");
                 } else if ($this.attr("aria-pressed") === "true") {
-                    $this.removeAttr("aria-disabled");
                     $this.attr("aria-pressed", "false");
                     announceForAccessibility("꺼짐");
                 } else {
-                    $this.removeAttr("aria-disabled");
                     $this.attr("aria-pressed", "true");
                     announceForAccessibility("켜짐");
                 };
             } else {
                 if (beforeOuterHtml === _this.outerHTML) {
-                    $this.attr("aria-disabled", "true");
                 } else if ($this.attr("aria-pressed") === "true") {
-                    $this.removeAttr("aria-disabled");
                     $this.attr("aria-pressed", "false");
                 } else {
-                    $this.removeAttr("aria-disabled");
                     $this.attr("aria-pressed", "true");
                 };
             };
@@ -311,16 +320,20 @@ function ariaExpanded() {
                         expandButton.setAttribute("aria-expanded", false);
                     } else if (expandEls.getAttribute('aria-hidden') === true) {
                         expandButton.setAttribute("aria-expanded", false);
+                    } else if (window.getComputedStyle(expandEls).display === 'block' && !expandEls.firstChild) {
+                        expandButton.setAttribute("aria-expanded", false);
                     }
                 });
                 if (btn.getAttribute("aria-expanded") === 'true' && window.getComputedStyle(expandEl).display === 'none') {
                     expandedClose(btn, expandEl);
-                } else if (btn.getAttribute("aria-expanded") === 'false' && window.getComputedStyle(expandEl).display === 'block') {
+                } else if (btn.getAttribute("aria-expanded") === 'false' && window.getComputedStyle(expandEl).display === 'block' && expandEl.firstChild) {
                     expandedOpen(btn, expandEl);
                 } else if (btn.getAttribute("aria-expanded") === 'true' && expandEl.getAttribute('aria-hidden') === 'true') {
                     expandedClose(btn, expandEl);
                 } else if (btn.getAttribute('aria-expanded') === 'false' && expandEl.getAttribute('aria-hidden') === 'false') {
                     expandedOpen(btn, expandEl);
+                } else if (btn.getAttribute("aria-expanded") === 'true' && window.getComputedStyle(expandEl).display === 'block' && !expandEl.firstChild) {
+                    expandedClose(btn, expandEl);
                 };
 
                 if (expandEl) {
@@ -343,6 +356,7 @@ function ariaExpanded() {
         btn.setAttribute("aria-expanded", true);
     };
 };
+
 
 //modal.js
 function modalDialog() {
@@ -389,17 +403,12 @@ function modalDialog() {
                 $modal.addEventListener('keydown', bindKeyEvt);
                 let observer = new MutationObserver((mutations) => {
                     setHiddenExceptForThis($modal, 'off');
-                    setTimeout(function () {
-                        if (window.getComputedStyle($modal).display === "none" || $modal.getAttribute('aria-hidden') === 'true') {
-                            $targetArea.focus();
-                            $modal.removeEventListener("keydown", bindKeyEvt, false);
-                            observer.disconnect();
-                        }
-                    }, 500);
+                    $targetArea.focus();
+                    $modal.removeEventListener("keydown", bindKeyEvt, false);
+                    observer.disconnect();
                 });
                 let option = {
                     attributes: true,
-                    CharacterData: true
                 };
                 observer.observe($modal, option);
             }
@@ -473,19 +482,112 @@ function modalDialog() {
         if (turn === 'on') {
             notImportants.forEach(function (el) {
                 el.setAttribute('aria-hidden', 'true');
-                el.classList.add('is-sr-hidden');
+                el.setAttribute('is-sr-hidden', 'true');
             })
         }
 
         // 'off'일 때 'is-sr-hidden'클래스를 가진 요소 목록을 가져와서 aria-hidden과 식별용 is-sr-hidden 클래스를 제거합니다.
         if (turn === 'off') {
-            document.querySelectorAll('.is-sr-hidden').forEach(function (el) {
-                el.classList.remove('is-sr-hidden');;
+            document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+                el.removeAttribute('is-sr-hidden');;
                 el.removeAttribute('aria-hidden');
             })
         }
     };
 };
+
+function setAsModal($modal) {
+    $closeModal = $modal.querySelector('.closeModal'),
+        $firstTab = $modal.querySelector('.firstTab'),
+        $lastTab = $modal.querySelector('.lastTab');
+    if ($firstTab) $firstTab.focus();
+    setHiddenExceptForThis($modal);
+    $modal.addEventListener('keydown', bindKeyEvt);
+    let observer = new MutationObserver((mutations) => {
+        setHiddenExceptForThis($modal, 'off');
+        $modal.removeEventListener("keydown", bindKeyEvt, false);
+        observer.disconnect();
+    });
+    let option = {
+        attributes: true,
+        childList: true
+    };
+    observer.observe($modal, option);
+    observer.observe($modal.parentNode, option)
+};
+function bindKeyEvt(event) {
+    event = event || window.event;
+    var keycode = event.keycode || event.which;
+    var $target = event.target;
+
+    switch (keycode) {
+        case 9:  // tab key
+            if ($firstTab && $lastTab) {
+                if (event.shiftKey) {
+                    if ($firstTab && $target == $firstTab) {
+                        event.preventDefault();
+                        if ($lastTab) $lastTab.focus();
+                    }
+                } else {
+                    if ($lastTab && $target == $lastTab) {
+                        event.preventDefault();
+                        if ($firstTab) $firstTab.focus();
+                    }
+                }
+            } else {
+                event.preventDefault();
+            }
+            break;
+        case 27:  // esc key
+            event.preventDefault();
+            $closeModal.click();
+            break;
+        default:
+            break;
+    }
+}
+
+function setHiddenExceptForThis(element, turn = 'on') {
+
+    // 다른 라이브러리로 인해 aria-hidden이 추가된 요소를 제외한 모든 요소를 가져옵니다. (버그 방지를 위해 aria-hidden이 없는 요소만을 가져옵니다)
+    var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
+
+    // 혹시 모를 버그를 방지하기 위해 aria-hidden을 초기화합니다.
+    allElems.forEach(function (el) {
+        el.removeAttribute('aria-hidden');
+    })
+
+    // Array.from과 같은 간단한 방법으로 Array로 바꿀 수 있으나 호환성 이슈로 NodeList에서 Array로 바꾸는 작업에 반복문을 사용합니다.
+    var _allElems = [];
+    for (var i = 0; i < allElems.length; i++) {
+        _allElems.push(allElems[i]);
+    }
+
+    // 숨겨질, 중요하지 않은 요소들과 그렇지 않은 대화상자 요소를 걸러내어, 대화상자와 관계없는 요소들을 모두 추려냅니다.
+    var notImportants = _allElems.filter(function (el) {
+        if (element.contains(el) === false && el.contains(element) === false) {
+            return el
+        }
+    })
+
+
+    // 'on'일 때 notImportants안에 들어있는 요소들을 모두 aria-hidden="true" 처리하고, is-sr-hidden 클래스를 추가합니다.
+    if (turn === 'on') {
+        notImportants.forEach(function (el) {
+            el.setAttribute('aria-hidden', 'true');
+            el.setAttribute('is-sr-hidden', 'true');
+        })
+    }
+
+    // 'off'일 때 'is-sr-hidden'클래스를 가진 요소 목록을 가져와서 aria-hidden과 식별용 is-sr-hidden 클래스를 제거합니다.
+    if (turn === 'off') {
+        document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+            el.removeAttribute('is-sr-hidden');
+            el.removeAttribute('aria-hidden');
+        })
+    }
+};
+
 
 //role button
 function ariaButton() {
@@ -517,6 +619,7 @@ function ariaHidden() {
         btn.checkHiddenEvent = true;
         var hiddenEl = document.querySelector("#" + btn.getAttribute("screen-reader-hidden"));
         var beforeOuterHtml;
+        var beforeOuterHtml2;
         var ua = navigator.userAgent.toLowerCase();
         var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
         if ($(hiddenEl).attr("aria-hidden") === "false") {
@@ -528,15 +631,17 @@ function ariaHidden() {
         if (isAndroid) {
             btn.addEventListener('mousedown', function () {
                 beforeOuterHtml = hiddenEl.outerHTML;
+                beforeOuterHtml2 = btn.parentNode.outerHTML;
             });
         } else {
             btn.addEventListener('focus', function () {
                 beforeOuterHtml = hiddenEl.outerHTML;
+                beforeOuterHtml2 = btn.parentNode.outerHTML;
             });
         };
         btn.addEventListener('click', function () {
             setTimeout(function () {
-                if (beforeOuterHtml === hiddenEl.outerHTML) {
+                if (beforeOuterHtml === hiddenEl.outerHTML && beforeOuterHtml2 === btn.parentNode.outerHTML) {
                     return;
                 } else if ($(hiddenEl).attr("aria-hidden") === "false") {
                     hiddenTrue(btn, hiddenEl);
@@ -544,7 +649,9 @@ function ariaHidden() {
                     hiddenFalse(btn, hiddenEl);
                 };
             }, 500);
-            if (hiddenEl) {
+        });
+        hiddenEl.addEventListener("click", function () {
+            if (hiddenEl && hiddenEl.getAttribute("aria-hidden", "false")) {
                 setTimeout(function () {
                     let observer = new MutationObserver((mutations) => {
                         hiddenEl.removeAttribute('aria-hidden',);
@@ -555,10 +662,9 @@ function ariaHidden() {
                     });
                     let option = {
                         attributes: true,
-                        CharacterData: true
                     };
                     observer.observe(hiddenEl, option);
-                }, 1000);
+                }, 500);
             };
         });
     }
@@ -578,18 +684,27 @@ function ariaHidden() {
 * targetValue1에 해당하는 요소에 id를 부여하며, targetValue2에 해당하는 요소에 aria-controls 혹은 aria-describedby 와 연결합니다.
 * ex) createElementsId("target1", "target2", "aria-controls") 로 선언 시 target1 이라는 class 및 name을 가진 요소에 id 부여 및 target2에 aria-controls id 혹은 aria-desciredby id 부여
 * document를 읽는 순서대로 속성을 주기 때문에 변경할 수 없음
+* targetValue2 값이 여러개일 경우 var targetValue2 = ['값1','값2','값3'~] 형태로 주입
 */
-function createElementsId(targetValue1, targetValue2, ariaProperty) {
-    var elements1 = document.querySelectorAll("." + targetValue1 + ", [name=" + targetValue1 + "]");
-    var elements2 = document.querySelectorAll("." + targetValue2 + ", [name=" + targetValue2 + "]");
-    if (elements1 != null && elements2 != null) {
+function createElementsId(element, targetValue1, idName, targetValue2, ariaProperty) {
+    var elements1 = element.querySelectorAll("." + targetValue1 + ", [name=" + targetValue1 + "]");
+
+    if (elements1 != null && targetValue2 != null) {
+
         Array.from(elements1).forEach(function (els, idx) {
-            var id = targetValue1 + "_" + idx;
+            var id = idName + "_" + idx;
             els.setAttribute("id", id);
-            document.querySelectorAll("." + targetValue2 + ", [name=" + targetValue2 + "]")[idx].setAttribute(ariaProperty, id);
+            if (Array.isArray(targetValue2)) { // targetValue2가 여러개일 경우
+                for (var target2Index in targetValue2) {
+                    element.querySelectorAll("." + targetValue2[target2Index] + ", [name=" + targetValue2[target2Index] + "]")[idx].setAttribute(ariaProperty, id);
+                }
+            } else {
+                element.querySelectorAll("." + targetValue2 + ", [name=" + targetValue2 + "]")[idx].setAttribute(ariaProperty, id);
+            }
         });
     }
 }
+
 
 //모바일에서의 링크 초점 분리 해결
 function focusTogetherForMobile() {
@@ -1015,36 +1130,134 @@ function ariaTab() {
 
         TAB.Initialization();//tab creation start(default usage)
 
-        /*
-            [READ ME]
-            This is an example code for setting the tab object when you make the tab dynamically by using javascript.
-            When you use it on your services, Please delete the below code lines that are surrounded by the '<Example>' Mark.
-        */
-        //<Example START>
-        var DynamicCreatedTab = document.createElement('div');
-        DynamicCreatedTab.innerHTML += `
-        <div class="DynamicTest_WRAPPER">
-        <ul role="tablist">
-            <li role="tab" aria-controls="DynamicTabTest1">Tab A</li>
-            <li role="tab" aria-controls="DynamicTabTest2">Tab B</li>
-            <li role="tab" aria-controls="DynamicTabTest3">Tab C</li>
-        </ul>
-            <div class="panel-wrapper" data-role="panelList">
-                <div id="DynamicTabTest1">
-                    Panel A
-                </div>
-                <div id="DynamicTabTest2">
-                    Panel B
-                </div>
-                <div id="DynamicTabTest3">
-                    Panel C
-                </div>
-            </div>
-        </div>
-    `;
-        document.body.append(DynamicCreatedTab);
-        TAB.createTabByManual(document.querySelector('.DynamicTest_WRAPPER [role=tablist]'))
-        //</Example END>
 
     })();//self calling function for Security
 };
+
+// waiAriaListBox
+var waiAriaListBox = function waiAriaListBox() {
+    var boxBtns = document.querySelectorAll('[aria-haspopup="listbox"]');
+    boxBtns.forEach(function (boxBtn) {
+        var ariaListBox = document.querySelector('#' + boxBtn.getAttribute("aria-controls"));
+        var listOptions = ariaListBox.querySelectorAll('[role="option"]');
+
+        boxBtn.addEventListener("click", function (e) {
+            setTimeout(function () {
+                if (boxBtn.getAttribute("aria-expanded", "true")) {
+                    const listSelected = ariaListBox.querySelector('[role="option"][aria-selected="true"]');
+                    if (listSelected) {
+                        listSelected.focus();
+                    } else {
+                        listOptions[0].focus();
+                    }
+                }
+            }, 500);
+        });
+
+        boxBtn.addEventListener("keydown", function (e) {
+            if (e.keyCode === 38) {
+                // up
+                boxBtn.click();
+                e.preventDefault();
+            }
+            if (e.keyCode === 40) {
+                // down
+                boxBtn.click();
+                e.preventDefault();
+            }
+        });
+
+        var _loop = function _loop(i) {
+            listOptions[i].tabIndex = -1;
+            const listSelected = ariaListBox.querySelector('[role="option"][aria-selected="true"]');
+            if (listSelected) {
+                listSelected.tabIndex = 0;
+            } else {
+                listOptions[0].tabIndex = 0;
+            }
+
+            listOptions[i].addEventListener("click", function () {
+                listSelectEvent(ariaListBox, listOptions[i]);
+            });
+
+            listOptions[i].addEventListener("keydown", function (e) {
+                if (e.keyCode === 13) {
+                    // enter
+                    listOptions[i].click();
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                if (e.keyCode === 38) {
+                    // up
+                    if (i == 0) {
+                        listOptions[listOptions.length - 1].focus();
+                    } else {
+                        listOptions[i - 1].focus();
+                    }
+                    e.preventDefault();
+                }
+                if (e.keyCode === 40) {
+                    // down
+                    if (i == listOptions.length - 1) {
+                        listOptions[0].focus();
+                    } else {
+                        listOptions[i + 1].focus();
+                    }
+                    e.preventDefault();
+                }
+                if (e.keyCode === 9 || e.keyCode === 27) {
+                    // tab, esc
+                    boxBtn.click();
+                    boxBtn.focus();
+                    e.preventDefault();
+                }
+            });
+        };
+
+        for (var i = 0; i < listOptions.length; i++) {
+            _loop(i);
+        }
+    });
+
+    function listSelectEvent(ariaListBox, listOption) {
+        const selected = ariaListBox.querySelector('[role="option"][aria-selected="true"]');
+        if (!selected) {
+            listOption.setAttribute("aria-selected", true);
+        }
+        if (selected !== listOption) {
+            if (selected !== null) {
+                selected.setAttribute("aria-selected", false);
+                listOption.setAttribute("aria-selected", true);
+            } else {
+                listOption.setAttribute("aria-selected", true);
+            }
+        }
+    }
+};
+
+// ariaCurrent
+function ariaCurrent(element) {
+    var ariaCurrentElements = element.querySelectorAll('[aria-current]')
+    var _loop = function (i) {
+        ariaCurrentElements[i].addEventListener("click", function () {
+            ariaCurrentEvent(element, ariaCurrentElements[i])
+        })
+    }
+    for (var i = 0; i < ariaCurrentElements.length; i++) {
+        _loop(i)
+    }
+    function ariaCurrentEvent(element, ariaCurrentElement) {
+        const currentTrue = element.querySelector('[aria-current="true"]')
+        if (!currentTrue) {
+            ariaCurrentElement.setAttribute("aria-current", "true")
+        }
+        if (currentTrue !== ariaCurrentElement) {
+            if (currentTrue !== null) {
+                currentTrue.setAttribute("aria-current", "false")
+                ariaCurrentElement.setAttribute("aria-current", "true")
+            } else {
+                ariaCurrentElement.setAttribute("aria-current", "true")
+            }
+        }
+    }
+}
