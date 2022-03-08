@@ -703,13 +703,6 @@ function focusTogetherForMobile() {
                 el.setAttribute('aria-hidden', 'true');
             });
         });
-        document.querySelectorAll('p > span').forEach((el, index) => {
-            el.setAttribute("role", "text");
-        });
-
-        document.querySelectorAll('p > span > span').forEach((el, index) => {
-            el.setAttribute("role", "text");
-        });
     };
 };
 
