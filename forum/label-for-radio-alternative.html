@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility alternative for non-standard radio button using the 'Label For' Markup pattern</title>
+    <link rel="stylesheet" href="https://a11y-nvisions.github.io/INTERNAL_CDN/style/nv-color-system.css">
+    <style>
+        *{margin:0; padding:0; box-sizing: border-box;}
+        html, body {
+            width:100%; height:100%;
+            font-family: '맑은 고딕', sans-serif;
+        }
+
+        h1,h2,h4,h4,h5,h6,p{
+            letter-spacing: 0.035em;
+            padding: 0.05em;
+            margin:0.4em 0;
+        }
+        .wapper{
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+
+
+        header,main,footer{
+            margin-bottom:0.5em 0;
+            padding:0.3em;
+        }
+        .warning {
+            border-color: var(--color-negative);
+        }
+        .warning strong{
+            color: var(--color-negative);
+        }
+
+        article,section,aside{
+            padding: 2em 0.5em;
+            margin:0 auto;
+            margin-top:1em;
+            margin-bottom: 2.5em;
+            padding-left: 1.25em;
+            border-left: solid 0.35em transparent;
+            width: 85%;
+        }
+
+        .non-standard {
+            display:none;
+        }
+        .non-standard+label{
+            display: flex; height: 100%;
+            padding:0.25em;
+            border-bottom:0.01em solid var(--foreground-extra-light);
+        }
+        .non-standard-radio {
+            display: flex;
+            flex-flow: column;
+            gap: 0.45em;
+        }
+
+        label::before {
+            content:"";
+            display: block;
+            height: 100%;
+            min-height: 1.5em;
+            max-height: 100%;
+            width: 0.25em;
+            background-color: transparent;
+            margin-right: 0.2em;
+        }
+        label[aria-current = "true"]::before {
+            background-color: currentColor;
+        }
+        label[aria-current = "true"] {
+            font-weight: bold;
+        }
+
+        header {
+            background-color: var(--background-global);
+        }
+        header h1{
+            color:var(--background-global);
+            width:50%;
+            font-weight: bolder;
+            font-size: 2.3em;
+            text-align: center;
+            margin: 0 auto;
+            padding: 00.5em;
+            text-shadow: 
+            0 0 1px #fff,
+            0 0 1px #fff,
+            0 0 1px #fff,
+            0 0 1px #fff,
+            0 0 1px #fff,
+            0 0 1px #fff,
+            0 0 1px #fff,
+            0 0 1px #fff,
+            0 0 1px #fff,
+            0 0 1px #fff,
+            0 0 1px #fff;
+        }
+
+        footer{
+            text-align: center;
+            background-color:var(--background-global);
+            color: var(--foreground-normal);
+        }
+
+        address{
+            font-style: normal;
+        }
+        footer a:any-link{
+            display: inline-block;
+            text-decoration: none;
+            border:solid 0.01em var(--foreground-extra-strong);
+            margin:0.25em 0; padding: 0.25em;
+            border-radius: 0.25em;
+            color: var(--foreground-extra-strong);
+            background-color: var(--background-global);
+            opacity: 0.8;
+            font-weight: normal;
+        }
+        footer a:any-link:hover,
+        footer a:any-link:focus{
+            opacity: 1;
+            font-weight: bold;
+            color: var(--foreground-extra-strong);
+        }
+    </style>
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Accessibility alternative for non-standard radio button using the 'Label For' Markup pattern</h1>
+        </header>
+        <main>
+            <article class="theme-dark warning">
+                <h2>Warning: Not recommended</h2>
+                <p>
+                    First, We notice for you. this is not a good method absolutely, We tell you confidently. This is wrong, and this is bad certainly.
+                </p>
+                <p>
+                    But, this will be helpful <strong>you're on the situation when you can't fix a wrong markup pattern</strong>.
+                </p>
+                <p>
+                    We want you to understand this is not a good way and <strong>don't do it yourself when you make a new website</strong> please.
+                </p>
+            </article>
+            <article>
+                <h2>Before you get an example: Please understand the concept of the Radio Buttons</h2>
+                <p>
+                    <strong>Radio Buttons&lt;input type=&ldquo;radio&rdquo;&gt;</strong> are the type of input elements designed to make users can select one of the values in a group.
+                </p>
+                <p>
+                    When you use the radio button, You always should focus on the keyword, <strong>'select'</strong>.
+                </p>
+                <p>
+                    To be more specific, Radio buttons 
+                    <strong>must not</strong> activate the functions, actions. They are for selection only.
+                </p>
+                <P>
+                    When you select one item of Radio Buttons. Page <strong>must not be changed</strong>,
+                    Dialog <strong>must not be pop-up</strong>, and The focus is <strong>must be controlled by users only.</strong>
+                </P>
+                <p>
+                    We authors always wish you use radio buttons as standard methods.
+                </p>
+            </article>
+            <article>
+                <h2>Alternative Example</h2>
+                <div class="non-standard-radio">
+                    <input checked type="radio" class="non-standard" name="non-standard" id="ns-1">
+                    <label>Alpaca</label>
+                    <input type="radio" class="non-standard" name="non-standard" id="ns-2">
+                    <label>Bear</label>
+                    <input type="radio" class="non-standard" name="non-standard" id="ns-3">
+                    <label>Cat</label>
+                    <input type="radio" class="non-standard" name="non-standard" id="ns-4">
+                    <label>Dog</label>
+                    <input type="radio" class="non-standard" name="non-standard" id="ns-5">
+                    <label>Elephant</label>
+                    <input type="radio" class="non-standard" name="non-standard" id="ns-6">
+                    <label>Falcon</label>
+                </div>
+            </article>
+        </main>
+        <footer>
+            <div>
+                Copyright &copy; Accessibility Team of NVISIONS
+            </div>
+            <address>
+                <div>
+                    71 Bukchon-ro Jongro-gu Seoul-Teukbyeol-si. Republic of Korea.
+                </div>
+                <div><a href="https://nvisions.co.kr">Visit our homepage&lt;https://nvisions.co.kr&gt;</a>
+                    <a href="mailto:ungjin.park@nvisions.co.kr">Contact author&lt;ungjin.park@nvisions.co.kr&gt;</a>
+                </div>
+            </address>
+        </footer>
+    </div>
+    <script>
+        const Container = document.querySelector('.non-standard-radio');
+        const Controllers = Container.querySelectorAll('label');
+        const RealControllers = Container.querySelectorAll('input');
+        
+        function currentSyncHandler (evt) { 
+            const label = this.labels[this.labels.length-1];
+            label.setAttribute('aria-current',this.checked);
+            Controllers.forEach(_=>{
+                if ( _ !== this.labels[this.labels.length-1]) {
+                    _.setAttribute('aria-current','false');
+                }
+            })
+        }
+        Controllers.forEach((e,i)=>{
+            // Initialize
+            e.htmlFor = "ns-"+(i+1);
+            const htmlFor = e.htmlFor;
+            const real = document.getElementById(e.htmlFor);
+            e.setAttribute('role','button');
+            e.setAttribute('tabindex','0');
+            if(real.checked){
+                e.setAttribute('aria-current','true');
+            } else {
+                e.setAttribute('aria-current','false');
+            }
+
+            // Event
+            e.addEventListener('click',function(evt){
+                if(real) {
+                    real.click();
+                }
+            });
+            e.addEventListener('keydown',function(evt){
+                switch(evt.key){
+                    case "Space":
+                    case "Enter":
+                        real.click();
+                        break;
+                }
+            })
+        });
+
+        //Event for State Synchronizing
+        RealControllers.forEach(_=>{
+            _.addEventListener('input',currentSyncHandler);
+        })
+    </script>
+</body>
+</html>
