@@ -1247,3 +1247,26 @@ function ariaCurrent(element) {
         }
     }
 }
+
+// radioAsButton
+function radioAsButton(Container) {
+    const Controllers = Container.querySelectorAll('label');
+    const RealControllers = Container.querySelectorAll('input');
+    $(RealControllers).css("display", "none")
+    Controllers.forEach(_ => {
+        _.setAttribute("role", "button")
+        initialize()
+        _.addEventListener("click", function () {
+            initialize()
+        })
+        function initialize() {
+            const real = Container.querySelector("#" + _.htmlFor)
+            if (real) {
+                if (real.checked) {
+                    $(Container).find("label").attr("aria-current", "false")
+                    _.setAttribute("aria-current", "true")
+                }
+            }
+        }
+    });
+}
