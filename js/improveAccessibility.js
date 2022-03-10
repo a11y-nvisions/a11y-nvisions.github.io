@@ -605,7 +605,6 @@ function ariaHidden() {
         btn.checkHiddenEvent = true;
         var hiddenEl = document.querySelector("#" + btn.getAttribute("screen-reader-hidden"));
         var beforeOuterHtml;
-        var beforeOuterHtml2;
         var ua = navigator.userAgent.toLowerCase();
         var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
         if ($(hiddenEl).attr("aria-hidden") === "false") {
@@ -617,17 +616,15 @@ function ariaHidden() {
         if (isAndroid) {
             btn.addEventListener('mousedown', function () {
                 beforeOuterHtml = hiddenEl.outerHTML;
-                beforeOuterHtml2 = btn.parentNode.outerHTML;
             });
         } else {
             btn.addEventListener('focus', function () {
                 beforeOuterHtml = hiddenEl.outerHTML;
-                beforeOuterHtml2 = btn.parentNode.outerHTML;
             });
         };
         btn.addEventListener('click', function () {
             setTimeout(function () {
-                if (beforeOuterHtml === hiddenEl.outerHTML && beforeOuterHtml2 === btn.parentNode.outerHTML) {
+                if (beforeOuterHtml === hiddenEl.outerHTML) {
                     return;
                 } else if ($(hiddenEl).attr("aria-hidden") === "false") {
                     hiddenTrue(btn, hiddenEl);
@@ -635,12 +632,9 @@ function ariaHidden() {
                     hiddenFalse(btn, hiddenEl);
                 };
             }, 500);
-        });
-        hiddenEl.addEventListener("click", function () {
             if (hiddenEl && hiddenEl.getAttribute("aria-hidden", "false")) {
                 setTimeout(function () {
                     let observer = new MutationObserver((mutations) => {
-                        hiddenEl.removeAttribute('aria-hidden',);
                         hiddenEl.setAttribute('aria-hidden', true);
                         $(hiddenEl).find("a, button, input, select").attr("tabindex", "-1");
                         btn.focus();
@@ -648,9 +642,10 @@ function ariaHidden() {
                     });
                     let option = {
                         attributes: true,
+                        CharacterData: true
                     };
                     observer.observe(hiddenEl, option);
-                }, 500);
+                }, 1000);
             };
         });
     }
@@ -663,6 +658,7 @@ function ariaHidden() {
         hiddenEl.setAttribute("aria-hidden", false);
         $(hiddenEl).find("a[href], button, input, select, [role='button'], [role='link'], [role='checkbox'], [role='tab'], [role='radiobutton'], [role='combobox']").removeAttr("tabindex");
     }
+
 };
 
 //aria-controls, aria-describedby 추가를 위한 동적 아이디 생성
