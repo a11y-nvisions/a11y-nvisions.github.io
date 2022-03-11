@@ -514,6 +514,9 @@ function setAsModal($modal) {
         setHiddenExceptForThis($modal, 'off');
         $modal.removeEventListener("keydown", bindKeyEvt, false);
         observer.disconnect();
+        if ($modal.getAttribute("role", "dialog")) {
+            $modal.removeAttribute("role")
+        }
         $modal = null
         $firstTab = null
         $lastTab = null
