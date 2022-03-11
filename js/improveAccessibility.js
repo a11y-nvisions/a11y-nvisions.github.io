@@ -491,7 +491,9 @@ function modalDialog() {
 
 function setAsModal($modal) {
     var focusable = $modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-    $closeModal = $modal.querySelector('.closeModal')
+    if ($modal.querySelector(".closeModal")) {
+        $closeModal = $modal.querySelector('.closeModal')
+    }
     if ($modal.querySelector(".firstTab")) {
         $firstTab = $modal.querySelector('.firstTab')
     } else {
@@ -502,14 +504,20 @@ function setAsModal($modal) {
     } else {
         $lastTab = focusable[focusable.length - 1];
     }
-
-    if ($firstTab) $firstTab.focus();
+    if (!$modal.querySelector('[role="dialog"]')) {
+        $modal.setAttribute("role", "dialog")
+        $modal.setAttribute("aria-modal", "true")
+    }
     setHiddenExceptForThis($modal);
     $modal.addEventListener('keydown', bindKeyEvt);
     let observer = new MutationObserver((mutations) => {
         setHiddenExceptForThis($modal, 'off');
         $modal.removeEventListener("keydown", bindKeyEvt, false);
         observer.disconnect();
+        $modal = null
+        $firstTab = null
+        $lastTab = null
+        $closeModal = null
     });
     let option = {
         attributes: true,
