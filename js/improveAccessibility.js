@@ -368,9 +368,7 @@ function modalDialog() {
         setTimeout(function () {
             $targetArea = event.target;
             modals.forEach(function ($el) {
-                if (
-                    $targetArea.getAttribute('aria-controls') && $targetArea.getAttribute('aria-controls') == $el.getAttribute('id') && 'true' == $el.getAttribute('aria-modal') && window.getComputedStyle($el).display === "block" || $el.getAttribute('aria-hidden') === 'false'
-                ) {
+                if ($targetArea.getAttribute('aria-controls') && $targetArea.getAttribute('aria-controls') == $el.getAttribute('id') && 'true' == $el.getAttribute('aria-modal') && window.getComputedStyle($el).display === "block" || $el.getAttribute('aria-hidden') === 'false') {
                     $modal = $el;
                     if ($modal.querySelector(".autoFocus")) {
                         $modal.querySelector(".autoFocus").focus();
@@ -379,9 +377,18 @@ function modalDialog() {
             });
 
             if ($modal) {
-                $closeModal = $modal.querySelector('.closeModal'),
-                    $firstTab = $modal.querySelector('.firstTab'),
+                var focusable = $modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                $closeModal = $modal.querySelector('.closeModal')
+                if ($modal.querySelector(".firstTab")) {
+                    $firstTab = $modal.querySelector('.firstTab')
+                } else {
+                    $firstTab = focusable[0];
+                }
+                if ($modal.querySelector(".lastTab")) {
                     $lastTab = $modal.querySelector('.lastTab');
+                } else {
+                    $lastTab = focusable[focusable.length - 1];
+                }
                 setHiddenExceptForThis($modal);
                 if (!$modal.getAttribute('aria-label') || $modal.getAttribute('aria-labelledby')) {
                     $modal.setAttribute('aria-label', $targetArea.textContent);
@@ -483,9 +490,19 @@ function modalDialog() {
 };
 
 function setAsModal($modal) {
-    $closeModal = $modal.querySelector('.closeModal'),
-        $firstTab = $modal.querySelector('.firstTab'),
+    var focusable = $modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    $closeModal = $modal.querySelector('.closeModal')
+    if ($modal.querySelector(".firstTab")) {
+        $firstTab = $modal.querySelector('.firstTab')
+    } else {
+        $firstTab = focusable[0];
+    }
+    if ($modal.querySelector(".lastTab")) {
         $lastTab = $modal.querySelector('.lastTab');
+    } else {
+        $lastTab = focusable[focusable.length - 1];
+    }
+
     if ($firstTab) $firstTab.focus();
     setHiddenExceptForThis($modal);
     $modal.addEventListener('keydown', bindKeyEvt);
