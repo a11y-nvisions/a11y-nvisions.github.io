@@ -389,6 +389,9 @@ function modalDialog() {
                 } else {
                     $lastTab = focusable[focusable.length - 1];
                 }
+                if ($firstTab === $lastTab) {
+                    $lastTab = null
+                }
                 setHiddenExceptForThis($modal);
                 if (!$modal.getAttribute('aria-label') || $modal.getAttribute('aria-labelledby')) {
                     $modal.setAttribute('aria-label', $targetArea.textContent);
@@ -398,10 +401,11 @@ function modalDialog() {
                     setHiddenExceptForThis($modal, 'off');
                     $targetArea.focus();
                     $modal.removeEventListener("keydown", bindKeyEvt, false);
+                    $modal = null
                     observer.disconnect();
                 });
                 let option = {
-                    attributes: true,
+                    attributes: true
                 };
                 observer.observe($modal, option);
             }
@@ -503,6 +507,9 @@ function setAsModal($modal) {
         $lastTab = $modal.querySelector('.lastTab');
     } else {
         $lastTab = focusable[focusable.length - 1];
+    }
+    if ($firstTab === $lastTab) {
+        $lastTab = null
     }
     if (!$modal.querySelector('[role="dialog"]')) {
         $modal.setAttribute("role", "dialog")
