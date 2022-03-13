@@ -314,7 +314,6 @@ function ariaExpanded() {
 			setTimeout(function () {
 				var expandEl = document.querySelector("#" + btn.getAttribute("aria-controls"));
 				if (btn.parentElement === expandEl) {
-					alert("first case")
 					if (btn.getAttribute("aria-expanded") === "false" && beforeOuterHtml !== expandEl.outerHTML) {
 						expandedOpen(btn, expandEl)
 					} else if (btn.getAttribute("aria-expanded") === "true" && beforeOuterHtml !== expandEl.outerHTML) {
