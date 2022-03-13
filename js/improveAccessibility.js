@@ -285,62 +285,81 @@ function removeAnnounceForAccessibility() {
 
 //aria-expanded
 function ariaExpanded() {
-    var expandButtons = document.querySelectorAll('[aria-expanded][aria-controls]');
-    expandButtons.forEach(function (expandButton) {
-        expandedEvent(expandButton);
-    });
+	var expandButtons = document.querySelectorAll('[aria-expanded][aria-controls]');
+	expandButtons.forEach(function (expandButton) {
+		expandedEvent(expandButton);
+	});
 
-    function expandedEvent(btn) {
-        if (btn.expandEvent) {
-            return false;
-        }
-        btn.expandEvent = true;
-        btn.addEventListener("click", function () {
-            setTimeout(function () {
-                var expandEl = document.querySelector("#" + btn.getAttribute("aria-controls"));
-                if (!expandEl) return;
-                expandButtons.forEach(function (expandButton) {
-                    var ariaControls = expandButton.getAttribute("aria-controls")
-                    var expandEls = document.querySelector("#" + ariaControls);
-                    if (window.getComputedStyle(expandEls).display === 'none') {
-                        expandButton.setAttribute("aria-expanded", false);
-                    } else if (expandEls.getAttribute('aria-hidden') === true) {
-                        expandButton.setAttribute("aria-expanded", false);
-                    } else if (window.getComputedStyle(expandEls).display === 'block' && !expandEls.firstChild) {
-                        expandButton.setAttribute("aria-expanded", false);
-                    }
-                });
-                if (btn.getAttribute("aria-expanded") === 'true' && window.getComputedStyle(expandEl).display === 'none') {
-                    expandedClose(btn, expandEl);
-                } else if (btn.getAttribute("aria-expanded") === 'false' && window.getComputedStyle(expandEl).display === 'block' && expandEl.firstChild) {
-                    expandedOpen(btn, expandEl);
-                } else if (btn.getAttribute("aria-expanded") === 'true' && expandEl.getAttribute('aria-hidden') === 'true') {
-                    expandedClose(btn, expandEl);
-                } else if (btn.getAttribute('aria-expanded') === 'false' && expandEl.getAttribute('aria-hidden') === 'false') {
-                    expandedOpen(btn, expandEl);
-                } else if (btn.getAttribute("aria-expanded") === 'true' && window.getComputedStyle(expandEl).display === 'block' && !expandEl.firstChild) {
-                    expandedClose(btn, expandEl);
-                };
+	function expandedEvent(btn) {
+		if (btn.expandEvent) {
+			return false;
+		}
+		btn.expandEvent = true;
+		var beforeOuterHtml
+		btn.addEventListener("focus", function () {
+			var expandEl = document.querySelector("#" + btn.getAttribute("aria-controls"));
+			beforeOuterHtml = expandEl.outerHTML
+		})
+		btn.addEventListener("click", function () {
+			var expandEl = document.querySelector("#" + btn.getAttribute("aria-controls"));
+			if (btn.parentElement === expandEl) {
+				setTimeout(function () {
+					if (btn.getAttribute("aria-expanded") === "false" && beforeOuterHtml !== expandEl.outerHTML) {
+						expandedOpen(btn, expandEl)
+					} else if (btn.getAttribute("aria-expanded") === "true" && beforeOuterHtml !== expandEl.outerHTML) {
+						expandedClose(btn, expandEl)
+					}
+				}, 500)
+				} else {
+					ariaControlsSeparated()
+				}
+		});
+	}
+	function expandedClose(btn, expandEl) {
+		btn.setAttribute("aria-expanded", false);
+	}
+	function expandedOpen(btn, expandEl) {
+		btn.setAttribute("aria-expanded", true);
+	};
+	function ariaControlsSeparated() {
+		setTimeout(function () {
+			var expandEl = document.querySelector("#" + btn.getAttribute("aria-controls"));
+			if (!expandEl) return;
+			expandButtons.forEach(function (expandButton) {
+				var ariaControls = expandButton.getAttribute("aria-controls")
+				var expandEls = document.querySelector("#" + ariaControls);
+				if (window.getComputedStyle(expandEls).display === 'none') {
+					expandButton.setAttribute("aria-expanded", false);
+				} else if (expandEls.getAttribute('aria-hidden') === true) {
+					expandButton.setAttribute("aria-expanded", false);
+				} else if (window.getComputedStyle(expandEls).display === 'block' && !expandEls.firstChild) {
+					expandButton.setAttribute("aria-expanded", false);
+				}
+			});
+			if (btn.getAttribute("aria-expanded") === 'true' && window.getComputedStyle(expandEl).display === 'none') {
+				expandedClose(btn, expandEl);
+			} else if (btn.getAttribute("aria-expanded") === 'false' && window.getComputedStyle(expandEl).display === 'block' && expandEl.firstChild) {
+				expandedOpen(btn, expandEl);
+			} else if (btn.getAttribute("aria-expanded") === 'true' && expandEl.getAttribute('aria-hidden') === 'true') {
+				expandedClose(btn, expandEl);
+			} else if (btn.getAttribute('aria-expanded') === 'false' && expandEl.getAttribute('aria-hidden') === 'false') {
+				expandedOpen(btn, expandEl);
+			} else if (btn.getAttribute("aria-expanded") === 'true' && window.getComputedStyle(expandEl).display === 'block' && !expandEl.firstChild) {
+				expandedClose(btn, expandEl);
+			};
 
-                if (expandEl) {
-                    expandEl.addEventListener('click', function () {
-                        setTimeout(function () {
-                            if (window.getComputedStyle(expandEl).display === 'none') {
-                                expandedClose(btn, expandEl);
-                                btn.focus();
-                            }
-                        }, 200);
-                    })
-                }
-            }, 500);
-        });
-    }
-    function expandedClose(btn, expandEl) {
-        btn.setAttribute("aria-expanded", false);
-    }
-    function expandedOpen(btn, expandEl) {
-        btn.setAttribute("aria-expanded", true);
-    };
+			if (expandEl) {
+				expandEl.addEventListener('click', function () {
+					setTimeout(function () {
+						if (window.getComputedStyle(expandEl).display === 'none') {
+							expandedClose(btn, expandEl);
+							btn.focus();
+						}
+					}, 200);
+				})
+			}
+		}, 500);
+	}
 };
 
 
@@ -1030,8 +1049,6 @@ function ariaTab() {
                         var Home = 'Home';
                         var End = 'End';
                         var FocusingIndex = Array.prototype.indexOf.call(_this.SELECTABLE_TAB_LIST, this);
-                        console.log(_this.select)
-                        console.log(_this.SELECTABLE_TAB_LIST)
                         switch (keySTR) {
                             case Next:
                                 if (_this.TABLIST_CONTAINER.getAttribute('data-mode') === 'aria1.1') {
