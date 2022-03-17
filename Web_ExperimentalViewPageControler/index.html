@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        pageview-list {
+            display: flex;
+            margin:0 auto;
+            position: relative;
+            flex-flow: column;
+            width: 75%;
+        }
+        pageview-list::part(content-box) {
+            display: flex;
+            position: relative;
+            margin: 0 auto;
+            width: 80%;
+        }
+        pageview-adjustor {
+            display: flex;
+            height: 1em;
+            width: 80%;
+            padding: 0.25em;
+            margin: 0 auto;
+            gap: 1em;
+            justify-content: center;
+            position: relative;
+        }
+
+        pageview-adjustor .indicator-dot {
+            border-radius: 50%;
+            height: 1em;
+            width: 1em;
+            z-index: 10;
+            background-color:#f99;
+        }
+        pageview-adjustor .indicator-dot.current {
+            background-color:#ff2f2f;
+        }
+        pageview-content{
+            min-height: 300px;
+            width: 100%;
+            display: none;
+            justify-content: center;
+        }
+        pageview-content[show]{
+            display: flex;
+            width: 100%;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        pageview-adjustor input[type="range"], input[type="range"]
+        {
+            position: absolute;
+            width: 100%; top:0; left:0;
+            height: 100%;
+            z-index: 9;
+            background-color: transparent;
+            appearance: none;
+            -o-appearance: none;
+            -ms-appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+        }
+        pageview-adjustor input[type="range"]::-webkit-slider-runnable-track,
+        pageview-adjustor input[type="range"]::-webkit-slider-thumb,
+        input[type="range"]::-webkit-slider-runnable-track,
+        input[type="range"]::-webkit-slider-thumb {
+            background: transparent;
+            appearance: none;
+        }
+    </style>
+    <pageview-list>
+        <pageview-content>
+            <h1>Experimental PageView!</h1>
+        </pageview-content>
+        <pageview-content>
+            <h1>이건 뭐야?</h1>
+            <p>애플 iOS의 PageViewController와 Google 안드로이드에 있는 ViewPager 느낌의 키보드 조작이 가능한 플립페이지 컴포넌트를 만들어 보았습니다.</p>
+        </pageview-content>
+        <pageview-content>
+            <h1>추천하지 않습니다.</h1>
+            <p>오로지 실험적인 컴포넌트입니다.</p>
+        </pageview-content>
+    </pageview-list>
+    <script src="./dist/bundle.js"></script>
+</body>
+</html>
