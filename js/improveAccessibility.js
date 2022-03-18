@@ -399,7 +399,7 @@ function modalDialog() {
 			});
 
 			if ($modal) {
-				var focusable = $modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+				var focusable = $($modal).find('a[href], input, select, textarea, button, [tabindex="0"], [contenteditable]').not('[tabindex=-1], [disabled], .not(:visible), :hidden')
 				$closeModal = $modal.querySelector('.closeModal')
 				if ($modal.querySelector(".firstTab")) {
 					$firstTab = $modal.querySelector('.firstTab')
@@ -409,11 +409,7 @@ function modalDialog() {
 				if ($modal.querySelector(".lastTab")) {
 					$lastTab = $modal.querySelector('.lastTab');
 				} else {
-					var allElements = $($modal).find("*")
-					$lastTab = allElements[allElements.length - 1]
-					setTimeout(function () {
-						$lastTab.tabindex = 0
-					}, 500)
+					$lastTab = focusable[focusable.length - 1]
 				}
 				if ($firstTab === $lastTab) {
 					$lastTab = null
@@ -525,7 +521,7 @@ function modalDialog() {
 };
 
 function setAsModal($modal) {
-	var focusable = $modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+	var focusable = $($modal).find('a[href], input, select, textarea, button, [tabindex="0"], [contenteditable]').not('[tabindex=-1], [disabled], .not(:visible), :hidden')
 	if ($modal.querySelector(".closeModal")) {
 		$closeModal = $modal.querySelector('.closeModal')
 	}
@@ -537,12 +533,7 @@ function setAsModal($modal) {
 	if ($modal.querySelector(".lastTab")) {
 		$lastTab = $modal.querySelector('.lastTab');
 	} else {
-		var allElements = $($modal).find("*")
-		$lastTab = allElements[allElements.length - 1]
-		setTimeout(function () {
-			$lastTab.tabIndex = 0
-		}, 500)
-		$lastTab.tabindex = 0
+		$lastTab = focusable[focusable.length - 1]
 	}
 	if ($firstTab === $lastTab) {
 		$lastTab = null
