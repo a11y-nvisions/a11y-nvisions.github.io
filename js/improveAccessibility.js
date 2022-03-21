@@ -399,7 +399,7 @@ function modalDialog() {
 			});
 
 			if ($modal) {
-				var focusable = $($modal).find('a[href], input, select, textarea, button, [tabindex="0"], [contenteditable]').not('[tabindex="-1"], [disabled], .not(:visible), :hidden')
+				var focusable = $($modal).find('a[href], input, select, textarea, button, [tabindex="0"], [contenteditable]').not('[disabled], [tabindex="-1"], :hidden')
 				$closeModal = $modal.querySelector('.closeModal')
 				if ($modal.querySelector(".firstTab")) {
 					$firstTab = $modal.querySelector('.firstTab')
@@ -521,7 +521,7 @@ function modalDialog() {
 };
 
 function setAsModal($modal) {
-	var focusable = $($modal).find('a[href], input, select, textarea, button, [tabindex="0"], [contenteditable]').not('[tabindex="-1"], [disabled], .not(:visible), :hidden')
+	var focusable = $($modal).find('a[href], input, select, textarea, button, [tabindex="0"], [contenteditable]').not('[disabled], [tabindex="-1"], :hidden')
 	if ($modal.querySelector(".closeModal")) {
 		$closeModal = $modal.querySelector('.closeModal')
 	}
