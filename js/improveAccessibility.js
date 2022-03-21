@@ -527,19 +527,11 @@ function setAsModal($modal) {
 		$lastTab = null
 	}
 	$firstTab.focus()
-	if (!$modal.querySelector('[role="dialog"]')) {
-		$modal.setAttribute("role", "dialog")
-		$modal.setAttribute("aria-modal", "true")
-	}
 	setHiddenExceptForThis($modal);
 	$modal.addEventListener('keydown', bindKeyEvt);
 	let observer = new MutationObserver((mutations) => {
 		setHiddenExceptForThis($modal, 'off');
 		$modal.removeEventListener("keydown", bindKeyEvt, false);
-		if ($modal.getAttribute("role", "dialog")) {
-			$modal.removeAttribute("role")
-			$modal.removeAttribute("aria-modal")
-		}
 		$modal = null
 		$firstTab = null
 		$lastTab = null
