@@ -368,15 +368,6 @@ function ariaExpanded() {
 
 //modal.js
 function modalDialog() {
-	/*
-	1. 대화상자를 여는 버튼에는 aria-haspopup="dialog" 속성과 aria-controls 속성을 줍니다. aria-controls 에는 버튼과 연결된 role="dialog" 요소의 id 를 주면 됩니다.
-	예: <button aria-haspopup="dialog" aria-controls="dialog-container">대화상자 열기</button>
-	2. role="dialog" 속성은 대화상자가 있는 컨테이너에 주되 display 속성이 none, block 으로 변경되는 곳이어야 합니다. 
-	3. aria-haspopup="dialog" 를 클릭하여 대화상자가 열렸을 때 초점을 대화상자 내부의 특정 요소로 보내려면 보내고자 하는 요소에 autoFocus 라는 class 를 주면 됩니다. 다만 탭키로 접근이 가능한 요소이거나, 자바스크립트로 초점을 보낼 수 있도록 tabindex="-1" 속성이 들어가 있는 요소여야 합니다. 
-	4. 대화상자 내부에서 포커스 트랩을 구현하기 위해 class="firstTab" class="lastTab" 클래스를 각각 지정합니다. 이렇게 하면 firstTab 요소에서 쉬프트 탭을 누르면 lastTab class 로, lastTab class 에서 탭키를 누르면 firstTab class 로 이동합니다.
-	5. 대화상자를 닫는 버튼에는 class="modalClose" 를 추가합니다. 그러면 취소 키를 눌렀을 때 해당 요소가 클릭되면서 대화상자가 사라지고 초점은 이전 대화상자를 여는 버튼으로 돌아가게 됩니다. 대화상자가 display:none 되면 모든 aria-hidden 속성은 사라집니다.
- 
-	*/
 	'use strict';
 	var $body = document.body,
 		$targetAreas = $body.querySelectorAll('[aria-haspopup=dialog]'),
@@ -423,9 +414,6 @@ function modalDialog() {
 					setHiddenExceptForThis($modal, 'off');
 					$targetArea.focus();
 					$modal.removeEventListener("keydown", bindKeyEvt, false);
-					if ($lastTab.getAttribute("tabindex")) {
-						$lastTab.removeAttribute("tabindwx")
-					}
 					$modal = null
 					observer.disconnect();
 				});
@@ -551,9 +539,6 @@ function setAsModal($modal) {
 		if ($modal.getAttribute("role", "dialog")) {
 			$modal.removeAttribute("role")
 			$modal.removeAttribute("aria-modal")
-		}
-		if ($lastTab.getAttribute("tabindex")) {
-			$lastTab.removeAttribute("tabindex")
 		}
 		$modal = null
 		$firstTab = null
