@@ -1296,7 +1296,11 @@ function radioAsButton(Container) {
 		_.setAttribute("role", "button")
 		initialize()
 		_.addEventListener("click", function () {
-			initialize()
+			const real = Container.querySelector("#" + _.htmlFor)
+			if (!real.getAttribute("disabled")) {
+				$(Container).find("label").attr("aria-current", "false")
+				_.setAttribute("aria-current", "true")
+			}
 		})
 		function initialize() {
 			const real = Container.querySelector("#" + _.htmlFor)
