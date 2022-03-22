@@ -1296,10 +1296,12 @@ function radioAsButton(Container) {
 		_.setAttribute("role", "button")
 		initialize()
 		_.addEventListener("click", function () {
-			const real = Container.querySelector("#" + _.htmlFor)
-			if (!real.getAttribute("disabled")) {
-				$(Container).find("label").attr("aria-current", "false")
-				_.setAttribute("aria-current", "true")
+			initialize()
+		})
+		$(Container).find('input:radio').click(function () {
+			if ($(this).is(':checked')) {
+			$(Container).find("label").attr("aria-current", "false")
+			$('label[for=' + this.id + ']').attr("aria-current", "true")
 			}
 		})
 		function initialize() {
