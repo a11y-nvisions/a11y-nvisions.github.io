@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script async="" type="text/javascript" src="https://ssl.pstatic.net/tveta/libs/ndpsdk/prod/ndp-core.js"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<meta property="og:title" content="&quot;갈아타면 50%할인&quot;…중국 클라우드 공세에 업계 긴장">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://n.news.naver.com/mnews/article/011/0004037292?sid=105">
+	<meta property="og:image"
+		content="https://imgnews.pstatic.net/image/011/2022/04/02/0004037292_001_20220402084301046.png">
+	<meta property="og:description"
+		content="[서울경제] 알리바바 클라우드가 최근 국내 데이터센터 오픈과 함께 공격적인 프로모션에 나서며 업계가 예의주시하고 있다. 아마존웹서비스(AWS), 마이크로소프트(MS) 애저 등 미국 빅테크가 주름잡고 있는 국내 클라우">
+	<meta property="og:article:author" content="서울경제 | 네이버">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="&quot;갈아타면 50%할인&quot;…중국 클라우드 공세에 업계 긴장">
+	<meta name="twitter:site" content="네이버 뉴스">
+	<meta name="twitter:creator" content="서울경제">
+	<meta name="twitter:image"
+		content="https://imgnews.pstatic.net/image/011/2022/04/02/0004037292_001_20220402084301046.png">
+	<meta name="twitter:description"
+		content="[서울경제] 알리바바 클라우드가 최근 국내 데이터센터 오픈과 함께 공격적인 프로모션에 나서며 업계가 예의주시하고 있다. 아마존웹서비스(AWS), 마이크로소프트(MS) 애저 등 미국 빅테크가 주름잡고 있는 국내 클라우">
+	<meta name="napp-site-analysis"
+		content="gdid=88000108_000000000000000004037292,service=news,collection=news,section=105">
+	<title>"모바일 초점 테스트</title>
+	<link rel="stylesheet" href="https://static-nnews.pstatic.net/css/min/20220324/news.css">
+	<link rel="shortcut icon" type="image/x-icon"
+		href="https://mimgnews.pstatic.net/image/news/m/2014/favicon/favicon.ico">
+	<link rel="apple-touch-icon-precomposed"
+		href="https://ssl.pstatic.net/static.news/image/news/m/2018/favicon/06/android_legacy_xxxhpdi_192x192.png">
+	<link rel="apple-touch-icon-precomposed" size="72x72"
+		href="https://ssl.pstatic.net/static.news/image/news/m/2018/favicon/06/android_legacy_hdpi_72X72.png">
+	<link rel="apple-touch-icon-precomposed" size="96x96"
+		href="https://ssl.pstatic.net/static.news/image/news/m/2018/favicon/06/android_legacy_xhdpi_96x96.png">
+	<link rel="apple-touch-icon-precomposed" size="144x144"
+		href="https://ssl.pstatic.net/static.news/image/news/m/2018/favicon/06/android_legacy_xxhpdi_144x144.png">
+	<link rel="apple-touch-icon-precomposed" size="192x192"
+		href="https://ssl.pstatic.net/static.news/image/news/m/2018/favicon/06/android_legacy_xxxhpdi_192x192.png">
+	<script async="" src="https://ssl.pstatic.net/tveta/libs/glad/prod/gfp-core.js"></script>
+	<script async="" src="https://ssl.pstatic.net/tveta/libs/ndpsdk/prod/ndp-loader.js"></script>
+	<script>
+		var g_ssc = nsc = "Mnews.v2";
+		var g_default_area = "art";
+
+		var svr = "one-service-r-20220331-220331-144819-ddc8d468c-82rtq";
+		var nelo = {
+			sampleNumber: 100,
+			maxCount: 100,
+			maxSendMessage: "로그 전송 최대치 도달"
+		};
+		var isGreendot = document.cookie.indexOf("MM_NEW=1") > -1;
+		var isNewGreendot = document.cookie.indexOf("MM_NEW=2") > -1;
+		var domain = "https://n.news.naver.com";
+		var ajaxDomain = "";
+		var newsDomain = "https://news.naver.com";
+		var isAvailableDarkMode = false;
+
+		var article = {
+			isSubscribe: false,
+			officeId: "011",
+			articleId: "0004037292",
+			sectionId: "105",
+			gdid: "88000108_000000000000000004037292",
+			type: "1",
+			sectionInfo: {
+				firstSection: "105",
+				secondSection: "226",
+				thirdSection: "000"
+			},
+			title: document.title
+		};
+
+
+
+		var office = {
+			isChannel: true,
+			isPressHome: true,
+			name: "서울경제",
+			category: "경제지"
+		};
+
+		var refererType = "UNKNOWN";
+
+		var searchQuery = (function () {
+			var referrerLink = document.createElement("a");
+			var emptySearch = "";
+
+			referrerLink.href = document.referrer || "";
+
+			if (referrerLink.host.indexOf("search.naver.com") === -1) {
+				return emptySearch;
+			}
+
+			return decodeURIComponent(
+				(
+					referrerLink.search.match(/(?:\?|&)query\=([^&]+)/) || [null, emptySearch]
+				)[1].replace(/\+/g, " ")
+			);
+		})();
+
+		var divIds = [];
+		var syncDivIds = [];
+		var syncDivIdsForNonArticle = [];
+
+		var unitIds = [];
+		var syncUnitIds = [];
+		var syncUnitIdsForNonArticle = [];
+
+		window.ndpsdk = window.ndpsdk || { cmd: [], polyfill: { cmd: [] } };
+		var ndpAdTagUrl = "https://siape.veta.naver.com/fxshow?su=SU10306";
+
+		window.gladsdk = window.gladsdk || { cmd: [] };
+		gladsdk.cmd.push(function () {
+			gladsdk.setAdDeduplication("article_body_dedup");
+			gladsdk.setGlobalConfig({ enablePersistAd: true });
+
+			var adInfoList = [];
+
+			adInfoList.push({
+				seq: 1,
+				unitId: "m_news",
+				sync: true,
+				mobileOnly: false,
+				article: false,
+				directSalesPct: "0",
+				calp: false
+			});
+			adInfoList.push({
+				seq: 2,
+				unitId: "m_news_smb",
+				sync: false,
+				mobileOnly: true,
+				article: false,
+				directSalesPct: "",
+				calp: false
+			});
+			adInfoList.push({
+				seq: 3,
+				unitId: "m_news_body",
+				sync: true,
+				mobileOnly: false,
+				article: true,
+				directSalesPct: "0",
+				calp: false
+			});
+
+			var userAgent = navigator.userAgent.toLowerCase();
+
+			for (var i = 0; i < adInfoList.length; i++) {
+				var adInfo = adInfoList[i];
+
+				var divId = "nmap_c_" + article.officeId + "_" + article.articleId + "_" + article.sectionId + "_" + (i + 1);
+
+				var unitId = adInfo.unitId;
+				var mobileOnly = adInfo.mobileOnly;
+				var sync = adInfo.sync;
+				var isArticle = adInfo.article;
+				var directSalesPct = adInfo.directSalesPct;
+				var calp = adInfo.calp;
+
+				if (mobileOnly == true) {
+					if (/iphone|android|ipod/.test(userAgent) == false) {
+						continue;
+					}
+				}
+
+				var customParam = {
+					sid1: article.sectionId,
+					oid: article.officeId,
+					gdid: article.gdid,
+					pk: searchQuery,
+					directSalesPct: directSalesPct
+				};
+
+				if (calp == true) {
+					customParam.calp = "";
+				}
+
+				var adUnit = {
+					adUnitId: unitId,
+					adSlotElementId: divId,
+					customParam: customParam
+				};
+
+				if (sync == true) {
+					syncUnitIds.push(unitId);
+					syncDivIds.push(divId);
+
+					if (isArticle == false) {
+						syncUnitIdsForNonArticle.push(unitId);
+						syncDivIdsForNonArticle.push(divId);
+					}
+				} else {
+					unitIds.push(unitId);
+					divIds.push(divId);
+				}
+
+				gladsdk.defineAdSlot(adUnit);
+			}
+
+		});
+		window.__htExternalUrl = window.__htExternalUrl || {};
+	</script>
+	<script src="https://static-nnews.pstatic.net/js/min/20220331/common.min.js"></script>
+	<style type="text/css" id="_cbox_default_style_"></style>
+	<link type="text/css" rel="stylesheet"
+		href="https://ssl.pstatic.net/static.cbox/20220331145806/css/comment_news_w.css" charset="utf-8">
+	<script type="text/javascript" src="https://ssl.pstatic.net/static.cbox/20220331145806/js/cbox.eg.js"
+		charset="utf-8"></script>
+	<script charset="utf-8" type="text/javascript"
+		src="https://news.like.naver.com/static20220322155734/js/reaction/dist/reaction.basic.js"></script>
+	<link id="naver-splugin-css" rel="stylesheet" type="text/css"
+		href="https://ssl.pstatic.net/spi/css/20210531/spi_standard_https.css">
+	<style name="tip_pc" type="text/css">
+		@charset "UTF-8";
+
+		.u_helpdict_module .u_pronunciation .u_btn_pronun,
+		.u_helpdict_module .u_pronunciation .u_btn_tts,
+		.u_helpdict_module .u_btn_helpdict_more .u_helpdict_ico_more,
+		.u_helpdict_module .u_helpdict_close,
+		.u_helpdict_module.u_type_a .u_headword .u_btn_headword .u_reference_word:before {
+			background-image: url(https://ssl.pstatic.net/dicimg/tip/3ad4ad8b499ce61c6c3769611c7e5bb2.png);
+			background-size: 69px 44px;
+		}
+
+		.u_helpdict_module div,
+		.u_helpdict_module ul,
+		.u_helpdict_module li,
+		.u_helpdict_module h2,
+		.u_helpdict_module dl,
+		.u_helpdict_module dd,
+		.u_helpdict_module img,
+		.u_helpdict_module p,
+		.u_helpdict_module em,
+		.u_helpdict_module a,
+		.u_helpdict_module span,
+		.u_helpdict_module button {
+			float: none;
+			position: static;
+			margin: 0;
+			padding: 0;
+			border-width: 0;
+			border-style: none;
+			border-color: transparent;
+			border-image: none;
+			border-radius: 0;
+			background: transparent;
+			letter-spacing: 0;
+			line-height: normal;
+			text-align: left;
+			text-decoration: none;
+			text-indent: 0;
+			vertical-align: baseline;
+			white-space: normal;
+			list-style: none;
+			list-style-image: none;
+			list-style-type: none;
+			font-style: normal;
+			word-spacing: 0;
+			font-family: normal;
+			-moz-box-sizing: content-box;
+			-webkit-box-sizing: content-box;
+			box-sizing: content-box;
+		}
+
+		.u_helpdict_module button {
+			cursor: pointer;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_btn_pronun,
+		.u_helpdict_module .u_pronunciation .u_btn_tts,
+		.u_helpdict_module .u_helpdict_close {
+			overflow: hidden;
+			white-space: nowrap;
+			text-indent: 100%;
+			color: transparent;
+		}
+
+		/* 보조사전 PC */
+		/* 선택된 단어 */
+		.u_word_dic.u_active {
+			position: relative;
+			background-color: #cdff74;
+		}
+
+		.u_word_dic.u_news_active {
+			position: relative;
+			background-color: #cdff74;
+			cursor: pointer;
+		}
+
+		/* 확대 레이어 */
+		.u_helpdict_zoom_area {
+			display: none;
+		}
+
+		/* 보조사전 영역 */
+		.u_helpdict_module {
+			position: absolute;
+			left: 0;
+			right: 0;
+			z-index: 10000;
+			/* 서비스에 맞게 수치 조정 */
+			width: 280px;
+			padding: 0 20px;
+			background-color: #fff;
+			border: 1px solid #b9c8d9;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_helpdict_area {
+			padding: 14px 0 19px;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_helpdict_area+.u_helpdict_area {
+			border-top: 1px solid #eaeef3;
+		}
+
+		.u_helpdict_module .u_headword {
+			padding: 0 30px 0 0;
+			font-size: 23px;
+			line-height: 30px;
+		}
+
+		.u_helpdict_module .u_headword .u_btn_headword {
+			display: block;
+			font-weight: bold;
+			color: #00c;
+			line-height: 30px;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+			word-break: break-all;
+		}
+
+		.u_helpdict_module .u_headword .u_btn_headword .u_normal_word {
+			font-weight: normal;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_headword .u_btn_headword .u_sup_item {
+			display: inline-block;
+			vertical-align: top;
+			font-size: 13px;
+			margin: -6px 2px 0 3px;
+		}
+
+		.u_helpdict_module .u_headword .u_btn_headword .u_origin_word {
+			display: inline-block;
+			font-family: NanumGothic, sans-serif;
+			font-weight: normal;
+			font-size: 22px;
+			color: #666;
+		}
+
+		.u_helpdict_module .u_headword .u_btn_headword .u_origin_word .u_word_slash {
+			color: #8a8a8a;
+		}
+
+		.u_helpdict_module .u_pronunciation {
+			margin: 0 -2px;
+			font-size: 14px;
+			line-height: 30px;
+			color: #666;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item {
+			display: inline-block;
+			padding: 0 2px;
+			line-height: 30px;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item.source {
+			display: block;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item:first-child {
+			margin: 0 5px 0 0;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item:first-child .u_by_country {
+			margin-left: 0;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item .u_by_country {
+			font-size: 12px;
+			line-height: 20px;
+			margin: 0 4px 0 0;
+			vertical-align: middle;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item .u_phonetic_alphabet {
+			margin: 0 5px 0 0;
+			font-size: 14px;
+			line-height: 22px;
+			color: #666;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item .u_phonetic_alphabet .u_sup_item {
+			vertical-align: top;
+			position: relative;
+			top: -4px;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item .u_phonetic_alphabet[lang="en"] {
+			font-size: 13px;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item .u_origin_source {
+			font-size: 12px;
+			line-height: 19px;
+			vertical-align: middle;
+			color: #767676;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_pronunciation_item .u_web_collection {
+			display: inline-block;
+			line-height: 17px;
+			border: 1px solid #e7e7e7;
+			padding: 1px 3px 0;
+			font-size: 11px;
+			color: #888;
+			vertical-align: middle;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_by_country+.u_btn_pronun,
+		.u_helpdict_module .u_pronunciation .u_by_country+.u_btn_tts {
+			margin-left: 0;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_btn_pronun {
+			background-position: -26px 0px;
+			width: 22px;
+			height: 20px;
+			display: inline-block;
+			vertical-align: middle;
+			margin: -1px 0 0 4px;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_btn_pronun.u_active {
+			background-position: 0px 0px;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_btn_tts {
+			background-position: -26px -24px;
+			width: 22px;
+			height: 20px;
+			display: inline-block;
+			vertical-align: middle;
+			margin: -1px 0 0 4px;
+		}
+
+		.u_helpdict_module .u_pronunciation .u_btn_tts.u_active {
+			background-position: 0px -24px;
+		}
+
+		.u_helpdict_module .u_definition {
+			margin-top: 12px;
+		}
+
+		.u_helpdict_module .u_definition .u_origin_source {
+			display: block;
+			margin-top: 5px;
+			font-size: 12px;
+			line-height: 19px;
+			color: #767676;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word {
+			font-size: 12px;
+			line-height: 19px;
+			color: #000;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_mean_word_item {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_mean_word_item+.u_mean_word_item {
+			margin-top: 13px;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_word_class {
+			margin-right: 3px;
+			white-space: nowrap;
+			color: #7a96b9;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_hanja_option {
+			display: block;
+			margin: 0 0 20px;
+			font-size: 12px;
+			white-space: nowrap;
+			color: #000;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_hanja_option .u_option_item {
+			color: #7a96b9;
+			margin-left: 18px;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_hanja_option .u_option_item:first-child {
+			margin-left: 0;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_hanja_option .u_option_radical {
+			font-size: 15px;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_word_mean,
+		.u_helpdict_module .u_definition .u_mean_word .u_hanja_option+.u_word_mean {
+			font-size: 13px;
+			line-height: 22px;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_word_mean .u_direct_link,
+		.u_helpdict_module .u_definition .u_mean_word .u_hanja_option+.u_word_mean .u_direct_link {
+			white-space: nowrap;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+			color: #888;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_word_mean .u_sup_item,
+		.u_helpdict_module .u_definition .u_mean_word .u_hanja_option+.u_word_mean .u_sup_item {
+			font-size: 10px;
+			margin: 0 3px 0 2px;
+			vertical-align: top;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_mean_word_item.u_list .u_word_mean {
+			position: relative;
+			display: block;
+			margin-top: 7px;
+			padding-left: 17px;
+		}
+
+		.u_helpdict_module .u_definition .u_mean_word .u_mean_word_item.u_list .u_word_mean .u_words_num {
+			position: absolute;
+			top: 0;
+			left: 0;
+			line-height: 22px;
+			font-size: 13px;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+		}
+
+		.u_helpdict_module .u_helpdict_notice {
+			padding: 14px 15px;
+			margin: 0 -20px;
+			line-height: 18px;
+			background-color: #fafafa;
+			border-top: 1px solid #eaeef3;
+			font-size: 12px;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+			color: #666;
+			clear: both;
+			word-break: keep-all;
+			word-wrap: break-word;
+		}
+
+		.u_helpdict_module .u_helpdict_notice .u_ico_notice {
+			display: none;
+		}
+
+		.u_helpdict_module .u_helpdict_notice .u_notice_txt {
+			vertical-align: middle;
+		}
+
+		.u_helpdict_module .u_helpdict_notice .u_notice_inner {
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+			margin: 0 3px 0 0;
+		}
+
+		.u_helpdict_module .u_helpdict_notice .u_report_link {
+			color: #404040;
+			text-decoration: underline;
+		}
+
+		.u_helpdict_module .u_btn_more_wrap {
+			text-align: right;
+			padding: 13px 9px;
+			background-color: #fafafa;
+			border-top: 1px solid #eaeef3;
+			margin: 0 -20px;
+		}
+
+		.u_helpdict_module .u_btn_helpdict_more {
+			display: inline-block;
+			font-size: 12px;
+			line-height: 18px;
+			font-family: Arial, NanumGothic, Dotum, sans-serif;
+			color: #404040;
+		}
+
+		.u_helpdict_module .u_btn_helpdict_more .u_bold_num {
+			color: #658fc4;
+		}
+
+		.u_helpdict_module .u_btn_helpdict_more .u_helpdict_ico_more {
+			background-position: -52px -36px;
+			width: 5px;
+			height: 8px;
+			display: inline-block;
+			margin-top: 2px;
+		}
+
+		.u_helpdict_module .u_helpdict_close {
+			background-position: -52px 0px;
+			width: 17px;
+			height: 17px;
+			position: absolute;
+			top: 18px;
+			right: 18px;
+		}
+
+		.u_helpdict_module.u_type_a .u_headword {
+			font-size: 23px;
+			line-height: 32px;
+		}
+
+		.u_helpdict_module.u_type_a .u_headword .u_btn_headword {
+			line-height: 32px;
+		}
+
+		.u_helpdict_module.u_type_a .u_headword .u_btn_headword .u_reference_word {
+			display: inline-block;
+			font-size: 23px;
+			line-height: 26px;
+			font-weight: normal;
+			color: #666;
+		}
+
+		.u_helpdict_module.u_type_a .u_headword .u_btn_headword .u_reference_word:before {
+			background-position: -52px -21px;
+			width: 11px;
+			height: 11px;
+			display: inline-block;
+			margin: 7px 5px 0 0;
+			vertical-align: top;
+			content: '';
+		}
+
+		.u_helpdict_module.u_type_a .u_definition .u_mean_word .u_mean_word_item.u_list .u_word_mean .u_words_num {
+			font-size: 12px;
+			line-height: 20px;
+		}
+
+		.u_helpdict_module.u_type_a .u_definition .u_mean_word .u_word_mean {
+			font-size: 12px;
+			line-height: 20px;
+		}
+
+		.u_helpdict_module.u_type_b1 .u_headword {
+			font-size: 21px;
+			line-height: 37px;
+		}
+
+		.u_helpdict_module.u_type_b1 .u_headword .u_btn_headword {
+			line-height: 37px;
+		}
+
+		.u_helpdict_module.u_type_b1 .u_definition .u_mean_word .u_mean_word_item.u_list .u_word_mean .u_words_num {
+			font-size: 12px;
+			line-height: 20px;
+		}
+
+		.u_helpdict_module.u_type_b1 .u_definition .u_mean_word .u_word_mean {
+			font-size: 12px;
+			line-height: 20px;
+		}
+
+		.u_helpdict_module.u_type_b2 .u_headword {
+			font-size: 23px;
+			line-height: 32px;
+		}
+
+		.u_helpdict_module.u_type_b2 .u_headword .u_btn_headword {
+			line-height: 32px;
+		}
+
+		.u_helpdict_module.u_type_b2 .u_pronunciation,
+		.u_helpdict_module.u_type_b2 .u_pronunciation .u_pronunciation_item,
+		.u_helpdict_module.u_type_b2 .u_pronunciation .u_pronunciation_item .u_origin_source {
+			line-height: 29px;
+		}
+
+		.u_helpdict_module.u_type_b2 .u_definition .u_mean_word {
+			line-height: 24px;
+		}
+
+		.u_helpdict_module.u_type_b2 .u_definition .u_mean_word .u_word_class {
+			font-size: 14px;
+		}
+
+		.u_helpdict_module.u_type_b2 .u_definition .u_mean_word .u_word_mean {
+			font-size: 14px;
+			line-height: 29px;
+		}
+
+		.u_helpdict_module.u_type_b2 .u_definition .u_mean_word .u_mean_word_item.u_list .u_word_mean .u_words_num {
+			top: 6px;
+		}
+
+		.u_helpdict_module.u_type_hanja .u_headword {
+			display: table;
+			table-layout: fixed;
+			width: 100%;
+		}
+
+		.u_helpdict_module.u_type_hanja .u_headword .u_btn_headword {
+			display: table-cell;
+			width: 35px;
+			font-size: 23px;
+			vertical-align: top;
+		}
+
+		.u_helpdict_module.u_type_hanja .u_headword .u_han_mean {
+			display: table-cell;
+			padding: 0 30px 0 0;
+			line-height: 20px;
+			font-size: 14px;
+			color: #666;
+			vertical-align: middle;
+		}
+
+		.u_helpdict_module.u_type_hanja .u_definition {
+			margin-top: 7px;
+		}
+
+		.u_helpdict_module.u_type_hanja .u_definition .u_mean_word .u_mean_word_item.u_list .u_word_mean .u_words_num {
+			font-size: 12px;
+			line-height: 20px;
+		}
+
+		.u_helpdict_module.u_type_hanja .u_definition .u_mean_word .u_word_mean {
+			font-size: 12px;
+			line-height: 20px;
+		}
+
+		.u_helpdict_module.u_layout_xdic .u_helpdict_notice .u_notice_txt {
+			font-size: 13px;
+			line-height: 24px;
+		}
+
+		.u_helpdict_module.u_layout_xdic .u_btn_helpdict_more {
+			line-height: 24px;
+		}
+
+		.u_helpdict_module.u_type_japan .u_pronunciation .u_pronunciation_item .u_origin_source {
+			font-size: 13px;
+			color: #888;
+		}
+
+		.u_helpdict_module.u_type_japan .u_japan_option .u_read_item {
+			display: inline-block;
+			margin: 5px 10px 0 0;
+			vertical-align: top;
+		}
+
+		.u_helpdict_module.u_type_japan .u_japan_option .u_read_item:after {
+			display: block;
+			clear: both;
+			content: '';
+		}
+
+		.u_helpdict_module.u_type_japan .u_japan_option .u_read_item .read_item {
+			float: left;
+			margin: 2px 4px 0 0;
+			vertical-align: top;
+			color: #7a96b9;
+		}
+
+		.u_helpdict_module.u_type_japan .u_japan_option .u_read_item .read_text {
+			overflow: hidden;
+		}
+
+		.u_helpdict_module.u_type_japan .u_headword .u_btn_headword {
+			display: inline-block;
+			vertical-align: middle;
+			min-width: 25px;
+			font-family: "Hiragino Sans", YuGothic, Meiryo, "MS Pgothic", sans-serif;
+			font-size: 24px;
+			font-weight: 500;
+		}
+
+		.u_helpdict_module.u_type_japan .u_headword .u_btn_headword .u_origin_word {
+			font-size: 23px;
+			color: #000;
+		}
+
+		.u_helpdict_module.u_type_japan .u_han_mean {
+			display: inline-block;
+			padding: 0 15px 0 0;
+			line-height: 20px;
+			font-size: 15px;
+			color: #666;
+			vertical-align: middle;
+		}
+
+		.u_helpdict_module.u_type_japan .u_relate_hanja {
+			margin: 0 -20px;
+			padding: 20px 20px 0;
+			border-top: 1px solid #b9c8d9;
+			line-height: 17px;
+			font-size: 15px;
+			font-weight: bold;
+			color: #404040;
+		}
+
+		.u_helpdict_module.u_type_japan .u_helpdict_area.u_hanja {
+			padding: 20px 0 19px;
+			border-color: #eaeef3;
+		}
+
+		.u_helpdict_module.u_type_japan .u_definition {
+			margin-top: 10px;
+		}
+
+		.u_helpdict_module.u_type_japan .u_definition .u_mean_word .u_hanja_option {
+			margin-bottom: 0;
+			font-size: 13px;
+		}
+
+		.u_helpdict_module.u_type_japan .u_definition .u_mean_word .u_option_radical,
+		.u_helpdict_module.u_type_japan .u_definition .u_mean_word .read_text {
+			font-size: 16px;
+		}
+
+		.u_helpdict_module.u_type_hanja .u_headword .u_btn_headword .u_origin_word {
+			display: none;
+		}
+	</style>
+	<link type="text/css" rel="stylesheet" class="like_css"
+		href="https://news.like.naver.com/static20220322155734/css/ssl/reaction/mobile/likeit_multi.css">
+	<link type="text/css" rel="stylesheet" class="like_css"
+		href="https://static-feedback.pstatic.net/css/NEWS/1d55b00f-7ab3-4763-90fe-48a926ef1026/9d88b97f-805d-482f-a74a-4dae200abe02/NEWS.css">
+	<script>
+		$(document).ready(function () {
+			if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+				$('#iOS').find('[role="paragraph"]').attr('role', 'text')
+			}
+		})
+	</script>
+</head>
+
+<body>
+	<h1>초점 분리 테스트</h1>
+	<div>
+		<h2>문단 시작에 p 태그가 없는 경우</h2>
+		<span class="article_p">2일 업계에 따르면 알리바바 클라우드는 최근 신규 고객을 대상으로 자사 클라우드 서비스를 이용할 수 있는 총 <span data-type="ore"
+				data-lang="en">100</span>만 달러(약 <span data-type="ore" data-lang="en">11</span>억 원) 규모의 크레딧을 제공하고 경쟁사 고객일
+			경우 이용료의 <span data-type="ore" data-lang="en">50</span>%를 깎아주는 할인 이벤트를 연다고 밝혔다. <span data-type="ore"
+				data-lang="en">100</span>만 달러 크레딧은 선착순 <span data-type="ore" data-lang="en">200</span>개사에 지급되는 모든 금액을 합친
+			액수다. 내부 심사 기준에 따라 고객사에서 필요로 하는 금액에 따라 차등 지급된다.</span><br><br><span class="article_p">알리바바 클라우드는 가격 경쟁력과 함께
+			자사 서비스가 중국·동남아 진출에도 강점을 갖는다고 강조하고 있다. 알리바바 클라우드는 전 세계 <span data-type="ore" data-lang="en">26</span>개
+			리전(클라우드 거점 단위)을 운영하고 있는 세계 3위 클라우드 기업이다. 특히 중국과 동남아 지역에서 높은 점유율을 자랑하고 있다. 정형권 알리바바코리아 대표는 “한국 기업들이 알리바바의 기술,
+			생태계를 통해 국내뿐 아니라 해외로도 적극 사업을 확장할 수 있도록 지원을 아끼지 않겠다”고 했다.</span><br><br>
+	</div>
+	<div>
+		<h2>p 태그 없는 문단에 role paragraph를 추가한 경우</h2>
+		<span role="paragraph" class="article_p">2일 업계에 따르면 알리바바 클라우드는 최근 신규 고객을 대상으로 자사 클라우드 서비스를 이용할 수 있는 총 <span
+				data-type="ore" data-lang="en">100</span>만 달러(약 <span data-type="ore" data-lang="en">11</span>억 원) 규모의
+			크레딧을 제공하고 경쟁사 고객일
+			경우 이용료의 <span data-type="ore" data-lang="en">50</span>%를 깎아주는 할인 이벤트를 연다고 밝혔다. <span data-type="ore"
+				data-lang="en">100</span>만 달러 크레딧은 선착순 <span data-type="ore" data-lang="en">200</span>개사에 지급되는 모든 금액을 합친
+			액수다. 내부 심사 기준에 따라 고객사에서 필요로 하는 금액에 따라 차등 지급된다.</span><br><br>
+		<span role="paragraph" class="article_p">알리바바 클라우드는 가격 경쟁력과 함께
+			자사 서비스가 중국·동남아 진출에도 강점을 갖는다고 강조하고 있다. 알리바바 클라우드는 전 세계 <span data-type="ore" data-lang="en">26</span>개
+			리전(클라우드 거점 단위)을 운영하고 있는 세계 3위 클라우드 기업이다. 특히 중국과 동남아 지역에서 높은 점유율을 자랑하고 있다. 정형권 알리바바코리아 대표는 “한국 기업들이 알리바바의 기술,
+			생태계를 통해 국내뿐 아니라 해외로도 적극 사업을 확장할 수 있도록 지원을 아끼지 않겠다”고 했다.</span><br><br>
+	</div>
+	<div>
+		<h2>문단마다 p 태그를 추가한 경우</h2>
+		<p>2일 업계에 따르면 알리바바 클라우드는 최근 신규 고객을 대상으로 자사 클라우드 서비스를 이용할 수 있는 총 <span data-type="ore" data-lang="en">100</span>만
+			달러(약 <span data-type="ore" data-lang="en">11</span>억 원) 규모의
+			크레딧을 제공하고 경쟁사 고객일
+			경우 이용료의 <span data-type="ore" data-lang="en">50</span>%를 깎아주는 할인 이벤트를 연다고 밝혔다. <span data-type="ore"
+				data-lang="en">100</span>만 달러 크레딧은 선착순 <span data-type="ore" data-lang="en">200</span>개사에 지급되는 모든 금액을 합친
+			액수다. 내부 심사 기준에 따라 고객사에서 필요로 하는 금액에 따라 차등 지급된다.</p><br><br>
+		<p>알리바바 클라우드는 가격 경쟁력과 함께
+			자사 서비스가 중국·동남아 진출에도 강점을 갖는다고 강조하고 있다. 알리바바 클라우드는 전 세계 <span data-type="ore" data-lang="en">26</span>개
+			리전(클라우드 거점 단위)을 운영하고 있는 세계 3위 클라우드 기업이다. 특히 중국과 동남아 지역에서 높은 점유율을 자랑하고 있다. 정형권 알리바바코리아 대표는 “한국 기업들이 알리바바의 기술,
+			생태계를 통해 국내뿐 아니라 해외로도 적극 사업을 확장할 수 있도록 지원을 아끼지 않겠다”고 했다.</p><br><br>
+	</div>
+	<div>
+		<h2> 아이폰 대응, role paragraph와 text를 p 태그 없는 문단마다 추가한 경우</h2>
+		<span role="paragraph text" class="article_p">2일 업계에 따르면 알리바바 클라우드는 최근 신규 고객을 대상으로 자사 클라우드 서비스를 이용할 수 있는 총 <span
+				data-type="ore" data-lang="en">100</span>만 달러(약 <span data-type="ore" data-lang="en">11</span>억 원) 규모의
+			크레딧을 제공하고 경쟁사 고객일
+			경우 이용료의 <span data-type="ore" data-lang="en">50</span>%를 깎아주는 할인 이벤트를 연다고 밝혔다. <span data-type="ore"
+				data-lang="en">100</span>만 달러 크레딧은 선착순 <span data-type="ore" data-lang="en">200</span>개사에 지급되는 모든 금액을 합친
+			액수다. 내부 심사 기준에 따라 고객사에서 필요로 하는 금액에 따라 차등 지급된다.</span><br><br>
+		<span role="paragraph text" class="article_p">알리바바 클라우드는 가격 경쟁력과 함께
+			자사 서비스가 중국·동남아 진출에도 강점을 갖는다고 강조하고 있다. 알리바바 클라우드는 전 세계 <span data-type="ore" data-lang="en">26</span>개
+			리전(클라우드 거점 단위)을 운영하고 있는 세계 3위 클라우드 기업이다. 특히 중국과 동남아 지역에서 높은 점유율을 자랑하고 있다. 정형권 알리바바코리아 대표는 “한국 기업들이 알리바바의 기술,
+			생태계를 통해 국내뿐 아니라 해외로도 적극 사업을 확장할 수 있도록 지원을 아끼지 않겠다”고 했다.</span><br><br>
+	</div>
+	<div>
+		<h2> 아이폰 대응, role text만 p 태그 없는 문단마다 추가한 경우</h2>
+		<span role="text" class="article_p">2일 업계에 따르면 알리바바 클라우드는 최근 신규 고객을 대상으로 자사 클라우드 서비스를 이용할 수 있는 총 <span
+				data-type="ore" data-lang="en">100</span>만 달러(약 <span data-type="ore" data-lang="en">11</span>억 원) 규모의
+			크레딧을 제공하고 경쟁사 고객일
+			경우 이용료의 <span data-type="ore" data-lang="en">50</span>%를 깎아주는 할인 이벤트를 연다고 밝혔다. <span data-type="ore"
+				data-lang="en">100</span>만 달러 크레딧은 선착순 <span data-type="ore" data-lang="en">200</span>개사에 지급되는 모든 금액을 합친
+			액수다. 내부 심사 기준에 따라 고객사에서 필요로 하는 금액에 따라 차등 지급된다.</span><br><br>
+		<span role="text" class="article_p">알리바바 클라우드는 가격 경쟁력과 함께
+			자사 서비스가 중국·동남아 진출에도 강점을 갖는다고 강조하고 있다. 알리바바 클라우드는 전 세계 <span data-type="ore" data-lang="en">26</span>개
+			리전(클라우드 거점 단위)을 운영하고 있는 세계 3위 클라우드 기업이다. 특히 중국과 동남아 지역에서 높은 점유율을 자랑하고 있다. 정형권 알리바바코리아 대표는 “한국 기업들이 알리바바의 기술,
+			생태계를 통해 국내뿐 아니라 해외로도 적극 사업을 확장할 수 있도록 지원을 아끼지 않겠다”고 했다.</span><br><br>
+	</div>
+	<div id="iOS">
+		<h2>스크립트로 아이폰 디바이스 탐지하여 코드 조정</h2>
+		<span role="paragraph" class="article_p">2일 업계에 따르면 알리바바 클라우드는 최근 신규 고객을 대상으로 자사 클라우드 서비스를 이용할 수 있는 총 <span
+				data-type="ore" data-lang="en">100</span>만 달러(약 <span data-type="ore" data-lang="en">11</span>억 원) 규모의
+			크레딧을 제공하고 경쟁사 고객일
+			경우 이용료의 <span data-type="ore" data-lang="en">50</span>%를 깎아주는 할인 이벤트를 연다고 밝혔다. <span data-type="ore"
+				data-lang="en">100</span>만 달러 크레딧은 선착순 <span data-type="ore" data-lang="en">200</span>개사에 지급되는 모든 금액을 합친
+			액수다. 내부 심사 기준에 따라 고객사에서 필요로 하는 금액에 따라 차등 지급된다.</span><br><br>
+		<span role="paragraph" class="article_p">알리바바 클라우드는 가격 경쟁력과 함께
+			자사 서비스가 중국·동남아 진출에도 강점을 갖는다고 강조하고 있다. 알리바바 클라우드는 전 세계 <span data-type="ore" data-lang="en">26</span>개
+			리전(클라우드 거점 단위)을 운영하고 있는 세계 3위 클라우드 기업이다. 특히 중국과 동남아 지역에서 높은 점유율을 자랑하고 있다. 정형권 알리바바코리아 대표는 “한국 기업들이 알리바바의 기술,
+			생태계를 통해 국내뿐 아니라 해외로도 적극 사업을 확장할 수 있도록 지원을 아끼지 않겠다”고 했다.</span><br><br>
+	</div>
+
+</body>
+
+</html>
