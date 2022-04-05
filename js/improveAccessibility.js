@@ -243,11 +243,17 @@ function screenReaderLive() {
 			if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
 				announceForAccessibility("");
 			} else {
-				if (btn.getAttribute("aria-label")) {
+				if (btn.getAttribute("aria-label") || btn.getAttribute("aria-labelledby")) {
 					if (isAndroid) {
-						setTimeout(function () {
-							announceForAccessibility(btn.getAttribute("aria-label"));
-						}, 150);
+						if (btn.getAttribute("aria-labelledby")) {
+							setTimeout(function () {
+								announceForAccessibility(btn.getAttribute("aria-label"))
+							}, 150)
+						} else {
+							setTimeout(function () {
+								announceForAccessibility(btn.getAttribute("aria-label"));
+							}, 150);
+						}
 					} else {
 						announceForAccessibility("");
 					};
@@ -1300,8 +1306,8 @@ function radioAsButton(Container) {
 		})
 		$(Container).find('input:radio').click(function () {
 			if ($(this).is(':checked')) {
-			$(Container).find("label").attr("aria-current", "false")
-			$('label[for=' + this.id + ']').attr("aria-current", "true")
+				$(Container).find("label").attr("aria-current", "false")
+				$('label[for=' + this.id + ']').attr("aria-current", "true")
 			}
 		})
 		function initialize() {
