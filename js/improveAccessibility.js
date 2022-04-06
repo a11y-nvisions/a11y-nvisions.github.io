@@ -121,7 +121,7 @@
 	function ariaPressed() {
 		var beforeOuterHtml;
 		var ua = navigator.userAgent.toLowerCase();
-		var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+		
 		$(document).on("mousedown", ":button[aria-pressed], [type='button'][aria-pressed], [role='button'][aria-pressed]", function (e) {
 			if ($(this).attr("aria-pressed") === undefined) { return; }
 			beforeOuterHtml = this.outerHTML;
@@ -237,7 +237,7 @@
 	
 	// announceForAccessibility
 	function screenReaderLive() {
-		var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+		var isAndroid = /(android)/i.test(navigator.userAgent);
 		var ua = navigator.userAgent.toLowerCase();
 		var btns = document.querySelectorAll('[screen-reader-live]');
 		btns.forEach(function (btn) {
@@ -249,7 +249,7 @@
 						if (isAndroid) {
 							if (btn.getAttribute("aria-labelledby")) {
 								setTimeout(function () {
-									announceForAccessibility(btn.getAttribute("aria-label"))
+									announceForAccessibility(btn.getAttribute("aria-labelledby"))
 								}, 150)
 							} else {
 								setTimeout(function () {
@@ -306,7 +306,7 @@
 			btn.expandEvent = true;
 			var beforeOuterHtml
 			var ua = navigator.userAgent.toLowerCase();
-			var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+			var isAndroid = /(android)/i.test(navigator.userAgent);
 			if (isAndroid) {
 				btn.addEventListener("mousedown", function () {
 					var expandEl = document.querySelector("#" + btn.getAttribute("aria-controls"));
@@ -659,7 +659,7 @@
 			var hiddenEl = document.querySelector("#" + btn.getAttribute("screen-reader-hidden"));
 			var beforeOuterHtml;
 			var ua = navigator.userAgent.toLowerCase();
-			var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
+			var isAndroid = /(android)/i.test(navigator.userAgent);
 			if ($(hiddenEl).attr("aria-hidden") === "false") {
 				$(hiddenEl).find("a[href], button, input, select, [role='button'], [role='link'], [role='checkbox'], [role='tab'], [role='radiobutton'], [role='combobox']").removeAttr("tabindex");
 			} else if ($(hiddenEl).attr("aria-hidden") === "true") {
