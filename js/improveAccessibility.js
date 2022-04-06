@@ -237,6 +237,7 @@
 	
 	// announceForAccessibility
 	function screenReaderLive() {
+		var isAndroid = ua.indexOf("android") > -1; //&& ua.indexOf("mobile");
 		var btns = document.querySelectorAll('[screen-reader-live]');
 		btns.forEach(function (btn) {
 			btn.addEventListener('click', function () {
