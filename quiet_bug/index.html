@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVDA Silent Bug when navigate beetween focusable parent and focusable children</title>
+</head>
+<body>
+    <h1>
+        <a href="#">
+            NVDA Silent Bug when navigate beetween focusable parent and focusable children
+        </a>
+    </h1>
+    <div tabindex="0" role="region" aria-label="nvda will be quiet when you navigate here">
+        test here!
+        <a href="#">This is focusable link children for testing</a>
+    </div>
+</body>
+</html>
