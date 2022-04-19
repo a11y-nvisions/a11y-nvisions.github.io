@@ -1244,3 +1244,49 @@ function getClosestParent(el, query) {
 	}
 	return el
 }
+// create ids for all tag without id
+function createIdForAllTag() {
+	(function (/** @type {HTMLElement}*/ target = document.body) {
+
+
+		function setInitializeAutoIdentifier(
+					/**@type {HTMLElement[]|NodeList}*/ elements
+		) {
+			elements.forEach(/** @param {Element} $e*/($e) => {
+				/** @type {string} */
+				var $tagName = $e.tagName.toLowerCase();
+
+				/** @type {RegEXP} */
+				var ignoredTags = /^(html|head|link|script|style|body|meta|title)$/;
+
+				/** @type {boolean} */
+				var isIgnoredTag = ignoredTags.test($tagName);
+
+				/** @type {HTMLElement[]} */
+				var AllElems = Array.prototype.slice.call(target.querySelectorAll($tagName));
+
+				/** @type {number} */
+				var $docIndex = AllElems.indexOf($e) + 1;
+				if (!isIgnoredTag) {
+					$e.id = $e.id ? $e.id : "AIID_" + $e.tagName.toLowerCase() + "_" + $docIndex;
+				}
+			});
+		}
+
+		/**
+			* 
+			* @param {MutationRecord} Record 
+			*/
+		var MTO_Callback = (Record) => {
+			setInitializeAutoIdentifier(Record.addedNodes ? Record.addedNodes : []);
+		}
+	/** @type {MutationObserverInit} */ var MTO_ObserveInitOptions = {
+			subtree: true,
+			childList: true,
+		}
+		var mtObserver = new MutationObserver(MTO_Callback);
+
+		mtObserver.observe(target, MTO_ObserveInitOptions);
+		setInitializeAutoIdentifier(document.querySelectorAll("*"));
+	})();
+}
