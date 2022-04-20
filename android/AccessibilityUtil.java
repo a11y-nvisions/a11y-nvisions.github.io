@@ -27,6 +27,8 @@ public class AccessibilityUtil {
             public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
                 super.onInitializeAccessibilityNodeInfo(host, info);
                 info.setClassName(Button.class.getName());
+                info.setStateDescription("");
+                info.setCheckable(false);
             }
         });
     }
@@ -285,5 +287,10 @@ public class AccessibilityUtil {
             }
         });
     }
+
+    public static void setStateDescription(View view, String descriptionText) {
+
+    }
 }
+
 

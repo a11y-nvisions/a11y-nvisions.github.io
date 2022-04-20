@@ -1,4 +1,4 @@
-package com.example.AccessibilityUtil
+package com.nvisions.solutionsforaccessibility.AccessibilityUtil
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +8,7 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
@@ -21,6 +22,8 @@ object AccessibilityKotlin {
             ) {
                 super.onInitializeAccessibilityNodeInfo(host, info)
                 info?.className = Button::class.java.name
+                info?.stateDescription = ""
+                info?.isCheckable = false
             }
         }
     }
@@ -123,7 +126,7 @@ object AccessibilityKotlin {
     }
     }
     fun isTalkBackOn(context: Context): Boolean {
-        val accessibilityManager = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+        val accessibilityManager = context.getSystemService(AppCompatActivity.ACCESSIBILITY_SERVICE) as AccessibilityManager
         val isTalkBackOn = accessibilityManager.isTouchExplorationEnabled
         return isTalkBackOn
     }
@@ -287,7 +290,8 @@ object AccessibilityKotlin {
 
     fun announceToast(context: Context, toastMessage: String?) {
         Handler().postDelayed({
-            val accessibilityManager = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+            val accessibilityManager =
+                context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
             val accessibilityEvent = AccessibilityEvent.obtain()
             accessibilityEvent.eventType = AccessibilityEvent.TYPE_ANNOUNCEMENT
             accessibilityEvent.text.add(toastMessage)
