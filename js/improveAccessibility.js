@@ -891,63 +891,60 @@ function ariaTab() {
 				if (!tablist.getAttribute("aria-orientation", "vertical")) {
 					if (e.keyCode === 37) {
 						// previous : left
-						target.setAttribute("aria-selected", false);
-						target.tabIndex = -1;
-						if (target == firstTab) {
-							if (lastTab.getAttribute("aria-disabled", "true")) {
-								lastTab.setAttribute("aria-selected", "false");
+						if (tablist.getAttribute('data-mode', 'aria1.2')) {
+							if (target == firstTab) {
+								lastTab.focus();
 							} else {
+								tabBox[i - 1].focus();
+							}
+						} else {
+							target.setAttribute("aria-selected", false);
+							target.tabIndex = -1;
+							if (target == firstTab) {
 								lastTab.setAttribute("aria-selected", true);
 								lastTab.click();
-							};
-							lastTab.tabIndex = 0;
-							lastTab.focus();
-						} else {
-							if (tabBox[i - 1].getAttribute("aria-disabled", "true")) {
-								tabBox[i - 1].setAttribute("aria-selected", "false");
+								lastTab.tabIndex = 0;
+								lastTab.focus();
 							} else {
 								tabBox[i - 1].setAttribute("aria-selected", true);
 								tabBox[i - 1].click();
-							};
-							tabBox[i - 1].tabIndex = 0;
-							tabBox[i - 1].focus();
+								tabBox[i - 1].tabIndex = 0;
+								tabBox[i - 1].focus();
+							}
 						}
-						e.preventDefault();
-					}
-					if (e.keyCode === 39) {
-						// next : right,down
-						target.setAttribute("aria-selected", false);
-						target.tabIndex = -1;
-						if (target == lastTab) {
-							if (firstTab.getAttribute("aria-disabled", "true")) {
-								firstTab.setAttribute("aria-selected", "false");
+					} else if (e.keyCode === 39) {
+						if (tablist.getAttribute('data-mode', 'aria1.2')) {
+							// next : right,down
+							if (target == lastTab) {
+								firstTab.focus();
 							} else {
+								tabBox[i + 1].focus();
+							}
+						} else {
+							// next : right,down
+							target.setAttribute("aria-selected", false);
+							target.tabIndex = -1;
+							if (target == lastTab) {
 								firstTab.setAttribute("aria-selected", true);
 								firstTab.click();
-							};
-							firstTab.tabIndex = 0;
-							firstTab.focus();
-						} else {
-							if (tabBox[i + 1].getAttribute("aria-disabled", "true")) {
-								tabBox[i + 1].setAttribute("aria-selected", "false");
+								firstTab.tabIndex = 0;
+								firstTab.focus();
 							} else {
 								tabBox[i + 1].setAttribute("aria-selected", true);
 								tabBox[i + 1].click();
-							};
-							tabBox[i + 1].tabIndex = 0;
-							tabBox[i + 1].focus();
+								tabBox[i + 1].tabIndex = 0;
+								tabBox[i + 1].focus();
+							}
 						}
-						e.preventDefault();
+					} else if (e.keyCode === 32) {
+						// select: space
+						if (target.getAttribute("aria-selected") !== 'true') {
+							target.setAttribute("aria-selected", true);
+							target.click();
+						}
 					}
 				}
-				if (e.keyCode === 32) {
-					// select: space
-					if (target.getAttribute("aria-selected") !== 'true') {
-						target.setAttribute("aria-selected", true);
-						target.click();
-					}
-					e.preventDefault();
-				}
+				e.preventDefault
 			});
 		};
 
