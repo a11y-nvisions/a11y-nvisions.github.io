@@ -1248,7 +1248,7 @@ function createIdForChildrenOf (
 	targetElement = document.body
 ) {
 	(function ( /** @type {HTMLElement}*/ target = targetElement ) {
-		if ( !Boolean(target) ) {
+		if ( Boolean(target) ) {
 			function setInitializeAutoIdentifier(
 						/**@type {HTMLElement[]|NodeList}*/ elements
 			) {
@@ -1288,6 +1288,8 @@ function createIdForChildrenOf (
 	
 			mtObserver.observe(target, MTO_ObserveInitOptions);
 			setInitializeAutoIdentifier(document.querySelectorAll("*"));
+		} else {
+			throw new Error ( "Target element not found. Please check that you entered the correct selector and try again." );
 		}
 
 	})();	
