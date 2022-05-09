@@ -1,0 +1,874 @@
+@charset "UTF-8";
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+/* Document
+========================================================================== */
+/**
+* 1. Correct the line height in all browsers.
+* 2. Prevent adjustments of font size after orientation changes in iOS.
+*/
+html {
+  line-height: 1.15;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/* Sections
+    ========================================================================== */
+/**
+* Remove the margin in all browsers.
+*/
+body {
+  margin: 0;
+}
+
+/**
+* Render the `main` element consistently in IE.
+*/
+main {
+  display: block;
+}
+
+/**
+* Correct the font size and margin on `h1` elements within `section` and
+* `article` contexts in Chrome, Firefox, and Safari.
+*/
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+    ========================================================================== */
+/**
+* 1. Add the correct box sizing in Firefox.
+* 2. Show the overflow in Edge and IE.
+*/
+hr {
+  box-sizing: content-box;
+  /* 1 */
+  height: 0;
+  /* 1 */
+  overflow: visible;
+  /* 2 */
+}
+
+/**
+* 1. Correct the inheritance and scaling of font size in all browsers.
+* 2. Correct the odd `em` font sizing in all browsers.
+*/
+pre {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+/* Text-level semantics
+    ========================================================================== */
+/**
+* Remove the gray background on active links in IE 10.
+*/
+a {
+  background-color: transparent;
+}
+
+/**
+* 1. Remove the bottom border in Chrome 57-
+* 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+*/
+abbr[title] {
+  border-bottom: none;
+  /* 1 */
+  text-decoration: underline;
+  /* 2 */
+  text-decoration: underline dotted;
+  /* 2 */
+}
+
+/**
+* Add the correct font weight in Chrome, Edge, and Safari.
+*/
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+* 1. Correct the inheritance and scaling of font size in all browsers.
+* 2. Correct the odd `em` font sizing in all browsers.
+*/
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+/**
+* Add the correct font size in all browsers.
+*/
+small {
+  font-size: 80%;
+}
+
+/**
+* Prevent `sub` and `sup` elements from affecting the line height in
+* all browsers.
+*/
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+    ========================================================================== */
+/**
+* Remove the border on images inside links in IE 10.
+*/
+img {
+  border-style: none;
+}
+
+/* Forms
+    ========================================================================== */
+/**
+* 1. Change the font styles in all browsers.
+* 2. Remove the margin in Firefox and Safari.
+*/
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+}
+
+/**
+* Show the overflow in IE.
+* 1. Show the overflow in Edge.
+*/
+button,
+input {
+  /* 1 */
+  overflow: visible;
+}
+
+/**
+* Remove the inheritance of text transform in Edge, Firefox, and IE.
+* 1. Remove the inheritance of text transform in Firefox.
+*/
+button,
+select {
+  /* 1 */
+  text-transform: none;
+}
+
+/**
+* Correct the inability to style clickable types in iOS and Safari.
+*/
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+
+/**
+* Remove the inner border and padding in Firefox.
+*/
+button::-moz-focus-inner,
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+* Restore the focus styles unset by the previous rule.
+*/
+button:-moz-focusring,
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+* Correct the padding in Firefox.
+*/
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+* 1. Correct the text wrapping in Edge and IE.
+* 2. Correct the color inheritance from `fieldset` elements in IE.
+* 3. Remove the padding so developers are not caught out when they zero out
+*    `fieldset` elements in all browsers.
+*/
+legend {
+  box-sizing: border-box;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  display: table;
+  /* 1 */
+  max-width: 100%;
+  /* 1 */
+  padding: 0;
+  /* 3 */
+  white-space: normal;
+  /* 1 */
+}
+
+/**
+* Add the correct vertical alignment in Chrome, Firefox, and Opera.
+*/
+progress {
+  vertical-align: baseline;
+}
+
+/**
+* Remove the default vertical scrollbar in IE 10+.
+*/
+textarea {
+  overflow: auto;
+}
+
+/**
+* 1. Add the correct box sizing in IE 10.
+* 2. Remove the padding in IE 10.
+*/
+[type=checkbox],
+[type=radio] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+* Correct the cursor style of increment and decrement buttons in Chrome.
+*/
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+* 1. Correct the odd appearance in Chrome and Safari.
+* 2. Correct the outline style in Safari.
+*/
+[type=search] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */
+}
+
+/**
+* Remove the inner padding in Chrome and Safari on macOS.
+*/
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+* 1. Correct the inability to style clickable types in iOS and Safari.
+* 2. Change font properties to `inherit` in Safari.
+*/
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+}
+
+/* Interactive
+    ========================================================================== */
+/*
+* Add the correct display in Edge, IE 10+, and Firefox.
+*/
+details {
+  display: block;
+}
+
+/*
+* Add the correct display in all browsers.
+*/
+summary {
+  display: list-item;
+}
+
+/* Misc
+    ========================================================================== */
+/**
+* Add the correct display in IE 10+.
+*/
+template {
+  display: none;
+}
+
+/**
+* Add the correct display in IE 10.
+*/
+[hidden] {
+  display: none;
+}
+
+:root {
+  --color-negative:#ff5624;
+  --color-negative-op25:rgba(255, 86, 36, 0.25);
+  --color-negative-op50:rgba(255, 86, 36, 0.5);
+  --color-negative-op75:rgba(255, 86, 36, 0.75);
+  --color-postive:#42df10;
+  --color-postive-op25:rgba(66, 223, 16, 0.25);
+  --color-postive-op50:rgba(66, 223, 16, 0.5);
+  --color-postive-op75:rgba(66, 223, 16, 0.75);
+  --foreground-extra-strong:#ffffff;
+  --foreground-strong:#efefef;
+  --foreground-normal:#bfbfbf;
+  --foreground-light:#8d8d8d;
+  --foreground-extra-light:#6d6d6d;
+  --foreground-strong-op25:rgba(239, 239, 239, 0.25);
+  --foreground-strong-op50:rgba(239, 239, 239, 0.5);
+  --foreground-strong-op75:rgba(239, 239, 239, 0.75);
+  --foreground-normal-op25:rgba(191, 191, 191, 0.25);
+  --foreground-normal-op50:rgba(191, 191, 191, 0.5);
+  --foreground-normal-op75:rgba(191, 191, 191, 0.75);
+  --foreground-light-op25:rgba(141, 141, 141, 0.25);
+  --foreground-light-op50:rgba(141, 141, 141, 0.5);
+  --foreground-light-op75:rgba(141, 141, 141, 0.75);
+  --foreground-extra-light-op25:rgba(109, 109, 109, 0.25);
+  --foreground-extra-light-op50:rgba(109, 109, 109, 0.25);
+  --foreground-extra-light-op75:rgba(109, 109, 109, 0.25);
+  --foreground-extra-strong-op25:rgba(255, 255, 255, 0.25);
+  --foreground-extra-strong-op50:rgba(255, 255, 255, 0.25);
+  --foreground-extra-strong-op75:rgba(255, 255, 255, 0.25);
+  --background-global:#212121;
+  --background-section:#252525;
+  --background-strong:#2f2f2f;
+  --background-strongest:#3c3c3c;
+  --accent-extra-light:#4f27cd;
+  --accent-light:#5f0ffd;
+  --accent-normal:#854ffd;
+  --accent-strong:#af8dff;
+  --accent-extra-strong:#d2adff;
+  --accent-extra-light-op25:rgba(79, 39, 205, 0.25);
+  --accent-extra-light-op50:rgba(79, 39, 205, 0.5);
+  --accent-extra-light-op75:rgba(79, 39, 205, 0.75);
+  --accent-light-op25:rgba(95, 15, 253, 0.25);
+  --accent-light-op50:rgba(95, 15, 253, 0.5);
+  --accent-light-op75:rgba(95, 15, 253, 0.75);
+  --accent-normal-op25:rgba(133, 79, 253, 0.25);
+  --accent-normal-op50:rgba(133, 79, 253, 0.5);
+  --accent-normal-op75:rgba(133, 79, 253, 0.75);
+  --accent-strong-op25:rgba(175, 141, 255, 0.25);
+  --accent-strong-op50:rgba(175, 141, 255, 0.5);
+  --accent-strong-op75:rgba(175, 141, 255, 0.75);
+  --accent-extra-strong-op25:rgba(210, 173, 255, 0.25);
+  --accent-extra-strong-op50:rgba(210, 173, 255, 0.5);
+  --accent-extra-strong-op75:rgba(210, 173, 255, 0.75);
+  --bottom-shadow:0 0.15em 0.2em 0.1em rgba(0,0,0,0.5);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-negative:#ef2624;
+    --color-negative-op25:rgba(239, 38, 36, 0.25);
+    --color-negative-op50:rgba(239, 38, 36, 0.5);
+    --color-negative-op75:rgba(239, 38, 36, 0.75);
+    --color-postive:#32af30;
+    --color-postive-op25:rgba(50, 175, 48, 0.25);
+    --color-postive-op50:rgba(50, 175, 48, 0.5);
+    --color-postive-op75:rgba(50, 175, 48, 0.75);
+    --foreground-extra-strong:#000000;
+    --foreground-strong:#0f0f0f;
+    --foreground-normal:#1f1f1fff;
+    --foreground-light:#2f2f2fff;
+    --foreground-extra-light:#6d6d6d;
+    --foreground-strong-op25:rgba(15, 15, 15, 0.25);
+    --foreground-strong-op50:rgba(15, 15, 15, 0.5);
+    --foreground-strong-op75:rgba(15, 15, 15, 0.75);
+    --foreground-normal-op25:rgba(31, 31, 31, 0.25);
+    --foreground-normal-op50:rgba(31, 31, 31, 0.5);
+    --foreground-normal-op75:rgba(31, 31, 31, 0.75);
+    --foreground-light-op25:rgba(47, 47, 47, 0.25);
+    --foreground-light-op50:rgba(47, 47, 47, 0.5);
+    --foreground-light-op75:rgba(47, 47, 47, 0.75);
+    --foreground-extra-light-op25:rgba(109, 109, 109, 0.25);
+    --foreground-extra-light-op50:rgba(109, 109, 109, 0.25);
+    --foreground-extra-light-op75:rgba(109, 109, 109, 0.25);
+    --foreground-extra-strong-op25:rgba(0, 0, 0, 0.25);
+    --foreground-extra-strong-op50:rgba(0, 0, 0, 0.25);
+    --foreground-extra-strong-op75:rgba(0, 0, 0, 0.25);
+    --background-global:#dfdfdf;
+    --background-section:#efefef;
+    --background-strong:#f0f0f0;
+    --background-strongest:#ffffff;
+    --accent-extra-light:#927dfd;
+    --accent-light:#726dff;
+    --accent-normal:#4f3fdd;
+    --accent-strong:#5f1fcd;
+    --accent-extra-strong:#450f8f;
+    --accent-extra-light-op25:rgba(146, 125, 253, 0.25);
+    --accent-extra-light-op50:rgba(146, 125, 253, 0.5);
+    --accent-extra-light-op75:rgba(146, 125, 253, 0.75);
+    --accent-light-op25:rgba(114, 109, 255, 0.25);
+    --accent-light-op50:rgba(114, 109, 255, 0.5);
+    --accent-light-op75:rgba(114, 109, 255, 0.75);
+    --accent-normal-op25:rgba(79, 63, 221, 0.25);
+    --accent-normal-op50:rgba(79, 63, 221, 0.5);
+    --accent-normal-op75:rgba(79, 63, 221, 0.75);
+    --accent-strong-op25:rgba(95, 31, 205, 0.25);
+    --accent-strong-op50:rgba(95, 31, 205, 0.5);
+    --accent-strong-op75:rgba(95, 31, 205, 0.75);
+    --accent-extra-strong-op25:rgba(69, 15, 143, 0.25);
+    --accent-extra-strong-op50:rgba(69, 15, 143, 0.5);
+    --accent-extra-strong-op75:rgba(69, 15, 143, 0.75);
+    --bottom-shadow:0 0.15em 0.2em 0.1em rgba(0,0,0,0.5);
+  }
+}
+.theme-dark {
+  --color-negative:#ff5624;
+  --color-negative-op25:rgba(255, 86, 36, 0.25);
+  --color-negative-op50:rgba(255, 86, 36, 0.5);
+  --color-negative-op75:rgba(255, 86, 36, 0.75);
+  --color-postive:#42df10;
+  --color-postive-op25:rgba(66, 223, 16, 0.25);
+  --color-postive-op50:rgba(66, 223, 16, 0.5);
+  --color-postive-op75:rgba(66, 223, 16, 0.75);
+  --foreground-extra-strong:#ffffff;
+  --foreground-strong:#efefef;
+  --foreground-normal:#bfbfbf;
+  --foreground-light:#8d8d8d;
+  --foreground-extra-light:#6d6d6d;
+  --foreground-strong-op25:rgba(239, 239, 239, 0.25);
+  --foreground-strong-op50:rgba(239, 239, 239, 0.5);
+  --foreground-strong-op75:rgba(239, 239, 239, 0.75);
+  --foreground-normal-op25:rgba(191, 191, 191, 0.25);
+  --foreground-normal-op50:rgba(191, 191, 191, 0.5);
+  --foreground-normal-op75:rgba(191, 191, 191, 0.75);
+  --foreground-light-op25:rgba(141, 141, 141, 0.25);
+  --foreground-light-op50:rgba(141, 141, 141, 0.5);
+  --foreground-light-op75:rgba(141, 141, 141, 0.75);
+  --foreground-extra-light-op25:rgba(109, 109, 109, 0.25);
+  --foreground-extra-light-op50:rgba(109, 109, 109, 0.25);
+  --foreground-extra-light-op75:rgba(109, 109, 109, 0.25);
+  --foreground-extra-strong-op25:rgba(255, 255, 255, 0.25);
+  --foreground-extra-strong-op50:rgba(255, 255, 255, 0.25);
+  --foreground-extra-strong-op75:rgba(255, 255, 255, 0.25);
+  --background-global:#212121;
+  --background-section:#252525;
+  --background-strong:#2f2f2f;
+  --background-strongest:#3c3c3c;
+  --accent-extra-light:#4f27cd;
+  --accent-light:#5f0ffd;
+  --accent-normal:#854ffd;
+  --accent-strong:#af8dff;
+  --accent-extra-strong:#d2adff;
+  --accent-extra-light-op25:rgba(79, 39, 205, 0.25);
+  --accent-extra-light-op50:rgba(79, 39, 205, 0.5);
+  --accent-extra-light-op75:rgba(79, 39, 205, 0.75);
+  --accent-light-op25:rgba(95, 15, 253, 0.25);
+  --accent-light-op50:rgba(95, 15, 253, 0.5);
+  --accent-light-op75:rgba(95, 15, 253, 0.75);
+  --accent-normal-op25:rgba(133, 79, 253, 0.25);
+  --accent-normal-op50:rgba(133, 79, 253, 0.5);
+  --accent-normal-op75:rgba(133, 79, 253, 0.75);
+  --accent-strong-op25:rgba(175, 141, 255, 0.25);
+  --accent-strong-op50:rgba(175, 141, 255, 0.5);
+  --accent-strong-op75:rgba(175, 141, 255, 0.75);
+  --accent-extra-strong-op25:rgba(210, 173, 255, 0.25);
+  --accent-extra-strong-op50:rgba(210, 173, 255, 0.5);
+  --accent-extra-strong-op75:rgba(210, 173, 255, 0.75);
+  --bottom-shadow:0 0.15em 0.2em 0.1em rgba(0,0,0,0.5);
+}
+.theme-dark.type-warm-color {
+  --foreground-strong:#fff0cf;
+  --foreground-normal:#e7c597;
+  --foreground-light:#cf995f;
+  --foreground-extra-light:#b97a46;
+  --background-global:#352110;
+  --background-section:#432a10;
+  --background-strong:#4c2f1f;
+  --background-strongest:#533a20;
+  --accent-extra-light:#bf6d32;
+  --accent-light:#cf7d32;
+  --accent-normal:#ffaf4f;
+  --accent-strong:#ffbd72;
+  --accent-extra-strong:#ffc897;
+  --accent-extra-light-op25:rgba(191, 109, 50, 0.25);
+  --accent-extra-light-op50:rgba(191, 109, 50, 0.5);
+  --accent-extra-light-op75:rgba(191, 109, 50, 0.75);
+  --accent-light-op25:rgba(207, 125, 50, 0.25);
+  --accent-light-op50:rgba(207, 125, 50, 0.5);
+  --accent-light-op75:rgba(207, 125, 50, 0.75);
+  --accent-normal-op25:rgba(255, 175, 79, 0.25);
+  --accent-normal-op50:rgba(255, 175, 79, 0.5);
+  --accent-normal-op75:rgba(255, 175, 79, 0.75);
+  --accent-strong-op25:rgba(255, 189, 114, 0.25);
+  --accent-strong-op50:rgba(255, 189, 114, 0.5);
+  --accent-strong-op75:rgba(255, 189, 114, 0.75);
+  --accent-extra-strong-op25:rgba(255, 200, 151, 0.25);
+  --accent-extra-strong-op50:rgba(255, 200, 151, 0.5);
+  --accent-extra-strong-op75:rgba(255, 200, 151, 0.75);
+}
+.theme-dark.type-cool-color {
+  --foreground-strong:#dfffff;
+  --foreground-normal:#bfefef;
+  --foreground-light:#96afbf;
+  --foreground-extra-light:#8fafd0;
+  --background-global:#030a23;
+  --background-section:#161f32;
+  --background-strong:#16233a;
+  --background-strongest:#162748;
+  --accent-extra-light:#153fed;
+  --accent-light:#254ffd;
+  --accent-normal:#3f7fff;
+  --accent-strong:#42adff;
+  --accent-extra-strong:#82bdff;
+  --accent-extra-light-op25:rgba(21, 63, 237, 0.25);
+  --accent-extra-light-op50:rgba(21, 63, 237, 0.5);
+  --accent-extra-light-op75:rgba(21, 63, 237, 0.75);
+  --accent-light-op25:rgba(37, 79, 253, 0.25);
+  --accent-light-op50:rgba(37, 79, 253, 0.5);
+  --accent-light-op75:rgba(37, 79, 253, 0.75);
+  --accent-normal-op25:rgba(63, 127, 255, 0.25);
+  --accent-normal-op50:rgba(63, 127, 255, 0.5);
+  --accent-normal-op75:rgba(63, 127, 255, 0.75);
+  --accent-strong-op25:rgba(66, 173, 255, 0.25);
+  --accent-strong-op50:rgba(66, 173, 255, 0.5);
+  --accent-strong-op75:rgba(66, 173, 255, 0.75);
+  --accent-extra-strong-op25:rgba(130, 189, 255, 0.25);
+  --accent-extra-strong-op50:rgba(130, 189, 255, 0.5);
+  --accent-extra-strong-op75:rgba(130, 189, 255, 0.75);
+}
+
+.theme-light {
+  --color-negative:#ef2624;
+  --color-negative-op25:rgba(239, 38, 36, 0.25);
+  --color-negative-op50:rgba(239, 38, 36, 0.5);
+  --color-negative-op75:rgba(239, 38, 36, 0.75);
+  --color-postive:#32af30;
+  --color-postive-op25:rgba(50, 175, 48, 0.25);
+  --color-postive-op50:rgba(50, 175, 48, 0.5);
+  --color-postive-op75:rgba(50, 175, 48, 0.75);
+  --foreground-extra-strong:#000000;
+  --foreground-strong:#0f0f0f;
+  --foreground-normal:#1f1f1fff;
+  --foreground-light:#2f2f2fff;
+  --foreground-extra-light:#6d6d6d;
+  --foreground-strong-op25:rgba(15, 15, 15, 0.25);
+  --foreground-strong-op50:rgba(15, 15, 15, 0.5);
+  --foreground-strong-op75:rgba(15, 15, 15, 0.75);
+  --foreground-normal-op25:rgba(31, 31, 31, 0.25);
+  --foreground-normal-op50:rgba(31, 31, 31, 0.5);
+  --foreground-normal-op75:rgba(31, 31, 31, 0.75);
+  --foreground-light-op25:rgba(47, 47, 47, 0.25);
+  --foreground-light-op50:rgba(47, 47, 47, 0.5);
+  --foreground-light-op75:rgba(47, 47, 47, 0.75);
+  --foreground-extra-light-op25:rgba(109, 109, 109, 0.25);
+  --foreground-extra-light-op50:rgba(109, 109, 109, 0.25);
+  --foreground-extra-light-op75:rgba(109, 109, 109, 0.25);
+  --foreground-extra-strong-op25:rgba(0, 0, 0, 0.25);
+  --foreground-extra-strong-op50:rgba(0, 0, 0, 0.25);
+  --foreground-extra-strong-op75:rgba(0, 0, 0, 0.25);
+  --background-global:#dfdfdf;
+  --background-section:#efefef;
+  --background-strong:#f0f0f0;
+  --background-strongest:#ffffff;
+  --accent-extra-light:#927dfd;
+  --accent-light:#726dff;
+  --accent-normal:#4f3fdd;
+  --accent-strong:#5f1fcd;
+  --accent-extra-strong:#450f8f;
+  --accent-extra-light-op25:rgba(146, 125, 253, 0.25);
+  --accent-extra-light-op50:rgba(146, 125, 253, 0.5);
+  --accent-extra-light-op75:rgba(146, 125, 253, 0.75);
+  --accent-light-op25:rgba(114, 109, 255, 0.25);
+  --accent-light-op50:rgba(114, 109, 255, 0.5);
+  --accent-light-op75:rgba(114, 109, 255, 0.75);
+  --accent-normal-op25:rgba(79, 63, 221, 0.25);
+  --accent-normal-op50:rgba(79, 63, 221, 0.5);
+  --accent-normal-op75:rgba(79, 63, 221, 0.75);
+  --accent-strong-op25:rgba(95, 31, 205, 0.25);
+  --accent-strong-op50:rgba(95, 31, 205, 0.5);
+  --accent-strong-op75:rgba(95, 31, 205, 0.75);
+  --accent-extra-strong-op25:rgba(69, 15, 143, 0.25);
+  --accent-extra-strong-op50:rgba(69, 15, 143, 0.5);
+  --accent-extra-strong-op75:rgba(69, 15, 143, 0.75);
+  --bottom-shadow:0 0.15em 0.2em 0.1em rgba(0,0,0,0.5);
+}
+.theme-light.type-warm-color {
+  --foreground-strong:#170f03;
+  --foreground-normal:#251202;
+  --foreground-light:#311f0f;
+  --foreground-extra-light:#382514;
+  --background-global:#fee9cf;
+  --background-section:#ffefe0;
+  --background-strong:#fff0e9;
+  --background-strongest:#ffffff;
+  --accent-extra-light:#ef9052;
+  --accent-light:#ff7d52;
+  --accent-normal:#b9314f;
+  --accent-strong:#af2532;
+  --accent-extra-strong:#7f1f12;
+  --accent-extra-light-op25:rgba(239, 144, 82, 0.25);
+  --accent-extra-light-op50:rgba(239, 144, 82, 0.5);
+  --accent-extra-light-op75:rgba(239, 144, 82, 0.75);
+  --accent-light-op25:rgba(255, 125, 82, 0.25);
+  --accent-light-op50:rgba(255, 125, 82, 0.5);
+  --accent-light-op75:rgba(255, 125, 82, 0.75);
+  --accent-normal-op25:rgba(185, 49, 79, 0.25);
+  --accent-normal-op50:rgba(185, 49, 79, 0.5);
+  --accent-normal-op75:rgba(185, 49, 79, 0.75);
+  --accent-strong-op25:rgba(175, 37, 50, 0.25);
+  --accent-strong-op50:rgba(175, 37, 50, 0.5);
+  --accent-strong-op75:rgba(175, 37, 50, 0.75);
+  --accent-extra-strong-op25:rgba(127, 31, 18, 0.25);
+  --accent-extra-strong-op50:rgba(127, 31, 18, 0.5);
+  --accent-extra-strong-op75:rgba(127, 31, 18, 0.75);
+}
+.theme-light.type-cool-color {
+  --foreground-strong:#13224f;
+  --foreground-normal:#2f2c75;
+  --foreground-light:#2f3f7f;
+  --foreground-extra-light:#4c62b0;
+  --background-global:#f4fbff;
+  --background-section:#fafeff;
+  --background-strong:#fcffff;
+  --background-strongest:#ffffff;
+  --accent-extra-light:#428dff;
+  --accent-light:#127dff;
+  --accent-normal:#1f4ffd;
+  --accent-strong:#0239ba;
+  --accent-extra-strong:#001fbd;
+  --accent-extra-light-op25:rgba(66, 141, 255, 0.25);
+  --accent-extra-light-op50:rgba(66, 141, 255, 0.5);
+  --accent-extra-light-op75:rgba(66, 141, 255, 0.75);
+  --accent-light-op25:rgba(18, 125, 255, 0.25);
+  --accent-light-op50:rgba(18, 125, 255, 0.5);
+  --accent-light-op75:rgba(18, 125, 255, 0.75);
+  --accent-normal-op25:rgba(31, 79, 253, 0.25);
+  --accent-normal-op50:rgba(31, 79, 253, 0.5);
+  --accent-normal-op75:rgba(31, 79, 253, 0.75);
+  --accent-strong-op25:rgba(2, 57, 186, 0.25);
+  --accent-strong-op50:rgba(2, 57, 186, 0.5);
+  --accent-strong-op75:rgba(2, 57, 186, 0.75);
+  --accent-extra-strong-op25:rgba(0, 31, 189, 0.25);
+  --accent-extra-strong-op50:rgba(0, 31, 189, 0.5);
+  --accent-extra-strong-op75:rgba(0, 31, 189, 0.75);
+}
+
+html, body, .preview-area {
+  background-color: var(--background-global);
+  color: var(--foreground-strong);
+}
+
+section, article {
+  background-color: var(--background-section);
+  color: var(--foreground-strong);
+}
+
+article {
+  box-shadow: var(--bottom-shadow);
+}
+
+a:link {
+  color: var(--accent-strong);
+  font-weight: bold;
+  text-decoration-color: var(--accent-strong);
+}
+a:link:focus, a:link:hover {
+  color: var(--accent-extra-strong);
+  text-decoration-color: var(--accent-strong);
+}
+a:visited {
+  color: var(--accent-normal);
+  text-decoration-color: var(--accent-strong);
+}
+a:visited:hover, a:visited:focus {
+  color: var(--accent-extra-strong);
+  text-decoration-color: var(--foreground-strong);
+}
+
+h1, h2, h3, h4, h5, h6, strong, em {
+  color: var(--foreground-extra-strong);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+div#sample-layout {
+  font-family: "留묒? 怨좊뵓", sans-serif;
+}
+div#sample-layout .preview-area {
+  padding: 0.4rem;
+  margin: 0.5em 0;
+  border-radius: 1em;
+  border: solid 0.01em #fff;
+  box-shadow: 0 0 0.5em 0.02em rgba(0, 0, 0, 0.4) inset, 0 0 0 0.01em #000;
+}
+div#sample-layout div.theme-previews {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: 0.3em;
+}
+@media screen and (max-width: 1024px) {
+  div#sample-layout div.theme-previews {
+    grid-template-columns: 1fr;
+  }
+}
+div#sample-layout article {
+  padding: 0.4rem;
+  margin: 0.5em 0;
+  border-radius: 1em;
+}
+div#sample-layout section {
+  padding: 0.4rem 1em;
+  margin: 1em 0;
+  border-radius: 1em;
+}
+div#sample-layout p, div#sample-layout blockquote, div#sample-layout pre {
+  padding: 0.2em 0;
+  margin: 0.2em 0;
+}
+div#sample-layout h1 {
+  padding: 0.2em 0;
+}
+div#sample-layout h2 {
+  padding: 0.2em 0;
+}
+div#sample-layout h3 {
+  padding: 0.2em 0;
+}
+div#sample-layout h4 {
+  padding: 0.2em 0;
+}
+div#sample-layout h5 {
+  padding: 0.2em;
+}
+div#sample-layout h6 {
+  padding: 0.2em;
+}
+div#sample-layout ul {
+  padding-left: 1.2em;
+}
+
+.sample-grid {
+  display: grid;
+  width: 100%;
+  gap: 0.1em;
+  grid-template-columns: 2fr 2fr 2fr 2fr 2fr;
+  grid-auto-rows: 1fr;
+  margin: 0.5em 0;
+}
+
+.color-sample {
+  width: 100%;
+  display: inline-grid;
+  grid-auto-columns: 2fr 2fr;
+  grid-auto-rows: 1fr 1fr;
+}
+
+.preview {
+  display: inline-flex;
+  width: 4em;
+  height: 4em;
+  border: solid 1px #fff;
+  box-shadow: inset 0 0 1px 0 #000;
+  align-self: center;
+  justify-self: center;
+}
+
+.preview-text {
+  text-align: center;
+}
+
+.background-global .preview {
+  background-color: var(--background-global);
+}
+
+.background-section .preview {
+  background-color: var(--background-section);
+}
+
+.foreground-extra-light .preview {
+  background-color: var(--foreground-extra-light);
+}
+
+.foreground-light .preview {
+  background-color: var(--foreground-light);
+}
+
+.foreground-normal .preview {
+  background-color: var(--foreground-normal);
+}
+
+.foreground-strong .preview {
+  background-color: var(--foreground-strong);
+}
+
+.foreground-extra-strong .preview {
+  background-color: var(--foreground-extra-strong);
+}
+
+.accent-extra-light .preview {
+  background-color: var(--accent-extra-light);
+}
+
+.accent-light .preview {
+  background-color: var(--accent-light);
+}
+
+.accent-normal .preview {
+  background: var(--accent-normal);
+}
+
+.accent-strong .preview {
+  background-color: var(--accent-strong);
+}
+
+.accent-extra-strong .preview {
+  background-color: var(--accent-extra-strong);
+}
+
+.color-negative .preview {
+  background-color: var(--color-negative);
+}
+
+.color-postive .preview {
+  background-color: var(--color-postive);
+}

@@ -1263,7 +1263,7 @@ function createIdForChildrenOf (
 					var isIgnoredTag = ignoredTags.test($tagName);
 	
 					/** @type {HTMLElement[]} */
-					var AllElems = Array.prototype.slice.call(target.querySelectorAll($tagName));
+					var AllElems = Array.prototype.slice.call(document.body.querySelectorAll($tagName));
 	
 					/** @type {number} */
 					var $docIndex = AllElems.indexOf($e) + 1;

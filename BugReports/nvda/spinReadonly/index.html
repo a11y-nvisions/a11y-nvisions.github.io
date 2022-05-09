@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin Test</title>
+  <link rel="stylesheet" href="../../globalResources/color-sys-index.css">
+  <style>
+    *{box-sizing: border-box; padding: 0; margin:0;}
+    html, body {
+      width:100%; height:100%; position: relative;
+    }
+
+    .wrapper {
+      display: flex; flex-flow:column;
+      height: 100%;
+      width:100%;
+      margin: 0 auto; position: relative;
+      background-color:var(--background-strong);
+    }
+    .wrapper>main {
+      height: 100%;
+    }
+
+    .content-wrapper{
+      height: 100%;
+      background-color: var(--background-strongest);
+      padding: 1em 0.5em;
+    }
+
+    .inputs {
+      margin:0.45em 0;
+    }
+    .inputs > label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+      font-weight: bold;
+    }
+    .inputs :is(
+    input[type=text],
+    input[type=tel],
+    input[type=url],
+    input[type=email],
+    input[type=search],
+    input[type=number],
+    input[type=time],
+    input[type=date],
+    input[type=week],
+    input[type=month],
+    input[type=datetime],
+    input[type=datetime-local],
+    input[type=password],
+    textarea
+    ) {
+      background-color: var(--background-strongest);
+      border:solid 0.15em  var(--foreground-light);
+      caret-color: var(--accent-extra-strong);
+      border-radius: 0.45em;
+      color: var(--foreground-extra-strong);
+    }
+
+    .inputs :is(
+    input[type=text],
+    input[type=tel],
+    input[type=url],
+    input[type=email],
+    input[type=search],
+    input[type=number],
+    input[type=time],
+    input[type=date],
+    input[type=week],
+    input[type=month],
+    input[type=datetime],
+    input[type=datetime-local],
+    input[type=password],
+    textarea):focus {
+      background-color: var(--background-strong);
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Readonly Speech Test for Spin Button</h1>
+    </header>
+    <main>
+      <div class="content-wrapper">
+        <div class="inputs">
+          <label for="normal_edit">
+            General Input
+            <input type="text" name="normal_edit" id="normal_edit" readonly>
+          </label>
+        </div>
+        <div class="inputs">
+          <label for="multiline_edit">
+            Multiline Input
+            <textarea name="multiline_edit" id="multiline_edit" cols="30" rows="4" readonly></textarea>
+          </label>
+        </div>
+        <div class="inputs">
+          <label for="spin_edit">
+            SpinButton input
+            <input type="number" name="spin_edit" id="spin_edit" readonly>
+          </label>
+        </div>
+      </div>
+    </div>
+    </main>
+    <script></script>
+</body>
+</html>
