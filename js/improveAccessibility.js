@@ -1243,28 +1243,28 @@ function getClosestParent(el, query) {
 }
 
 // create ids for children of target without id
-function createIdForChildrenOf (
-	/** @param {HTMLElement} targetElement This function is for giving a Id to each children of a target Element. If you didn't set the target when you call this function, default target will be set to a body tag in your product documents. It's the same with createIdForAllTag Method. */ 
+function createIdForChildrenOf(
+	/** @param {HTMLElement} targetElement This function is for giving a Id to each children of a target Element. If you didn't set the target when you call this function, default target will be set to a body tag in your product documents. It's the same with createIdForAllTag Method. */
 	targetElement = document.body
 ) {
-	(function ( /** @type {HTMLElement}*/ target = targetElement ) {
-		if ( Boolean(target) ) {
+	(function ( /** @type {HTMLElement}*/ target = targetElement) {
+		if (Boolean(target)) {
 			function setInitializeAutoIdentifier(
 						/**@type {HTMLElement[]|NodeList}*/ elements
 			) {
 				elements.forEach(/** @param {Element} $e*/($e) => {
 					/** @type {string} */
 					var $tagName = $e.tagName.toLowerCase();
-	
+
 					/** @type {RegEXP} */
 					var ignoredTags = /^(html|head|link|script|style|body|meta|title)$/;
-	
+
 					/** @type {boolean} */
 					var isIgnoredTag = ignoredTags.test($tagName);
-	
+
 					/** @type {HTMLElement[]} */
 					var AllElems = Array.prototype.slice.call(document.body.querySelectorAll($tagName));
-	
+
 					/** @type {number} */
 					var $docIndex = AllElems.indexOf($e) + 1;
 					if (!isIgnoredTag) {
@@ -1272,7 +1272,7 @@ function createIdForChildrenOf (
 					}
 				});
 			}
-	
+
 			/**
 				* 
 				* @param {MutationRecord} Record 
@@ -1285,17 +1285,63 @@ function createIdForChildrenOf (
 				childList: true,
 			}
 			var mtObserver = new MutationObserver(MTO_Callback);
-	
+
 			mtObserver.observe(target, MTO_ObserveInitOptions);
 			setInitializeAutoIdentifier(document.querySelectorAll("*"));
 		} else {
-			throw new Error ( "Target element not found. Please check that you entered the correct selector and try again." );
+			throw new Error("Target element not found. Please check that you entered the correct selector and try again.");
 		}
 
-	})();	
+	})();
 }
 
 // create ids for all tag without id
-function createIdForAllTag (  ) {
-	createIdForChildrenOf ( /* default : document.body */ );
+function createIdForAllTag() {
+	createIdForChildrenOf( /* default : document.body */);
 }
+
+// set as heading with level between 1 to 6
+
+/**
+	* @param {number} level :insert 1 to 6
+	*/
+Element.prototype.setAsHeading = function setToHeadingElement(level) {
+	const target = this;
+	if (typeof level == "number") {
+		const Level = (level <= 6 && level >= 1) ? level : 1;
+		const tagName = target.tagName.toLowerCase();
+		const appliedTags = /^(div|b|u|i|s|p|strong|span|em)$/
+		if (appliedTags.test(tagName)) {
+			target.setAttribute('role', "heading");
+			target.setAttribute('aria-level', Level);
+		} else {
+			throw new Error(`You're trying to set a ${tagName} tag as heading. it may be a mistake.`);
+		}
+	} else {
+		throw new Error(`You typed a value that's not a number. Or, You didn't type anything at 'level' parameter. level parameter is required and it must be a number.`)
+	}
+};
+
+/**
+	* @param {HTMLElement} target
+	* @param {number} level :insert 1 to 6
+	*/
+function setAsHeading(target, level) {
+	if (typeof level == "number") {
+		const Level = (level <= 6 && level >= 1) ? level : 1;
+		const tagName = target.tagName.toLowerCase();
+		const appliedTags = /^(div|b|u|i|s|p|strong|span|em)$/
+		if (appliedTags.test(tagName)) {
+			target.setAttribute('role', "heading");
+			target.setAttribute('aria-level', Level);
+		} else {
+			throw new Error(`You're trying to set a ${tagName} tag as heading. it may be a mistake.`);
+		}
+	} else {
+		const NumError = `You typed a value that's not a number. Or, You didn't type anything at 'level' parameter. level parameter is required and it must be a number.`;
+		const ElementError = "\nYou insert a wrong element, Element not found. Please you make sure insert the correct HTML Element";
+		const ErrorMsg = `${typeof level != "number" ? NumError : ""}${!target instanceof Element ? ElementError : ""}`;
+
+		throw new Error(ErrorMsg);
+	}
+};
