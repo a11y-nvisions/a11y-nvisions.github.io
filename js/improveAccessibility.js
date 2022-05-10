@@ -998,7 +998,9 @@ var waiAriaListBox = function waiAriaListBox() {
 			}
 
 			listOptions[i].addEventListener("click", function () {
-				listSelectEvent(ariaListBox, listOptions[i]);
+				setTimeout(function () {
+					listSelectEvent(ariaListBox, listOptions[i]);
+				}, 500)
 			});
 
 			listOptions[i].addEventListener("keydown", function (e) {
