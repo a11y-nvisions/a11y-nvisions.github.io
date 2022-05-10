@@ -1002,6 +1002,7 @@ var waiAriaListBox = function waiAriaListBox() {
 				if (boxBtn.getAttribute("aria-expanded", "true")) {
 					boxBtn.setAttribute("aria-expanded", "false")
 				}
+				boxBtn.focus()
 			});
 
 			listOptions[i].addEventListener("keydown", function (e) {
@@ -1013,20 +1014,12 @@ var waiAriaListBox = function waiAriaListBox() {
 				}
 				if (e.keyCode === 38) {
 					// up
-					if (i == 0) {
-						listOptions[listOptions.length - 1].focus();
-					} else {
-						listOptions[i - 1].focus();
-					}
+					listOptions[i - 1].focus();
 					e.preventDefault();
 				}
 				if (e.keyCode === 40) {
 					// down
-					if (i == listOptions.length - 1) {
-						listOptions[0].focus();
-					} else {
-						listOptions[i + 1].focus();
-					}
+					listOptions[i + 1].focus();
 					e.preventDefault();
 				}
 				if (e.keyCode === 9 || e.keyCode === 27) {
