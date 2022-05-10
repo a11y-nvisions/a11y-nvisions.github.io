@@ -998,9 +998,10 @@ var waiAriaListBox = function waiAriaListBox() {
 			}
 
 			listOptions[i].addEventListener("click", function () {
-				setTimeout(function () {
-					listSelectEvent(ariaListBox, listOptions[i]);
-				}, 500)
+				listSelectEvent(ariaListBox, listOptions[i]);
+				if (boxBtn.getAttribute("aria-expanded", "true")) {
+					boxBtn.setAttribute("aria-expanded", "false")
+				}
 			});
 
 			listOptions[i].addEventListener("keydown", function (e) {
