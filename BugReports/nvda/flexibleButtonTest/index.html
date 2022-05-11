@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin Test</title>
+  <link rel="stylesheet" href="../../globalResources/color-sys-index.css">
+  <style>
+    *{box-sizing: border-box; padding: 0; margin:0;}
+    html, body {
+      width:100%; height:100%; position: relative;
+    }
+
+    .wrapper {
+      display: flex; flex-flow:column;
+      height: 100%;
+      width:100%;
+      margin: 0 auto; position: relative;
+      background-color:var(--background-strong);
+    }
+    .wrapper>main {
+      height: 100%;
+    }
+
+    .content-wrapper{
+      counter-reset: btnOrder;
+      height: 100%;
+      background-color: var(--background-strongest);
+      padding: 1em 0.5em;
+    }
+
+    button {
+      background-color: transparent;
+      border: solid 0.1em #fff;
+      color:#fff;
+    }
+
+    button::before {
+      counter-increment: btnOrder;
+      content:counter(btnOrder) ". ";
+    }
+
+    .d-inline {
+      display: inline;
+    }
+
+    .d-block {
+      display: block;
+    }
+
+    .d-iflex {
+      display: inline-flex;
+    }
+
+    .icon {
+      display: flex;
+    }
+
+    .d-bflex {
+      display: flex;
+    }
+    .d-igrid {
+      display: inline-grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.2em;
+    }
+    .d-bgrid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.2em;
+    }
+
+    .txt-postive {
+      color:var(--color-postive);
+    }
+    .txt-negative {
+      color:var(--color-negative);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Readonly Speech Test for Spin Button</h1>
+    </header>
+    <main>
+      <div class="content-wrapper">
+        <h2>Successed</h2>
+        <p class="txt-postive" id="desc1">First button is on the state displayed as the inline-block.</p>
+        <button onclick="alert('You clicked default inline-block button')">inline-block(default)</button>
+        <p class="txt-postive" id="desc2">Second button is on the state displayed as the inline</p>
+        <button class="d-inline" onclick="alert('You clicked inline button')">inline</button>
+        <p class="txt-postive" id="desc3">Third button is on the state displayed as the block.</p>
+        <button class="d-block" onclick="alert('You clicked block button')">block</button>
+        
+        
+        <h2>Failed</h2>
+        <p class="txt-negative" id="desc4">Fourth button is on the state displayed as the inline-flex.</p>
+        <button class="d-iflex" onclick="alert('You clicked inline-flex button')">inline-flex</button>
+        
+        <p class="txt-negative" id="desc5">Fifth button is on the state displayed as the flex.</p>
+        <button class="d-bflex" onclick="alert('You clicked flex button')">flex</button>
+
+        <p class="txt-negative" id="desc6">Sixth button is on the state displayed as the inline grid.</p>
+        <button class="d-igrid" onclick="alert('You clicked inline-grid button')">inline-grid</button>
+
+        <p class="txt-negative" id="desc7">Seventh button is on the state displayed as the grid.</p>
+        <button class="d-bgrid" onclick="alert('You clicked grid button')">grid</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
