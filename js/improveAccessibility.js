@@ -801,7 +801,9 @@ function ariaRadio() {
 							lastRadio.click();
 						};
 						lastRadio.tabIndex = 0;
-						lastRadio.focus();
+						setTimeout(function () {
+							lastRadio.focus();
+						}, 500)
 					} else {
 						if (radioBox[i - 1].getAttribute("aria-disabled", "true")) {
 							radioBox[i - 1].setAttribute("aria-checked", "false");
@@ -810,7 +812,9 @@ function ariaRadio() {
 							radioBox[i - 1].click();
 						};
 						radioBox[i - 1].tabIndex = 0;
-						radioBox[i - 1].focus();
+						setTimeout(function () {
+							radioBox[i - 1].focus();
+						}, 500)
 					}
 					e.preventDefault();
 				}
@@ -826,7 +830,9 @@ function ariaRadio() {
 							firstRadio.click();
 						};
 						firstRadio.tabIndex = 0;
-						firstRadio.focus();
+						setTimeout(function () {
+							firstRadio.focus();
+						}, 500)
 					} else {
 						if (radioBox[i + 1].getAttribute("aria-disabled", "true")) {
 							radioBox[i + 1].setAttribute("aria-checked", "false");
@@ -835,7 +841,9 @@ function ariaRadio() {
 							radioBox[i + 1].click();
 						};
 						radioBox[i + 1].tabIndex = 0;
-						radioBox[i + 1].focus();
+						setTimeout(function () {
+							radioBox[i + 1].focus();
+						}, 500)
 					}
 					e.preventDefault();
 				}
