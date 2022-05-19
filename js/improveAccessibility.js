@@ -265,27 +265,43 @@ function screenReaderLive() {
 	});
 };
 
+function announceForAutoComplete(message) {
+	if (!$("[name='div_announceForAccessibility']").length) {
+		const html = '' +
+			'<div aria-live="polite" name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
+			'position: absolute !important;' + 'height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px); ' +
+			'clip: rect(1px, 1px, 1px, 1px);' + 'clip-path: inset(50%); white-space: nowrap;">' +
+			'<p name="p_announceForAccessibility"></p></div>';
+		$("body").append(html);
+		setTimeout(function () {
+			$("[name='p_announceForAccessibility']").text(message);
+		}, 200);
+	} else {
+		$("[name='p_announceForAccessibility']").text("");
+		setTimeout(function() {
+		$("[name='p_announceForAccessibility']").text(message);
+		}, 100)
+	}
+}
+
 function announceForAccessibility(message) {
-	var html = '' +
+	const html = '' +
 		'<div aria-live="polite" name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
 		'position: absolute !important;' + 'height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px); ' +
 		'clip: rect(1px, 1px, 1px, 1px);' + 'clip-path: inset(50%); white-space: nowrap;">' +
 		'<p name="p_announceForAccessibility"></p></div>';
-
-	$("body").append(html); // body 끝에 div_announceForAccessibility 추가
-
-	setTimeout(function () { // 0.02초 후 p 태그에 message 추가
+	$("body").append(html);
+	setTimeout(function () {
 		$("[name='p_announceForAccessibility']").text(message);
 	}, 200);
 
-	setTimeout(removeAnnounceForAccessibility, 500); // 0.5초 후 div_announceForAccessibility 삭제
+	setTimeout(removeAnnounceForAccessibility, 500);
 }
 
-/**
-	* div 의 name 이 div_announceForAccessibility 인 태그를 하위까지 삭제
-	*/
 function removeAnnounceForAccessibility() {
-	$("[name='div_announceForAccessibility']").remove();
+	if ($("[name='div_announceForAccessibility']").length) {
+		$("[name='div_announceForAccessibility']").remove();
+	}
 }
 
 //aria-expanded
