@@ -221,6 +221,17 @@ public class AccessibilityUtil {
         });
     }
 
+    public static void setAsDropdownWithHint(View view, String hintMessage) {
+        view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setClassName(Spinner.class.getName());
+                info.setText(hintMessage);
+            }
+        });
+    }
+
     public static void setEditTextHint(View view, String hintMessage) {
         view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override
@@ -257,7 +268,7 @@ public class AccessibilityUtil {
     }
 
     public static void setAsKeyboardKey(View view) {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
                 @Override
                 public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {

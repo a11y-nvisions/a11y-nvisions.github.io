@@ -125,6 +125,20 @@ object AccessibilityKotlin {
         }
     }
     }
+
+    fun setAsDropdownWithHint(view: View, hintMessage: String?) {
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.className = Spinner::class.java.name
+                info.text = hintMessage
+            }
+        }
+    }
+
     fun isTalkBackOn(context: Context): Boolean {
         val accessibilityManager = context.getSystemService(AppCompatActivity.ACCESSIBILITY_SERVICE) as AccessibilityManager
         val isTalkBackOn = accessibilityManager.isTouchExplorationEnabled
