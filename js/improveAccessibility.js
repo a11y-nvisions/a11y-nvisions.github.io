@@ -341,17 +341,6 @@ function ariaExpanded() {
 					}
 				} else {
 					if (!expandEl) return;
-					expandButtons.forEach(function (expandButton) {
-						var ariaControls = expandButton.getAttribute("aria-controls")
-						var expandEls = document.querySelector("#" + ariaControls);
-						if (window.getComputedStyle(expandEls).display === 'none') {
-							expandButton.setAttribute("aria-expanded", false);
-						} else if (expandEls.getAttribute('aria-hidden') === true) {
-							expandButton.setAttribute("aria-expanded", false);
-						} else if (window.getComputedStyle(expandEls).display === 'block' && !expandEls.firstChild) {
-							expandButton.setAttribute("aria-expanded", false);
-						}
-					});
 					if (btn.getAttribute("aria-expanded") === 'true' && window.getComputedStyle(expandEl).display === 'none') {
 						expandedClose(btn, expandEl);
 					} else if (btn.getAttribute("aria-expanded") === 'false' && window.getComputedStyle(expandEl).display === 'block' && expandEl.firstChild) {
