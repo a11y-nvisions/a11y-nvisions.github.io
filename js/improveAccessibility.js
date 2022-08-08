@@ -1251,12 +1251,46 @@ function getClosestParent(el, query) {
 	return el
 }
 
-// create ids for children of target without id
+// create ids for children of target without id;
+/** 
+	 * @function createIdForChildrenOf This function is for giving a Id to each children of a target Element. If you didn't set the target when you call this function, default target will be set to a body tag in your product documents. It's the same with createIdForAllTag Method.
+	 * @param {HTMLElement} targetElement
+	 * **targetElement**:
+	 * targetElement is for set a target that will be given an automated id.
+	 * 
+	 * @param {boolean} useNewFormat
+	 * **useNewFormat** decides a method for format of automatically created id.
+	 * - **false**: indexing format (default) : Existing old format like next example: AIID_{TagName}_index
+	 * - **true**: Randomized format of mixed alphabet and number characters. create randomized 24-digit character basically. example: AIID_{TagName}_adaE52Qa2Qa1A213Az235511
+	 * @param {number} randomizeLength
+	 * **randomizeLength** decides a length of character-digit when useNewFormat has set to true. It is set to basically 24-digit, If this parameter isn't initialized.
+	 * @param {string} startWith
+	 * **startWith** decides insert your starting keyword before of randmoized id format.
+*/
 function createIdForChildrenOf(
-	/** @param {HTMLElement} targetElement This function is for giving a Id to each children of a target Element. If you didn't set the target when you call this function, default target will be set to a body tag in your product documents. It's the same with createIdForAllTag Method. */
-	targetElement = document.body
+	targetElement = document.body,
+	useNewFormat = false,
+	randomizeLength = 24,
+	startWith = ""
 ) {
-	(function ( /** @type {HTMLElement}*/ target = targetElement) {
+	function getRandom (rangeEnd,rangeStart=0){ return Math.floor(Math.random()*(rangeEnd-rangeStart))+rangeStart; };
+	function getNumberic ()  { return String.fromCharCode(getRandom(57,48)); };
+	function getAlphabet ()  { return String.fromCharCode(getRandom(2) ? getRandom(97,122) : getRandom(65,90)); };
+	function getAlphaNumeric () { return getRandom(2) ? getAlphabet() : getNumberic(); };
+	function generateRandomizedId (length=24,startWith="")  {
+			function RandomIDCode () {return new Array(length).fill('').map((el,idx)=>idx%2 === 0 ? getAlphabet() : getAlphaNumeric()).join('');};
+			var automatedID = startWith+RandomIDCode();
+			var checkExists = document.querySelector("#"+automatedID);
+			while(checkExists){
+				automatedID = startWith+RandomIDCode();
+				checkExists = document.querySelector("#"+automatedID);
+			}
+			return automatedID;
+	}
+
+	(function ( 
+		/** @type {HTMLElement}*/ target = targetElement,
+	) {
 		if (Boolean(target)) {
 			function setInitializeAutoIdentifier(
 						/**@type {HTMLElement[]|NodeList}*/ elements
@@ -1277,7 +1311,11 @@ function createIdForChildrenOf(
 					/** @type {number} */
 					var $docIndex = AllElems.indexOf($e) + 1;
 					if (!isIgnoredTag) {
-						$e.id = $e.id ? $e.id : "AIID_" + $e.tagName.toLowerCase() + "_" + $docIndex;
+						if(!useNewFormat){
+							$e.id = $e.id ? $e.id : "AIID_" + $e.tagName.toLowerCase() + "_" + $docIndex;
+						} else {
+							$e.id = $e.id ? $e.id : generateRandomizedId(randomizeLength,startWith.length > 0 ? startWith + $e.tagName.toLowerCase()+"_" : "AIID_" + $e.tagName.toLowerCase()+"_");
+						}
 					}
 				});
 			}
@@ -1300,13 +1338,20 @@ function createIdForChildrenOf(
 		} else {
 			throw new Error("Target element not found. Please check that you entered the correct selector and try again.");
 		}
-
 	})();
 }
 
 // create ids for all tag without id
-function createIdForAllTag() {
-	createIdForChildrenOf( /* default : document.body */);
+/**
+ * @param {boolean} useNewFormat @see createIdForChildrenOf
+ * @param {string} startWith @see createIdForChildrenOf
+ */
+function createIdForAllTag(useNewFormat=false,startWith="AIID") {
+	if (useNewFormat) {
+		createIdForChildrenOf(document.body,true,24,startWith);
+	} else {
+		createIdForChildrenOf( /* default : document.body */);
+	}
 }
 
 // set as heading with level between 1 to 6
