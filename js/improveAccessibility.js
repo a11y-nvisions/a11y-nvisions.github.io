@@ -286,10 +286,10 @@ function announceForAutoComplete(message) {
 
 function announceForAccessibility(message) {
 	const html = '' +
-		'<div aria-live="polite" name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
+		'<div name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
 		'position: absolute !important;' + 'height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px); ' +
 		'clip: rect(1px, 1px, 1px, 1px);' + 'clip-path: inset(50%); white-space: nowrap;">' +
-		'<p name="p_announceForAccessibility"></p></div>';
+		'<p aria-live="assertive" aria-atomic="false" name="p_announceForAccessibility"></p></div>';
 	$("body").append(html);
 	setTimeout(function () {
 		$("[name='p_announceForAccessibility']").text(message);
