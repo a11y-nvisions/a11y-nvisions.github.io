@@ -16,91 +16,36 @@ try {
 	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
-/* Element 확장 메소드로 추가 */
-
-Element.prototype.setAriaHiddenExceptForThis = function (turn = 'on') {
-	// 다른 라이브러리로 인해 aria-hidden이 추가된 요소를 제외한 모든 요소를 가져옵니다. (버그 방지를 위해 aria-hidden이 없는 요소만을 가져옵니다)
-	var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
-	// 혹시 모를 버그를 방지하기 위해 aria-hidden을 초기화합니다.
+function setHiddenExceptForThis(element, turn = 'on') {
+	var allElems = document.body.querySelectorAll('*:not([inert="true"])');
 	allElems.forEach(function (el) {
-		el.removeAttribute('aria-hidden');
+		el.removeAttribute('inert');
 	})
-	// Array.from과 같은 간단한 방법으로 Array로 바꿀 수 있으나 호환성 이슈로 NodeList에서 Array로 바꾸는 작업에 반복문을 사용합니다.
+
 	var _allElems = [];
 	for (var i = 0; i < allElems.length; i++) {
 		_allElems.push(allElems[i]);
 	}
-	// 숨겨질, 중요하지 않은 요소들과 그렇지 않은 대화상자 요소를 걸러내어, 대화상자와 관계없는 요소들을 모두 추려냅니다.
+
 	var notImportants = _allElems.filter(function (el) {
-		if (this.contains(el) === false && el.contains(this) === false) {
+		if (element.contains(el) === false && el.contains(element) === false) {
 			return el
 		}
 	})
-	// 'on'일 때 notImportants안에 들어있는 요소들을 모두 aria-hidden="true" 처리하고, is-sr-hidden 클래스를 추가합니다.
+
 	if (turn === 'on') {
 		notImportants.forEach(function (el) {
-			el.setAttribute('aria-hidden', 'true');
+			el.setAttribute('inert', 'true');
 			el.setAttribute('is-sr-hidden', 'true');
 		})
 	}
 
-	// 'off'일 때 'is-sr-hidden'클래스를 가진 요소 목록을 가져와서 aria-hidden과 식별용 is-sr-hidden 클래스를 제거합니다.
 	if (turn === 'off') {
 		document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
 			el.removeAttribute('is-sr-hidden');;
-			el.removeAttribute('aria-hidden');
+			el.removeAttribute('inert');
 		})
 	}
-};
-
-function createMutationObserver(callback) {
-
-}
-
-function setAriaHiddenExceptForThis(element) {
-	setHiddenExceptForThis(element);
-	function setHiddenExceptForThis(element, turn = 'on') {
-		var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
-		allElems.forEach(function (el) {
-			el.removeAttribute('aria-hidden');
-		})
-
-		var _allElems = [];
-		for (var i = 0; i < allElems.length; i++) {
-			_allElems.push(allElems[i]);
-		}
-
-		var notImportants = _allElems.filter(function (el) {
-			if (element.contains(el) === false && el.contains(element) === false) {
-				return el
-			}
-		})
-
-		if (turn === 'on') {
-			notImportants.forEach(function (el) {
-				el.setAttribute('aria-hidden', 'true');
-				el.setAttribute('is-sr-hidden', 'true');
-			})
-		}
-
-		if (turn === 'off') {
-			document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
-				el.removeAttribute('is-sr-hidden');;
-				el.removeAttribute('aria-hidden');
-			})
-		}
-	};
-	let observer = new MutationObserver((mutations) => {
-		setHiddenExceptForThis(element, "off");
-		observer.disconnect();
-	});
-	let option = {
-		attributes: true,
-		attributeFilter: ['class', 'style'],
-		childList: true
-	};
-	observer.observe(element, option);
-	observer.observe(element.parentNode, option)
 };
 
 function isMobile() {
@@ -278,8 +223,8 @@ function announceForAutoComplete(message) {
 		}, 200);
 	} else {
 		$("[name='p_announceForAccessibility']").text("");
-		setTimeout(function() {
-		$("[name='p_announceForAccessibility']").text(message);
+		setTimeout(function () {
+			$("[name='p_announceForAccessibility']").text(message);
 		}, 100)
 	}
 }
@@ -1273,22 +1218,22 @@ function createIdForChildrenOf(
 	randomizeLength = 24,
 	startWith = ""
 ) {
-	function getRandom (rangeEnd,rangeStart=0){ return Math.floor(Math.random()*(rangeEnd-rangeStart))+rangeStart; };
-	function getNumberic ()  { return String.fromCharCode(getRandom(57,48)); };
-	function getAlphabet ()  { return String.fromCharCode(getRandom(2) ? getRandom(97,122) : getRandom(65,90)); };
-	function getAlphaNumeric () { return getRandom(2) ? getAlphabet() : getNumberic(); };
-	function generateRandomizedId (length=24,startWith="")  {
-			function RandomIDCode () {return new Array(length).fill('').map((el,idx)=>idx%2 === 0 ? getAlphabet() : getAlphaNumeric()).join('');};
-			var automatedID = startWith+RandomIDCode();
-			var checkExists = document.querySelector("#"+automatedID);
-			while(checkExists){
-				automatedID = startWith+RandomIDCode();
-				checkExists = document.querySelector("#"+automatedID);
-			}
-			return automatedID;
+	function getRandom(rangeEnd, rangeStart = 0) { return Math.floor(Math.random() * (rangeEnd - rangeStart)) + rangeStart; };
+	function getNumberic() { return String.fromCharCode(getRandom(57, 48)); };
+	function getAlphabet() { return String.fromCharCode(getRandom(2) ? getRandom(97, 122) : getRandom(65, 90)); };
+	function getAlphaNumeric() { return getRandom(2) ? getAlphabet() : getNumberic(); };
+	function generateRandomizedId(length = 24, startWith = "") {
+		function RandomIDCode() { return new Array(length).fill('').map((el, idx) => idx % 2 === 0 ? getAlphabet() : getAlphaNumeric()).join(''); };
+		var automatedID = startWith + RandomIDCode();
+		var checkExists = document.querySelector("#" + automatedID);
+		while (checkExists) {
+			automatedID = startWith + RandomIDCode();
+			checkExists = document.querySelector("#" + automatedID);
+		}
+		return automatedID;
 	}
 
-	(function ( 
+	(function (
 		/** @type {HTMLElement}*/ target = targetElement,
 	) {
 		if (Boolean(target)) {
@@ -1311,10 +1256,10 @@ function createIdForChildrenOf(
 					/** @type {number} */
 					var $docIndex = AllElems.indexOf($e) + 1;
 					if (!isIgnoredTag) {
-						if(!useNewFormat){
+						if (!useNewFormat) {
 							$e.id = $e.id ? $e.id : "AIID_" + $e.tagName.toLowerCase() + "_" + $docIndex;
 						} else {
-							$e.id = $e.id ? $e.id : generateRandomizedId(randomizeLength,startWith.length > 0 ? startWith + $e.tagName.toLowerCase()+"_" : "AIID_" + $e.tagName.toLowerCase()+"_");
+							$e.id = $e.id ? $e.id : generateRandomizedId(randomizeLength, startWith.length > 0 ? startWith + $e.tagName.toLowerCase() + "_" : "AIID_" + $e.tagName.toLowerCase() + "_");
 						}
 					}
 				});
@@ -1346,9 +1291,9 @@ function createIdForChildrenOf(
  * @param {boolean} useNewFormat @see createIdForChildrenOf
  * @param {string} startWith @see createIdForChildrenOf
  */
-function createIdForAllTag(useNewFormat=false,startWith="AIID") {
+function createIdForAllTag(useNewFormat = false, startWith = "AIID") {
 	if (useNewFormat) {
-		createIdForChildrenOf(document.body,true,24,startWith);
+		createIdForChildrenOf(document.body, true, 24, startWith);
 	} else {
 		createIdForChildrenOf( /* default : document.body */);
 	}
