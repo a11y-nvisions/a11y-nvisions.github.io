@@ -1,4 +1,5 @@
 package com.nvisions.solutionsforaccessibility.AccessibilityUtil
+
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +14,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 
 object AccessibilityKotlin {
+    fun buttonAsNewRoleDescription(view: View, roleDescriptionMessage: String) {
+        ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View?,
+                info: AccessibilityNodeInfoCompat?
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info?.roleDescription = roleDescriptionMessage
+            }
+        })
+    }
+
     fun setAsButton(view: View) {
         view.accessibilityDelegate = object : View.AccessibilityDelegate() {
             override fun onInitializeAccessibilityNodeInfo(
@@ -115,16 +128,21 @@ object AccessibilityKotlin {
     }
 
     fun removeClickHintMsg(view: View) {
-    view.accessibilityDelegate = object : View.AccessibilityDelegate() {
-        override fun onInitializeAccessibilityNodeInfo(host: View?, info: AccessibilityNodeInfo?) {
-            super.onInitializeAccessibilityNodeInfo(host, info)
-            info?.isClickable = false
-            info?.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK)
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View?,
+                info: AccessibilityNodeInfo?
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info?.isClickable = false
+                info?.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK)
+            }
         }
     }
-    }
+
     fun isTalkBackOn(context: Context): Boolean {
-        val accessibilityManager = context.getSystemService(AppCompatActivity.ACCESSIBILITY_SERVICE) as AccessibilityManager
+        val accessibilityManager =
+            context.getSystemService(AppCompatActivity.ACCESSIBILITY_SERVICE) as AccessibilityManager
         val isTalkBackOn = accessibilityManager.isTouchExplorationEnabled
         return isTalkBackOn
     }
@@ -141,6 +159,7 @@ object AccessibilityKotlin {
                 }
                 return super.performAccessibilityAction(host, action, args)
             }
+
             override fun onInitializeAccessibilityNodeInfo(
                 host: View?,
                 info: AccessibilityNodeInfo?
@@ -180,6 +199,7 @@ object AccessibilityKotlin {
                     info?.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_EXPAND)
                 }
             }
+
             override fun performAccessibilityAction(
                 host: View?,
                 action: Int,
@@ -194,7 +214,7 @@ object AccessibilityKotlin {
     }
 
     fun sendFocusThisView(view: View) {
-        Handler().postDelayed( {
+        Handler().postDelayed({
             view.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
         }, 500)
     }
@@ -237,7 +257,7 @@ object AccessibilityKotlin {
     }
 
     fun setAsIgnoreSelected(view: View) {
-        view.accessibilityDelegate = object :View.AccessibilityDelegate() {
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
             override fun onInitializeAccessibilityNodeInfo(
                 host: View?,
                 info: AccessibilityNodeInfo?

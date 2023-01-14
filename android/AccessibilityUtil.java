@@ -22,6 +22,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 public class AccessibilityUtil {
+    public static void buttonAsRoleDescription(View view, String roleDescriptionMessage) {
+        ViewCompat.setAccessibilityDelegate(view, new AccessibilityDelegateCompat() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setRoleDescription(roleDescriptionMessage);
+            }
+        });
+    }
+
     public static void setAsButton(View view) {
         view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override
@@ -49,20 +59,6 @@ public class AccessibilityUtil {
                 }
             }
         });
-    }
-
-    public static boolean isChildAccessibilityFocused(ViewGroup viewGroup) {
-        boolean isFocused = false;
-        View view = null;
-        for (int i = 0; i < viewGroup.getChildCount(); i++) {
-            view = viewGroup.getChildAt(i);
-            if (view.isAccessibilityFocused()) {
-                isFocused = true;
-                break;
-            }
-        }
-
-        return isFocused;
     }
 
     public static void setAsRadioButton(View view, boolean isChecked) {
