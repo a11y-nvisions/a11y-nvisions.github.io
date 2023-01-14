@@ -5,9 +5,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
@@ -27,8 +28,6 @@ public class AccessibilityUtil {
             public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
                 super.onInitializeAccessibilityNodeInfo(host, info);
                 info.setClassName(Button.class.getName());
-                info.setStateDescription("");
-                info.setCheckable(false);
             }
         });
     }
@@ -76,12 +75,12 @@ public class AccessibilityUtil {
                 if (view.isSelected()) {
                     info.setChecked(true);
                     info.setSelected(false);
-                    info.setClickable(false);
                     info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK);
+                    info.setClickable(false);
                 } else if (isChecked) {
                     info.setChecked(true);
-                    info.setClickable(false);
                     info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK);
+                    info.setClickable(false);
                 } else {
                     info.setChecked(false);
                 }
@@ -207,7 +206,9 @@ public class AccessibilityUtil {
             @Override
             public void run() {
                 view.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
-            };
+            }
+
+            ;
         }, 500);
     }
 
@@ -217,17 +218,6 @@ public class AccessibilityUtil {
             public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
                 super.onInitializeAccessibilityNodeInfo(host, info);
                 info.setClassName(Spinner.class.getName());
-            }
-        });
-    }
-
-    public static void setAsDropdownWithHint(View view, String hintMessage) {
-        view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
-            @Override
-            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
-                super.onInitializeAccessibilityNodeInfo(host, info);
-                info.setClassName(Spinner.class.getName());
-                info.setText(hintMessage);
             }
         });
     }
@@ -268,7 +258,7 @@ public class AccessibilityUtil {
     }
 
     public static void setAsKeyboardKey(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
                 @Override
                 public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
@@ -288,20 +278,5 @@ public class AccessibilityUtil {
             }
         });
     }
-
-    public static void setTooltipText(View view, String textMessage) {
-        view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
-            @Override
-            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
-                super.onInitializeAccessibilityNodeInfo(host, info);
-                info.setTooltipText(textMessage);
-            }
-        });
-    }
-
-    public static void setStateDescription(View view, String descriptionText) {
-
-    }
 }
-
 
