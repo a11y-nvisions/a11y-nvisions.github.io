@@ -16,6 +16,25 @@ try {
 	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
+function announceForAccessibilityWithModal(element, message) {
+	const html = '' +
+		'<div name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
+		'position: absolute !important;' + 'height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px); ' +
+		'clip: rect(1px, 1px, 1px, 1px);' + 'clip-path: inset(50%); white-space: nowrap;">' +
+		'<p aria-live="polite" name="p_announceForAccessibility"></p></div>';
+	$(html).appendTo(element);
+	setTimeout(function () {
+		$("[name='p_announceForAccessibility']").text(message);
+	}, 200);
+
+	setTimeout(removeAnnounceForAccessibility, 500);
+}
+
+function removeAnnounceForAccessibility() {
+	if ($("[name='div_announceForAccessibility']").length) {
+		$("[name='div_announceForAccessibility']").remove();
+	}
+}
 function setHiddenExceptForThis(element, turn = 'on') {
 	var allElems = document.body.querySelectorAll('*:not([inert="true"])');
 	allElems.forEach(function (el) {
