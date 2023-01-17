@@ -14,6 +14,38 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 
 object AccessibilityKotlin {
+    fun setContainerAsCheckbox(containerView: View, checkboxView: CheckBox, textView: TextView) {
+        checkboxView.isClickable = false
+        containerView.contentDescription = textView.text
+        containerView.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.isCheckable = true
+                info.isChecked = checkboxView.isChecked
+                info.className = CheckBox::class.java.name
+            }
+        }
+    }
+
+    fun setContainerAsSwitch(containerView: View, switchView: Switch, textView: TextView) {
+        switchView.isClickable = false
+        containerView.contentDescription = textView.text
+        containerView.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.isCheckable = true
+                info.isChecked = switchView.isChecked
+                info.className = Switch::class.java.name
+            }
+        }
+    }
+
     fun buttonAsNewRoleDescription(view: View, roleDescriptionMessage: String) {
         ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat() {
             override fun onInitializeAccessibilityNodeInfo(

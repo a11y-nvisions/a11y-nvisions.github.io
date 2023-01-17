@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.core.view.AccessibilityDelegateCompat;
@@ -22,6 +24,34 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 public class AccessibilityUtil {
+    public static void setContainerAsCheckbox(View containerView, CheckBox checkboxView, TextView textView) {
+        checkboxView.setClickable(false);
+        containerView.setContentDescription(textView.getText());
+        containerView.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setCheckable(true);
+                info.setChecked(checkboxView.isChecked());
+                info.setClassName(CheckBox.class.getName());
+            }
+        });
+    }
+
+    public static void setContainerAsSwitch(View containerView, Switch switchView, TextView textView) {
+        switchView.setClickable(false);
+        containerView.setContentDescription(textView.getText());
+        containerView.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setCheckable(true);
+                info.setChecked(switchView.isChecked());
+                info.setClassName(Switch.class.getName());
+            }
+        });
+    }
+
     public static void buttonAsRoleDescription(View view, String roleDescriptionMessage) {
         ViewCompat.setAccessibilityDelegate(view, new AccessibilityDelegateCompat() {
             @Override
@@ -254,7 +284,7 @@ public class AccessibilityUtil {
     }
 
     public static void setAsKeyboardKey(View view) {
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
                 @Override
                 public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
