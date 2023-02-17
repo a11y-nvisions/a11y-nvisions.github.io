@@ -1,4 +1,4 @@
-package com.nvisions.solutionsforaccessibility.AccessibilityUtil
+package com.nvisions.accessibility
 
 import android.content.Context
 import android.os.Bundle
@@ -49,11 +49,11 @@ object AccessibilityKotlin {
     fun buttonAsNewRoleDescription(view: View, roleDescriptionMessage: String) {
         ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat() {
             override fun onInitializeAccessibilityNodeInfo(
-                host: View?,
-                info: AccessibilityNodeInfoCompat?
+                host: View,
+                info: AccessibilityNodeInfoCompat
             ) {
                 super.onInitializeAccessibilityNodeInfo(host, info)
-                info?.roleDescription = roleDescriptionMessage
+                info.roleDescription = roleDescriptionMessage
             }
         })
     }
@@ -119,8 +119,8 @@ object AccessibilityKotlin {
     fun setAsTab(view: View, isSelected: Boolean) {
         ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat() {
             override fun onInitializeAccessibilityNodeInfo(
-                host: View?,
-                info: AccessibilityNodeInfoCompat?
+                host: View,
+                info: AccessibilityNodeInfoCompat
             ) {
                 super.onInitializeAccessibilityNodeInfo(host, info)
                 info?.roleDescription = "tab"
