@@ -1,4 +1,5 @@
-package com.nvisions.accessibility
+package com.nvisions.solutionsforaccessibility.AccessibilityUtil
+
 
 import android.content.Context
 import android.os.Bundle
@@ -236,6 +237,41 @@ object AccessibilityKotlin {
                 host: View?,
                 action: Int,
                 args: Bundle?
+            ): Boolean {
+                if (action == AccessibilityNodeInfo.ACTION_COLLAPSE || action == AccessibilityNodeInfo.ACTION_EXPAND) {
+                    view.performClick()
+                }
+                return super.performAccessibilityAction(host, action, args)
+            }
+        }
+    }
+
+    fun collapseExpandCheckBox(view: View, isChecked: Boolean) {
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.className = CheckBox::class.java.name
+                info.isCheckable = true
+                if (view.isSelected) {
+                    info.isChecked = true
+                    info.isSelected = false
+                    info.addAction(AccessibilityNodeInfo.ACTION_COLLAPSE)
+                } else if (isChecked) {
+                    info.isChecked = true
+                    info.addAction(AccessibilityNodeInfo.ACTION_COLLAPSE)
+                } else {
+                    info.isChecked = false
+                    info.addAction(AccessibilityNodeInfo.ACTION_EXPAND)
+                }
+            }
+
+            override fun performAccessibilityAction(
+                host: View,
+                action: Int,
+                args: Bundle
             ): Boolean {
                 if (action == AccessibilityNodeInfo.ACTION_COLLAPSE || action == AccessibilityNodeInfo.ACTION_EXPAND) {
                     view.performClick()

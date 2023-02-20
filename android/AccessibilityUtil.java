@@ -226,6 +226,37 @@ public class AccessibilityUtil {
         });
     }
 
+    public static void collapseExpandCheckBox(View view, boolean isChecked) {
+        view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+                info.setClassName(CheckBox.class.getName());
+                info.setCheckable(true);
+                if (view.isSelected()) {
+                    info.setChecked(true);
+                    info.setSelected(false);
+                    info.addAction(AccessibilityNodeInfo.ACTION_COLLAPSE);
+                } else if (isChecked) {
+                    info.setChecked(true);
+                    info.addAction(AccessibilityNodeInfo.ACTION_COLLAPSE);
+                } else {
+                    info.setChecked(false);
+                    info.addAction(AccessibilityNodeInfo.ACTION_EXPAND);
+                }
+            }
+
+            @Override
+            public boolean performAccessibilityAction(View host, int action, Bundle args) {
+                if (action == AccessibilityNodeInfo.ACTION_COLLAPSE || action == AccessibilityNodeInfo.ACTION_EXPAND) {
+                    view.performClick();
+                }
+                return super.performAccessibilityAction(host, action, args);
+            }
+        });
+    }
+
+
     public static void sendFocusThisView(View view) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
