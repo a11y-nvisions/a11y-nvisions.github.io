@@ -16,25 +16,32 @@ try {
 	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
-function announceForAccessibilityWithModal(element, message) {
-	const html = '' +
-		'<div name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
-		'position: absolute !important;' + 'height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px); ' +
-		'clip: rect(1px, 1px, 1px, 1px);' + 'clip-path: inset(50%); white-space: nowrap;">' +
-		'<p aria-live="polite" name="p_announceForAccessibility"></p></div>';
-	$(html).appendTo(element);
+
+function announceForAccessibility(message) {
+	const $$ = document.querySelectorAll;
+	const style = `border: 0; padding: 0; margin: 0; position: absolute !important;
+	height: 1px; width: 1px; overflow: hidden;
+	clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);clip-path: inset(50%); white-space: nowrap;`.replaceAll(/\n/g,"");
+	const html = `<div name="div_announceForAccessibility" style="${style}">
+		<p aria-live="polite" name="p_announceForAccessibility"></p>
+	</div>`;
+	/* insertAdjacentHTML은 텍스트 형식의 html을 appendChild처럼 추가해주는 것임. beforeend는 자식으로 맨끝에 추가하겠다는 의미 */
+	$$(`body,[role="dialog"][aria-modal="true"],dialog`).forEach(element=>element.insertAdjacentHTML('beforeend',html));
 	setTimeout(function () {
-		$("[name='p_announceForAccessibility']").text(message);
+		$$("[name='p_announceForAccessibility']").forEach(lives=>lives.innerText = message);
 	}, 200);
 
 	setTimeout(removeAnnounceForAccessibility, 500);
 }
 
 function removeAnnounceForAccessibility() {
-	if ($("[name='div_announceForAccessibility']").length) {
-		$("[name='div_announceForAccessibility']").remove();
+	let announces = document.querySelectorAll("[name='div_announceForAccessibility']");
+	if (announces.length) {
+		announces.forEach(_=> _.parentElement.removeChild(_));
 	}
 }
+
+
 function setHiddenExceptForThis(element, turn = 'on') {
 	var allElems = document.body.querySelectorAll('*:not([inert="true"])');
 	allElems.forEach(function (el) {
@@ -245,26 +252,6 @@ function announceForAutoComplete(message) {
 		setTimeout(function () {
 			$("[name='p_announceForAccessibility']").text(message);
 		}, 100)
-	}
-}
-
-function announceForAccessibility(message) {
-	const html = '' +
-		'<div name="div_announceForAccessibility" style="border: 0; padding: 0; margin: 0; ' +
-		'position: absolute !important;' + 'height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px); ' +
-		'clip: rect(1px, 1px, 1px, 1px);' + 'clip-path: inset(50%); white-space: nowrap;">' +
-		'<p aria-live="polite" name="p_announceForAccessibility"></p></div>';
-	$("body").append(html);
-	setTimeout(function () {
-		$("[name='p_announceForAccessibility']").text(message);
-	}, 200);
-
-	setTimeout(removeAnnounceForAccessibility, 500);
-}
-
-function removeAnnounceForAccessibility() {
-	if ($("[name='div_announceForAccessibility']").length) {
-		$("[name='div_announceForAccessibility']").remove();
 	}
 }
 
@@ -1363,3 +1350,14 @@ function setAsHeading(target, level) {
 		throw new Error(ErrorMsg);
 	}
 };
+
+/** @param {string} sectionHeader Section headings selector */
+/** @param {string} viewMoreLinks View More Link for section*/
+function setViewMoreLinkLabel (sectionHeaders, viewMoreLinks) {
+	const sectionHeaderElements = document.querySelectorAll(sectionHeaders);
+	const viewMoreLinkElements = document.querySelectorAll(viewMoreLinks);
+	sectionHeaderElements.forEach((e,i)=> {
+		const vml = viewMoreLinkElements[i];
+		if(vml) vml.setAttribute('aria-label', `${e.innerText} ${vml.innerText}`)
+	})
+}
