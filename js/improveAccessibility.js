@@ -16,34 +16,9 @@ try {
 	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
-
-function announceForAccessibility(message) {
-	const $$ = document.querySelectorAll;
-	const style = `border: 0; padding: 0; margin: 0; position: absolute !important;
-	height: 1px; width: 1px; overflow: hidden;
-	clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);clip-path: inset(50%); white-space: nowrap;`.replaceAll(/\n/g,"");
-	const html = `<div name="div_announceForAccessibility" style="${style}">
-		<p aria-live="polite" name="p_announceForAccessibility"></p>
-	</div>`;
-	/* insertAdjacentHTML은 텍스트 형식의 html을 appendChild처럼 추가해주는 것임. beforeend는 자식으로 맨끝에 추가하겠다는 의미 */
-	$$(`body,[role="dialog"][aria-modal="true"],dialog`).forEach(element=>element.insertAdjacentHTML('beforeend',html));
-	setTimeout(function () {
-		$$("[name='p_announceForAccessibility']").forEach(lives=>lives.innerText = message);
-	}, 200);
-
-	setTimeout(removeAnnounceForAccessibility, 500);
-}
-
-function removeAnnounceForAccessibility() {
-	let announces = document.querySelectorAll("[name='div_announceForAccessibility']");
-	if (announces.length) {
-		announces.forEach(_=> _.parentElement.removeChild(_));
-	}
-}
-
-
 function setHiddenExceptForThis(element, turn = 'on') {
 	var allElems = document.body.querySelectorAll('*:not([inert="true"])');
+
 	allElems.forEach(function (el) {
 		el.removeAttribute('inert');
 	})
@@ -59,6 +34,7 @@ function setHiddenExceptForThis(element, turn = 'on') {
 		}
 	})
 
+
 	if (turn === 'on') {
 		notImportants.forEach(function (el) {
 			el.setAttribute('inert', 'true');
@@ -68,11 +44,38 @@ function setHiddenExceptForThis(element, turn = 'on') {
 
 	if (turn === 'off') {
 		document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
-			el.removeAttribute('is-sr-hidden');;
+			el.removeAttribute('is-sr-hidden');
 			el.removeAttribute('inert');
 		})
 	}
 };
+
+
+
+function announceForAccessibility(message) {
+	const $$ = document.querySelectorAll;
+	const style = `border: 0; padding: 0; margin: 0; position: absolute !important;
+	height: 1px; width: 1px; overflow: hidden;
+	clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);clip-path: inset(50%); white-space: nowrap;`.replaceAll(/\n/g, "");
+	const html = `<div name="div_announceForAccessibility" style="${style}">
+		<p aria-live="polite" name="p_announceForAccessibility"></p>
+	</div>`;
+	/* insertAdjacentHTML은 텍스트 형식의 html을 appendChild처럼 추가해주는 것임. beforeend는 자식으로 맨끝에 추가하겠다는 의미 */
+	$$(`body,[role="dialog"][aria-modal="true"],dialog`).forEach(element => element.insertAdjacentHTML('beforeend', html));
+	setTimeout(function () {
+		$$("[name='p_announceForAccessibility']").forEach(lives => lives.innerText = message);
+	}, 200);
+
+	setTimeout(removeAnnounceForAccessibility, 500);
+}
+
+function removeAnnounceForAccessibility() {
+	let announces = document.querySelectorAll("[name='div_announceForAccessibility']");
+	if (announces.length) {
+		announces.forEach(_ => _.parentElement.removeChild(_));
+	}
+}
+
 
 function isMobile() {
 	var UserAgent = navigator.userAgent;
@@ -418,54 +421,6 @@ function modalDialog() {
 				break;
 		}
 	}
-
-
-	/*
-	1. element 파라미터에는 role="dialog"가 붙은 컨테이너를 document.querySelector()나 document.getElementById()등으로 가져와서 넣습니다.
-	2. turn은 'on'과 'off'값이 허용되며, on이면 element로 지정된 요소가 속한 부모 요소들과 element의 하위 요소, 그리고 element 자신을 제외한 모든 요소에 aria-hidden="true"를 추가해 줍니다.
-	3. 이 함수로 aria-hidden="true" 가 부여된 요소는 is-sr-hidden 서브클래스가 붙으며, 같은 요소에 'off'를 사용하여 이 함수를 다시 부르면 aria-hidden 속성이 제거됩니다.
-	*/
-
-	function setHiddenExceptForThis(element, turn = 'on') {
-
-		// 다른 라이브러리로 인해 aria-hidden이 추가된 요소를 제외한 모든 요소를 가져옵니다. (버그 방지를 위해 aria-hidden이 없는 요소만을 가져옵니다)
-		var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
-
-		// 혹시 모를 버그를 방지하기 위해 aria-hidden을 초기화합니다.
-		allElems.forEach(function (el) {
-			el.removeAttribute('aria-hidden');
-		})
-
-		// Array.from과 같은 간단한 방법으로 Array로 바꿀 수 있으나 호환성 이슈로 NodeList에서 Array로 바꾸는 작업에 반복문을 사용합니다.
-		var _allElems = [];
-		for (var i = 0; i < allElems.length; i++) {
-			_allElems.push(allElems[i]);
-		}
-
-		// 숨겨질, 중요하지 않은 요소들과 그렇지 않은 대화상자 요소를 걸러내어, 대화상자와 관계없는 요소들을 모두 추려냅니다.
-		var notImportants = _allElems.filter(function (el) {
-			if (element.contains(el) === false && el.contains(element) === false) {
-				return el
-			}
-		})
-
-
-		// 'on'일 때 notImportants안에 들어있는 요소들을 모두 aria-hidden="true" 처리하고, is-sr-hidden 클래스를 추가합니다.
-		if (turn === 'on') {
-			notImportants.forEach(function (el) {
-				el.setAttribute('aria-hidden', 'true');
-				el.setAttribute('is-sr-hidden', 'true');
-			})
-		}
-
-		// 'off'일 때 'is-sr-hidden'클래스를 가진 요소 목록을 가져와서 aria-hidden과 식별용 is-sr-hidden 클래스를 제거합니다.
-		if (turn === 'off') {
-			document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
-				el.removeAttribute('is-sr-hidden');;
-				el.removeAttribute('aria-hidden');
-			})
-		}
-	};
 };
 
 function setAsModal($modal) {
@@ -537,48 +492,6 @@ function bindKeyEvt(event) {
 			break;
 	}
 }
-
-function setHiddenExceptForThis(element, turn = 'on') {
-
-	// 다른 라이브러리로 인해 aria-hidden이 추가된 요소를 제외한 모든 요소를 가져옵니다. (버그 방지를 위해 aria-hidden이 없는 요소만을 가져옵니다)
-	var allElems = document.body.querySelectorAll('*:not([aria-hidden="true"])');
-
-	// 혹시 모를 버그를 방지하기 위해 aria-hidden을 초기화합니다.
-	allElems.forEach(function (el) {
-		el.removeAttribute('aria-hidden');
-	})
-
-	// Array.from과 같은 간단한 방법으로 Array로 바꿀 수 있으나 호환성 이슈로 NodeList에서 Array로 바꾸는 작업에 반복문을 사용합니다.
-	var _allElems = [];
-	for (var i = 0; i < allElems.length; i++) {
-		_allElems.push(allElems[i]);
-	}
-
-	// 숨겨질, 중요하지 않은 요소들과 그렇지 않은 대화상자 요소를 걸러내어, 대화상자와 관계없는 요소들을 모두 추려냅니다.
-	var notImportants = _allElems.filter(function (el) {
-		if (element.contains(el) === false && el.contains(element) === false) {
-			return el
-		}
-	})
-
-
-	// 'on'일 때 notImportants안에 들어있는 요소들을 모두 aria-hidden="true" 처리하고, is-sr-hidden 클래스를 추가합니다.
-	if (turn === 'on') {
-		notImportants.forEach(function (el) {
-			el.setAttribute('aria-hidden', 'true');
-			el.setAttribute('is-sr-hidden', 'true');
-		})
-	}
-
-	// 'off'일 때 'is-sr-hidden'클래스를 가진 요소 목록을 가져와서 aria-hidden과 식별용 is-sr-hidden 클래스를 제거합니다.
-	if (turn === 'off') {
-		document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
-			el.removeAttribute('is-sr-hidden');
-			el.removeAttribute('aria-hidden');
-		})
-	}
-};
-
 
 //role button
 function ariaButton() {
@@ -1353,11 +1266,11 @@ function setAsHeading(target, level) {
 
 /** @param {string} sectionHeader Section headings selector */
 /** @param {string} viewMoreLinks View More Link for section*/
-function setViewMoreLinkLabel (sectionHeaders, viewMoreLinks) {
+function setViewMoreLinkLabel(sectionHeaders, viewMoreLinks) {
 	const sectionHeaderElements = document.querySelectorAll(sectionHeaders);
 	const viewMoreLinkElements = document.querySelectorAll(viewMoreLinks);
-	sectionHeaderElements.forEach((e,i)=> {
+	sectionHeaderElements.forEach((e, i) => {
 		const vml = viewMoreLinkElements[i];
-		if(vml) vml.setAttribute('aria-label', `${e.innerText} ${vml.innerText}`)
+		if (vml) vml.setAttribute('aria-label', `${e.innerText} ${vml.innerText}`)
 	})
 }
