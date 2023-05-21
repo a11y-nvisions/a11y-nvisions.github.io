@@ -16,6 +16,41 @@ try {
 	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
+function disableRadioCheckedWithArrow(radioGroup) {
+	const radioButtons = radioGroup.querySelectorAll('input[type="radio"]');
+
+	radioGroup.addEventListener('keydown', (event) => {
+		if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+			event.preventDefault();
+
+			let currentIndex = Array.from(radioButtons).findIndex((radio) => radio === document.activeElement);
+			let newIndex;
+
+			if (currentIndex > 0) {
+				newIndex = currentIndex - 1;
+			} else {
+				newIndex = radioButtons.length - 1;
+			}
+
+			radioButtons[newIndex].focus();
+		} else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+			event.preventDefault();
+
+			let currentIndex = Array.from(radioButtons).findIndex((radio) => radio === document.activeElement);
+			let newIndex;
+
+			if (currentIndex < radioButtons.length - 1) {
+				newIndex = currentIndex + 1;
+			} else {
+				newIndex = 0;
+			}
+
+			radioButtons[newIndex].focus();
+		}
+	});
+
+}
+
 function setHiddenExceptForThis(element, turn = 'on') {
 	var allElems = document.body.querySelectorAll('*:not([inert="true"])');
 
@@ -1117,19 +1152,19 @@ function getClosestParent(el, query) {
 
 // create ids for children of target without id;
 /** 
-	 * @function createIdForChildrenOf This function is for giving a Id to each children of a target Element. If you didn't set the target when you call this function, default target will be set to a body tag in your product documents. It's the same with createIdForAllTag Method.
-	 * @param {HTMLElement} targetElement
-	 * **targetElement**:
-	 * targetElement is for set a target that will be given an automated id.
-	 * 
-	 * @param {boolean} useNewFormat
-	 * **useNewFormat** decides a method for format of automatically created id.
-	 * - **false**: indexing format (default) : Existing old format like next example: AIID_{TagName}_index
-	 * - **true**: Randomized format of mixed alphabet and number characters. create randomized 24-digit character basically. example: AIID_{TagName}_adaE52Qa2Qa1A213Az235511
-	 * @param {number} randomizeLength
-	 * **randomizeLength** decides a length of character-digit when useNewFormat has set to true. It is set to basically 24-digit, If this parameter isn't initialized.
-	 * @param {string} startWith
-	 * **startWith** decides insert your starting keyword before of randmoized id format.
+		* @function createIdForChildrenOf This function is for giving a Id to each children of a target Element. If you didn't set the target when you call this function, default target will be set to a body tag in your product documents. It's the same with createIdForAllTag Method.
+		* @param {HTMLElement} targetElement
+		* **targetElement**:
+		* targetElement is for set a target that will be given an automated id.
+		* 
+		* @param {boolean} useNewFormat
+		* **useNewFormat** decides a method for format of automatically created id.
+		* - **false**: indexing format (default) : Existing old format like next example: AIID_{TagName}_index
+		* - **true**: Randomized format of mixed alphabet and number characters. create randomized 24-digit character basically. example: AIID_{TagName}_adaE52Qa2Qa1A213Az235511
+		* @param {number} randomizeLength
+		* **randomizeLength** decides a length of character-digit when useNewFormat has set to true. It is set to basically 24-digit, If this parameter isn't initialized.
+		* @param {string} startWith
+		* **startWith** decides insert your starting keyword before of randmoized id format.
 */
 function createIdForChildrenOf(
 	targetElement = document.body,
@@ -1207,9 +1242,9 @@ function createIdForChildrenOf(
 
 // create ids for all tag without id
 /**
- * @param {boolean} useNewFormat @see createIdForChildrenOf
- * @param {string} startWith @see createIdForChildrenOf
- */
+	* @param {boolean} useNewFormat @see createIdForChildrenOf
+	* @param {string} startWith @see createIdForChildrenOf
+	*/
 function createIdForAllTag(useNewFormat = false, startWith = "AIID") {
 	if (useNewFormat) {
 		createIdForChildrenOf(document.body, true, 24, startWith);
