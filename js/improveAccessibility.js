@@ -1,6 +1,3 @@
-/**
-	* jQuery 라이브러리 버전이 1.7.0 미만이거나 없을 경우 jQuery 최신 버전 적용
-	*/
 try {
 	var jScript = document.createElement("script");
 	jScript.type = "text/javascript";
@@ -12,11 +9,33 @@ try {
 	if (jQuery_minimum_version > jQuery_current_version) {
 		document.getElementsByTagName("head")[0].appendChild(jScript);
 	}
-} catch { // jQuery가 없을 경우 예외처리 하여 최신 버전을 적용함
+} catch {
 	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
-function disableRadioCheckedWithArrow(radioGroup) {
+function joinSplitedTexts() {
+	// Get all elements in the document
+	const elements = document.querySelectorAll('span, i, u, s, b, div, p').forEach(element => {
+		// Get the text nodes for the element
+		const textNodes = Array.from(element.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
+
+		// Check if there are more than one text nodes
+		if (textNodes.length > 1) {
+			// Check the user agent
+			const userAgent = navigator.userAgent;
+			const isIOS = /(iPhone|iPad|iPod)/i.test(userAgent);
+
+			// Add the appropriate role attribute
+			if (isIOS) {
+				element.setAttribute('role', 'text');
+			} else {
+				element.setAttribute('role', 'paragraph');
+			}
+		}
+	});
+}
+
+function passiveRadio(radioGroup) {
 	const radioButtons = radioGroup.querySelectorAll('input[type="radio"]');
 
 	radioGroup.addEventListener('keydown', (event) => {
