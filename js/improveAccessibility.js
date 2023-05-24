@@ -549,19 +549,24 @@ function bindKeyEvt(event) {
 
 //role button
 function ariaButton() {
-	var btns = document.querySelectorAll('[role="button"]');
-	btns.forEach(function (btn) {
-		btn.addEventListener("keydown", function (e) {
-			if (e.keyCode === 32 || e.keyCode === 13) {
-				btn.click();
-				e.preventDefault();
+	// Get all elements with the role="button" attribute.
+	const buttons = document.querySelectorAll('[role="button"]');
+
+	// For each button, add an event listener for the `keydown` event.
+	buttons.forEach((button) => {
+		button.addEventListener('keydown', (event) => {
+			// If the user pressed the Enter or Space key, run the click() method.
+			if (event.keyCode === 13 || event.keyCode === 32) {
+				button.click();
 			}
 		});
-		if ($(btn) !== $("a [href]")) {
-			btn.setAttribute('tabindex', '0');
+
+		// If the button is not focusable and its role is div or span, add the tabindex="0" attribute.
+		if (!button.hasAttribute('tabindex') && (button.tagName === 'DIV' || button.tagName === 'SPAN')) {
+			button.setAttribute('tabindex', '0');
 		}
 	});
-};
+}
 
 //aria-hidden
 function ariaHidden() {
