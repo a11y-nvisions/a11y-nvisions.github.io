@@ -13,6 +13,50 @@ try {
 	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
+function setAriaHiddenExceptForThis(element, turn = 'on') {
+	const allElems = [...document.body.querySelectorAll('*:not([aria-hidden="true"])')];
+	allElems.forEach((el) => {
+		el.removeAttribute('aria-hidden');
+	});
+	const _allElems = [...allElems];
+	const notImportants = _allElems.filter((el) => {
+		if (!element.contains(el) && !el.contains(element)) {
+			return el;
+		}
+	});
+
+	if (turn === 'on') {
+		notImportants.forEach((el) => {
+			el.setAttribute('aria-hidden', 'true');
+			el.setAttribute('is-sr-hidden', 'true');
+			if (el.hasAttribute('tabindex')) {
+				el.dataset.elOriginalTabIndex = el.getAttribute('tabindex');
+			}
+			el.tabIndex = -1;
+			el.querySelectorAll('*').forEach((child) => {
+				if (child.hasAttribute('tabindex')) {
+					child.dataset.originalTabIndex = child.getAttribute('tabindex');
+				}
+				child.tabIndex = -1;
+			});
+		});
+	}
+
+	if (turn === 'off') {
+		document.querySelectorAll('[is-sr-hidden]').forEach((el) => {
+			el.removeAttribute('is-sr-hidden');
+			el.removeAttribute('aria-hidden');
+			el.removeAttribute('tabindex')
+			el.tabIndex = el.dataset.elOriginalTabIndex;
+			delete el.dataset.elOriginalTabIndex;
+			el.querySelectorAll('*').forEach((child) => {
+				child.removeAttribute('tabindex')
+				child.tabIndex = child.dataset.originalTabIndex;
+				delete child.dataset.originalTabIndex;
+			});
+		});
+	}
+}
 function joinSplitedTexts() {
 	// Get all elements in the document
 	const elements = document.querySelectorAll('span, i, u, s, b, div, p').forEach(element => {
