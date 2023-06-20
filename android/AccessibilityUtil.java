@@ -26,6 +26,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 public class AccessibilityUtil {
     public static void setContainerAsCheckbox(View containerView, CheckBox checkboxView, TextView textView) {
         checkboxView.setClickable(false);
+        checkboxView.setFocusable(false);
         containerView.setContentDescription(textView.getText());
         containerView.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override
@@ -40,6 +41,7 @@ public class AccessibilityUtil {
 
     public static void setContainerAsSwitch(View containerView, Switch switchView, TextView textView) {
         switchView.setClickable(false);
+        switchView.setFocusable(false);
         containerView.setContentDescription(textView.getText());
         containerView.setAccessibilityDelegate(new View.AccessibilityDelegate() {
             @Override
@@ -52,7 +54,7 @@ public class AccessibilityUtil {
         });
     }
 
-    public static void buttonAsRoleDescription(View view, String roleDescriptionMessage) {
+    public static void viewAsRoleDescription(View view, String roleDescriptionMessage) {
         ViewCompat.setAccessibilityDelegate(view, new AccessibilityDelegateCompat() {
             @Override
             public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfoCompat info) {
