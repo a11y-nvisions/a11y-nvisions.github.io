@@ -179,24 +179,41 @@ function setHiddenExceptForThis(element, turn = 'on') {
 	}
 };
 
-
-
 function announceForAccessibility(message) {
-	const $$ = document.querySelectorAll;
 	const style = `border: 0; padding: 0; margin: 0; position: absolute !important;
-	height: 1px; width: 1px; overflow: hidden;
-	clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);clip-path: inset(50%); white-space: nowrap;`.replaceAll(/\n/g, "");
+	  height: 1px; width: 1px; overflow: hidden;
+	  clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);clip-path: inset(50%); white-space: nowrap;`.replaceAll(
+		/\n/g,
+		""
+	);
 	const html = `<div name="div_announceForAccessibility" style="${style}">
-		<p aria-live="polite" name="p_announceForAccessibility"></p>
+	  <p aria-live="polite" name="p_announceForAccessibility"></p>
 	</div>`;
-	/* insertAdjacentHTML은 텍스트 형식의 html을 appendChild처럼 추가해주는 것임. beforeend는 자식으로 맨끝에 추가하겠다는 의미 */
-	$$(`body,[role="dialog"][aria-modal="true"],dialog`).forEach(element => element.insertAdjacentHTML('beforeend', html));
+	const bodyElements = document.querySelectorAll('body');
+	const dialogElements = document.querySelectorAll('[role="dialog"][aria-modal="true"], dialog');
+
+	dialogElements.forEach((element) => {
+		element.insertAdjacentHTML("beforeend", html);
+	});
+
+	if (bodyElements.length > 0 && dialogElements.length === 0) {
+		bodyElements[0].insertAdjacentHTML("beforeend", html);
+	}
+
 	setTimeout(function () {
-		$$("[name='p_announceForAccessibility']").forEach(lives => lives.innerText = message);
+		document.querySelectorAll("[name='p_announceForAccessibility']").forEach(
+			(lives) => (lives.innerText = "")
+		);
+		setTimeout(function () {
+			document.querySelectorAll("[name='p_announceForAccessibility']").forEach(
+				(lives) => (lives.innerText = message)
+			);
+		}, 200);
 	}, 200);
 
 	setTimeout(removeAnnounceForAccessibility, 500);
 }
+
 
 function removeAnnounceForAccessibility() {
 	let announces = document.querySelectorAll("[name='div_announceForAccessibility']");
@@ -298,7 +315,6 @@ function ariaCheckbox() {
 }
 
 
-// announceForAccessibility
 function screenReaderLive() {
 	var isAndroid = /(android)/i.test(navigator.userAgent);
 	var ua = navigator.userAgent.toLowerCase();
