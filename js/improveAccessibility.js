@@ -13,35 +13,30 @@ try {
 	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
-function afterDeleteFocusManage(container, buttonClassName) {
-	let deleteButtons = Array.from(container.getElementsByClassName(buttonClassName));
+/** @typedef {HTMLElement|Element|Node} DOMNode */
 
-	function indexDeleteButtons() {
-		deleteButtons = Array.from(container.getElementsByClassName(buttonClassName));
-		for (let i = 0; i < deleteButtons.length; i++) {
-			deleteButtons[i].index = i;
-		}
-	}
+function manageFocusOnDelete(container, buttonClassName) {
+	/** @returns {DOMNode[]} */
+	const getDeleteButtons = () => Array.from(container.querySelectorAll("." + buttonClassName));
+
+	/** @param {DOMNode} btnDelete @returns {number}*/
+	const getDeleteButtonIndex = (btnDelete) => getDeleteButtons().indexOf(btnDelete);
 
 	container.addEventListener('click', (event) => {
 		const clickedElement = event.target;
 
 		if (clickedElement.classList.contains(buttonClassName)) {
-			const clickedButtonIndex = clickedElement.index;
+			const clickedButtonIndex = getDeleteButtonIndex(clickedElement);
 
-			if (clickedButtonIndex === deleteButtons.length - 1) {
+			if (clickedButtonIndex === getDeleteButtons().length - 1) {
 				if (clickedButtonIndex > 0) {
-					deleteButtons[clickedButtonIndex - 1].focus();
+					getDeleteButtons()[clickedButtonIndex - 1]?.focus();
 				}
 			} else {
-				deleteButtons[clickedButtonIndex + 1].focus();
+				getDeleteButtons()[clickedButtonIndex + 1]?.focus();
 			}
 		}
-
-		indexDeleteButtons();
 	});
-
-	indexDeleteButtons();
 }
 
 function setAriaHiddenExceptForThis(element, turn = 'on') {
