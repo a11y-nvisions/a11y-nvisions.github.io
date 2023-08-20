@@ -1,4 +1,4 @@
-package com.example.myapplication
+
 
 
 import android.content.Context
@@ -22,6 +22,27 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 
 object AccessibilityKotlin {
+    private var touchExplorationStateChangeListener: AccessibilityManager.TouchExplorationStateChangeListener? = null
+
+    fun isTalkBackOn(context: Context, callback: (Boolean) -> Unit) {
+        val accessibilityManager = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
+
+        val listener = AccessibilityManager.TouchExplorationStateChangeListener {
+            callback(it)
+        }
+        touchExplorationStateChangeListener = listener
+
+        accessibilityManager?.addTouchExplorationStateChangeListener(listener)
+        callback(accessibilityManager?.isTouchExplorationEnabled == true)
+    }
+
+    fun removeTalkBackStateListener(context: Context) {
+        touchExplorationStateChangeListener?.let {
+            val accessibilityManager = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
+            accessibilityManager?.removeTouchExplorationStateChangeListener(it)
+        }
+    }
+
     fun setContainerAsCheckbox(containerView: View, checkboxView: CheckBox, textView: TextView) {
         checkboxView.isClickable = false
         checkboxView.isFocusable = false
@@ -182,11 +203,6 @@ object AccessibilityKotlin {
         }
     }
 
-    fun isTalkBackOn(context: Context): Boolean {
-        val accessibilityManager =
-            context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-        return accessibilityManager.isTouchExplorationEnabled
-    }
 
     fun expandCollapseButton(view: View, isExpanded: Boolean) {
         view.accessibilityDelegate = object : View.AccessibilityDelegate() {
