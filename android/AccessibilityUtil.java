@@ -1,4 +1,4 @@
-package com.nvisions.solutionsforaccessibility.AccessibilityUtil;
+package com.example.javatalkbackdemo;
 
 import android.content.Context;
 import android.os.Build;
@@ -18,12 +18,38 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 public class AccessibilityUtil {
+    private static AccessibilityManager.TouchExplorationStateChangeListener touchExplorationStateChangeListener;
+
+    public static void isTalkBackOn(Context context, final TalkBackCallback callback) {
+        final AccessibilityManager accessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+
+        touchExplorationStateChangeListener = new AccessibilityManager.TouchExplorationStateChangeListener() {
+            @Override
+            public void onTouchExplorationStateChanged(boolean isEnabled) {
+                callback.onResult(isEnabled);
+            }
+        };
+
+        accessibilityManager.addTouchExplorationStateChangeListener(touchExplorationStateChangeListener);
+        callback.onResult(accessibilityManager.isTouchExplorationEnabled());
+    }
+
+    public static void removeTalkBackStateListener(Context context) {
+        if (touchExplorationStateChangeListener != null) {
+            AccessibilityManager accessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+            accessibilityManager.removeTouchExplorationStateChangeListener(touchExplorationStateChangeListener);
+        }
+    }
+
+    public interface TalkBackCallback {
+        void onResult(boolean isTalkBackOn);
+    }
+
     public static void setContainerAsCheckbox(View containerView, CheckBox checkboxView, TextView textView) {
         checkboxView.setClickable(false);
         checkboxView.setFocusable(false);
@@ -164,12 +190,6 @@ public class AccessibilityUtil {
                 info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK);
             }
         });
-    }
-
-    public static boolean isTalkBackOn(Context context) {
-        AccessibilityManager accessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-        boolean isTalkBackOn = accessibilityManager.isTouchExplorationEnabled();
-        return isTalkBackOn;
     }
 
     public static void expandCollapseButton(View view, boolean isExpanded) {
