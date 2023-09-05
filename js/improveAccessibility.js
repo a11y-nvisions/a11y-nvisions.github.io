@@ -209,7 +209,7 @@ function announceForAccessibility(message) {
 		}, 200);
 	}
 
-	setTimeout(removeAnnounceForAccessibility, 500);
+	setTimeout(removeAnnounceForAccessibility, 1000);
 }
 
 function removeAnnounceForAccessibility() {
