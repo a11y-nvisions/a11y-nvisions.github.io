@@ -1,4 +1,4 @@
-
+package com.example.customaction
 
 
 import android.content.Context
@@ -22,6 +22,29 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 
 object AccessibilityKotlin {
+    data class CustomAction(val actionId: Int, val actionName: String, val actionHandler: () -> Unit)
+
+    fun setCustomAction(view: View, vararg actions: CustomAction) {
+        ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat() {
+            override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfoCompat) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                for (action in actions) {
+                    info.addAction(AccessibilityNodeInfoCompat.AccessibilityActionCompat(action.actionId, action.actionName))
+                }
+            }
+
+            override fun performAccessibilityAction(host: View, actionId: Int, args: Bundle?): Boolean {
+                for (action in actions) {
+                    if (action.actionId == actionId) {
+                        action.actionHandler.invoke()
+                        return true
+                    }
+                }
+                return super.performAccessibilityAction(host, actionId, args)
+            }
+        })
+    }
+
     private var touchExplorationStateChangeListener: AccessibilityManager.TouchExplorationStateChangeListener? = null
 
     fun isTalkBackOn(context: Context, callback: (Boolean) -> Unit) {
