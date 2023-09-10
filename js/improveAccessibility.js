@@ -13,7 +13,28 @@ try {
 	document.getElementsByTagName("head")[0].appendChild(jScript);
 }
 
-/** @typedef {HTMLElement|Element|Node} DOMNode */
+function setActiveDescendant(input, listContainer, activeClass) {
+	const activeItem = listContainer.querySelector(`.${activeClass}`);
+
+	// Set the roles and tabindex for items inside listContainer
+	listContainer.querySelectorAll('*').forEach(item => {
+		// For each role=option inside the listContainer, set tabindex to -1
+		if (item.getAttribute('role') === 'option' && !item.hasAttribute('tabindex')) {
+			item.setAttribute('tabindex', '-1');
+		}
+
+	});
+
+	// Set the aria-activedescendant for the input
+	if (activeItem) {
+		if (!activeItem.id) {
+			activeItem.id = `activeDescendant_${Date.now()}`;
+		}
+		input.setAttribute('aria-activedescendant', activeItem.id);
+	} else {
+		input.setAttribute('aria-activedescendant', '');
+	}
+}
 
 function manageFocusOnDelete(container, buttonClassName) {
 	/** @returns {DOMNode[]} */
