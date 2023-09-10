@@ -14,7 +14,16 @@ try {
 }
 
 function setActiveDescendant(input, listContainer, activeClass) {
-	const activeItem = listContainer.querySelector(`.${activeClass}`);
+	let activeItem = listContainer.querySelector(`.${activeClass}[role="option"]`);
+
+	if (!activeItem) {
+		const liWithActiveClass = listContainer.querySelector(`.${activeClass}`);
+		if (liWithActiveClass && liWithActiveClass.getAttribute('role') === 'option') {
+			activeItem = liWithActiveClass;
+		} else if (liWithActiveClass) {
+			activeItem = liWithActiveClass.querySelector('[role="option"]');
+		}
+	}
 
 	// Set the roles and tabindex for items inside listContainer
 	listContainer.querySelectorAll('*').forEach(item => {
@@ -22,7 +31,6 @@ function setActiveDescendant(input, listContainer, activeClass) {
 		if (item.getAttribute('role') === 'option' && !item.hasAttribute('tabindex')) {
 			item.setAttribute('tabindex', '-1');
 		}
-
 	});
 
 	// Set the aria-activedescendant for the input
