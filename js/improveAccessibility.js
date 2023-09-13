@@ -69,48 +69,53 @@ function manageFocusOnDelete(container, buttonClassName) {
 }
 
 function setAriaHiddenExceptForThis(element, turn = 'on') {
-	const allElems = [...document.body.querySelectorAll('*:not([aria-hidden="true"])')];
-	allElems.forEach((el) => {
-		el.removeAttribute('aria-hidden');
-	});
-	const _allElems = [...allElems];
-	const notImportants = _allElems.filter((el) => {
-		if (!element.contains(el) && !el.contains(element)) {
-			return el;
-		}
-	});
+    const allElems = [...document.body.querySelectorAll('*:not(script):not(style):not([aria-hidden="true"])')];
 
-	if (turn === 'on') {
-		notImportants.forEach((el) => {
-			el.setAttribute('aria-hidden', 'true');
-			el.setAttribute('is-sr-hidden', 'true');
-			if (el.hasAttribute('tabindex')) {
-				el.dataset.elOriginalTabIndex = el.getAttribute('tabindex');
-			}
-			el.tabIndex = -1;
-			el.querySelectorAll('*').forEach((child) => {
-				if (child.hasAttribute('tabindex')) {
-					child.dataset.originalTabIndex = child.getAttribute('tabindex');
-				}
-				child.tabIndex = -1;
-			});
-		});
-	}
+    const notImportants = allElems.filter((el) => {
+        return !element.contains(el) && !el.contains(element);
+    });
 
-	if (turn === 'off') {
-		document.querySelectorAll('[is-sr-hidden]').forEach((el) => {
-			el.removeAttribute('is-sr-hidden');
-			el.removeAttribute('aria-hidden');
-			el.removeAttribute('tabindex')
-			el.tabIndex = el.dataset.elOriginalTabIndex;
-			delete el.dataset.elOriginalTabIndex;
-			el.querySelectorAll('*').forEach((child) => {
-				child.removeAttribute('tabindex')
-				child.tabIndex = child.dataset.originalTabIndex;
-				delete child.dataset.originalTabIndex;
-			});
-		});
-	}
+    if (turn === 'on') {
+        notImportants.forEach((el) => {
+            el.setAttribute('aria-hidden', 'true');
+            el.setAttribute('is-sr-hidden', 'true');
+
+            if (el.hasAttribute('tabindex')) {
+                el.dataset.elOriginalTabIndex = el.getAttribute('tabindex');
+            }
+            el.tabIndex = -1;
+
+            el.querySelectorAll('*').forEach((child) => {
+                if (child.hasAttribute('tabindex')) {
+                    child.dataset.originalTabIndex = child.getAttribute('tabindex');
+                }
+                child.tabIndex = -1;
+            });
+        });
+    }
+
+    if (turn === 'off') {
+        document.querySelectorAll('[is-sr-hidden]').forEach((el) => {
+            el.removeAttribute('is-sr-hidden');
+            el.removeAttribute('aria-hidden');
+
+            if (el.dataset.elOriginalTabIndex) {
+                el.tabIndex = el.dataset.elOriginalTabIndex;
+                delete el.dataset.elOriginalTabIndex;
+            } else {
+                el.removeAttribute('tabindex');
+            }
+
+            el.querySelectorAll('*').forEach((child) => {
+                if (child.dataset.originalTabIndex) {
+                    child.tabIndex = child.dataset.originalTabIndex;
+                    delete child.dataset.originalTabIndex;
+                } else {
+                    child.removeAttribute('tabindex');
+                }
+            });
+        });
+    }
 }
 
 function joinSplitedTexts() {
@@ -170,37 +175,32 @@ function passiveRadio(radioGroup) {
 }
 
 function setHiddenExceptForThis(element, turn = 'on') {
-	var allElems = document.body.querySelectorAll('*:not([inert="true"])');
+    // Exclude elements with `script`, `style` tags and those already with `inert` attribute
+    const allElems = document.body.querySelectorAll('*:not(script):not(style):not([inert="true"])');
 
-	allElems.forEach(function (el) {
-		el.removeAttribute('inert');
-	})
+    // Removing the `inert` attribute for all selected elements 
+    allElems.forEach(function (el) {
+        el.removeAttribute('inert');
+    });
 
-	var _allElems = [];
-	for (var i = 0; i < allElems.length; i++) {
-		_allElems.push(allElems[i]);
-	}
+    // Filter out the provided `element` and its descendants
+    const notImportants = Array.from(allElems).filter(function (el) {
+        return !element.contains(el) && !el.contains(element);
+    });
 
-	var notImportants = _allElems.filter(function (el) {
-		if (element.contains(el) === false && el.contains(element) === false) {
-			return el
-		}
-	})
+    if (turn === 'on') {
+        notImportants.forEach(function (el) {
+            el.setAttribute('inert', 'true');
+            el.setAttribute('is-sr-hidden', 'true');
+        });
+    }
 
-
-	if (turn === 'on') {
-		notImportants.forEach(function (el) {
-			el.setAttribute('inert', 'true');
-			el.setAttribute('is-sr-hidden', 'true');
-		})
-	}
-
-	if (turn === 'off') {
-		document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
-			el.removeAttribute('is-sr-hidden');
-			el.removeAttribute('inert');
-		})
-	}
+    if (turn === 'off') {
+        document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+            el.removeAttribute('is-sr-hidden');
+            el.removeAttribute('inert');
+        });
+    }
 };
 
 function announceForAccessibility(message) {
