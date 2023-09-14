@@ -69,7 +69,7 @@ function manageFocusOnDelete(container, buttonClassName) {
 }
 
 function setAriaHiddenExceptForThis(element, turn = 'on') {
-	const allElems = [...document.querySelectorAll('*:not(script):not(style):not([aria-hidden="true"])')];
+	const allElems = [...document.body.querySelectorAll('*:not(script):not(style):not([aria-hidden="true"])')];
 
 	allElems.forEach((el) => {
 		el.removeAttribute('aria-hidden');
@@ -98,11 +98,11 @@ function setAriaHiddenExceptForThis(element, turn = 'on') {
 	}
 
 	if (turn === 'off') {
-		document.querySelectorAll('[tabindex="-1"]').forEach((el) => {
+		document.body.querySelectorAll('[tabindex="-1"]').forEach((el) => {
 			el.removeAttribute('tabindex');
 		});
 
-		document.querySelectorAll('[data-original-tabindex]').forEach((el) => {
+		document.body.querySelectorAll('[data-original-tabindex]').forEach((el) => {
 			const originalTabIndex = el.getAttribute('data-original-tabindex');
 			if (originalTabIndex === 'none') {
 				el.removeAttribute('tabindex');
@@ -114,7 +114,7 @@ function setAriaHiddenExceptForThis(element, turn = 'on') {
 			el.removeAttribute('data-original-tabindex');
 		});
 
-		document.querySelectorAll('[is-sr-hidden]').forEach((el) => {
+		document.body.querySelectorAll('[is-sr-hidden]').forEach((el) => {
 			el.removeAttribute('is-sr-hidden');
 			el.removeAttribute('aria-hidden');
 		});
