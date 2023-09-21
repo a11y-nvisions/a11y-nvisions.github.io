@@ -123,7 +123,7 @@ function setAriaHiddenExceptForThis(element, turn = 'on') {
 
 function joinSplitedTexts() {
 	// Get all elements in the document
-	const elements = document.querySelectorAll('span, i, u, s, b, div, p').forEach(element => {
+	const elements = document.body.querrySelectorAll('span, i, u, s, b, div, p').forEach(element => {
 		// Get the text nodes for the element
 		const textNodes = Array.from(element.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
 
@@ -199,7 +199,7 @@ function setHiddenExceptForThis(element, turn = 'on') {
 	}
 
 	if (turn === 'off') {
-		document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+		document.body.querrySelectorAll('[is-sr-hidden]').forEach(function (el) {
 			el.removeAttribute('is-sr-hidden');
 			el.removeAttribute('inert');
 		});
@@ -217,7 +217,7 @@ function announceForAccessibility(message) {
 			<p aria-live="polite" name="p_announceForAccessibility"></p>
 	</div>`;
 	const bodyElement = document.querySelector('body');
-	const dialogElements = document.querySelectorAll('[role="dialog"][aria-modal="true"], dialog');
+	const dialogElements = document.body.querrySelectorAll('[role="dialog"][aria-modal="true"], dialog');
 
 	if (dialogElements.length > 0) {
 		dialogElements.forEach((element) => {
@@ -245,7 +245,7 @@ function announceForAccessibility(message) {
 }
 
 function removeAnnounceForAccessibility() {
-	let divElements = document.querySelectorAll("[name='div_announceForAccessibility']");
+	let divElements = document.body.querrySelectorAll("[name='div_announceForAccessibility']");
 	divElements.forEach((element) => {
 		element.parentNode.removeChild(element);
 	});
@@ -307,7 +307,7 @@ function ariaPressed() {
 //wai-aria checkbox
 function ariaCheckbox() {
 	// Find all role="checkbox" elements with aria-checked attribute
-	const checkboxes = document.querySelectorAll('[role="checkbox"][aria-checked]');
+	const checkboxes = document.body.querrySelectorAll('[role="checkbox"][aria-checked]');
 
 	// For each checkbox, if it is not an <a> or <button> element, add tabindex="0" attribute
 	for (const checkbox of checkboxes) {
@@ -346,7 +346,7 @@ function ariaCheckbox() {
 function screenReaderLive() {
 	var isAndroid = /(android)/i.test(navigator.userAgent);
 	var ua = navigator.userAgent.toLowerCase();
-	var btns = document.querySelectorAll('[screen-reader-live]');
+	var btns = document.body.querrySelectorAll('[screen-reader-live]');
 	btns.forEach(function (btn) {
 		btn.addEventListener('click', function () {
 			if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
@@ -393,7 +393,7 @@ function announceForAutoComplete(message) {
 
 //aria-expanded
 function ariaExpanded() {
-	var expandButtons = document.querySelectorAll('[aria-expanded][aria-controls]');
+	var expandButtons = document.body.querrySelectorAll('[aria-expanded][aria-controls]');
 	expandButtons.forEach(function (expandButton) {
 		expandedEvent(expandButton);
 	});
@@ -629,7 +629,7 @@ function bindKeyEvt(event) {
 //role button
 function ariaButton() {
 	// Get all elements with the role="button" attribute.
-	const buttons = document.querySelectorAll('[role="button"]');
+	const buttons = document.body.querrySelectorAll('[role="button"]');
 
 	// For each button, add an event listener for the `keydown` event.
 	buttons.forEach((button) => {
@@ -649,7 +649,7 @@ function ariaButton() {
 
 //aria-hidden
 function ariaHidden() {
-	var hiddenButtons = document.querySelectorAll('[screen-reader-hidden]');
+	var hiddenButtons = document.body.querrySelectorAll('[screen-reader-hidden]');
 	hiddenButtons.forEach(function (hiddenButton) {
 		checkHiddenEvent(hiddenButton);
 	});
@@ -747,7 +747,7 @@ function createElementsId(element, targetValue1, idName, targetValue2, ariaPrope
 //모바일에서의 링크 초점 분리 해결
 function focusTogetherForMobile() {
 	if (isMobile) {
-		document.querySelectorAll('a[href]').forEach((el, index) => {
+		document.body.querrySelectorAll('a[href]').forEach((el, index) => {
 			const text = el.innerText;
 			el.setAttribute('aria-label', text);
 			el.querySelectorAll('*:not(img, h1, h2, h3, h4, h5, h6)').forEach((el, index) => {
@@ -755,11 +755,11 @@ function focusTogetherForMobile() {
 				el.setAttribute('aria-hidden', 'true');
 			});
 		});
-		document.querySelectorAll('p > span').forEach((el, index) => {
+		document.body.querrySelectorAll('p > span').forEach((el, index) => {
 			el.setAttribute("role", "text");
 		});
 
-		document.querySelectorAll('p > span > span').forEach((el, index) => {
+		document.body.querrySelectorAll('p > span > span').forEach((el, index) => {
 			el.setAttribute("role", "text");
 		});
 	};
@@ -767,7 +767,7 @@ function focusTogetherForMobile() {
 
 // radio
 function ariaRadio() {
-	var radioGroups = document.querySelectorAll('[role="radiogroup"]');
+	var radioGroups = document.body.querrySelectorAll('[role="radiogroup"]');
 	radioGroups.forEach(function (radioGroup) {
 		var radioBox = radioGroup.querySelectorAll('[role="radio"]');
 		var firstRadio = radioBox[0];
@@ -874,7 +874,7 @@ function ariaRadio() {
 };
 //aria tab
 function ariaTab() {
-	var tablists = document.querySelectorAll('[role="tablist"]');
+	var tablists = document.body.querrySelectorAll('[role="tablist"]');
 	tablists.forEach(function (tablist) {
 		var tabBox = tablist.querySelectorAll('[role="tab"]');
 		var firstTab = tabBox[0];
@@ -972,7 +972,7 @@ function ariaTab() {
 
 // waiAriaListBox
 var waiAriaListBox = function waiAriaListBox() {
-	var boxBtns = document.querySelectorAll('[aria-haspopup="listbox"]');
+	var boxBtns = document.body.querrySelectorAll('[aria-haspopup="listbox"]');
 	boxBtns.forEach(function (boxBtn) {
 		var ariaListBox = document.querySelector('#' + boxBtn.getAttribute("aria-controls"));
 		var listOptions = ariaListBox.querySelectorAll('[role="option"]');
@@ -1125,7 +1125,7 @@ function radioAsButton(Container) {
 
 //dropdownmenu
 var waiAriaHasPopupMenu = function waiAriaHasPopupMenu() {
-	var haspops = document.querySelectorAll('[aria-haspopup="true"], [aria-haspopup="menu"]');
+	var haspops = document.body.querrySelectorAll('[aria-haspopup="true"], [aria-haspopup="menu"]');
 	haspops.forEach(function (haspop) {
 		menuEvent(haspop)
 	})
@@ -1336,7 +1336,7 @@ function createIdForChildrenOf(
 			var mtObserver = new MutationObserver(MTO_Callback);
 
 			mtObserver.observe(target, MTO_ObserveInitOptions);
-			setInitializeAutoIdentifier(document.querySelectorAll("*"));
+			setInitializeAutoIdentifier(document.body.querrySelectorAll("*"));
 		} else {
 			throw new Error("Target element not found. Please check that you entered the correct selector and try again.");
 		}
@@ -1405,8 +1405,8 @@ function setAsHeading(target, level) {
 /** @param {string} sectionHeader Section headings selector */
 /** @param {string} viewMoreLinks View More Link for section*/
 function setViewMoreLinkLabel(sectionHeaders, viewMoreLinks) {
-	const sectionHeaderElements = document.querySelectorAll(sectionHeaders);
-	const viewMoreLinkElements = document.querySelectorAll(viewMoreLinks);
+	const sectionHeaderElements = document.body.querrySelectorAll(sectionHeaders);
+	const viewMoreLinkElements = document.body.querrySelectorAll(viewMoreLinks);
 	sectionHeaderElements.forEach((e, i) => {
 		const vml = viewMoreLinkElements[i];
 		if (vml) vml.setAttribute('aria-label', `${e.innerText} ${vml.innerText}`)
