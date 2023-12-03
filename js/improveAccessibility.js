@@ -69,53 +69,61 @@ function manageFocusOnDelete(container, buttonClassName) {
 }
 
 function setAriaHiddenExceptForThis(element, turn = 'on') {
-	const allElems = [...document.body.querySelectorAll('*:not([aria-hidden="true"])')];
+	const allElems = [...document.body.querySelectorAll('*:not(script):not(style):not([aria-hidden="true"])')];
+
 	allElems.forEach((el) => {
 		el.removeAttribute('aria-hidden');
 	});
-	const _allElems = [...allElems];
-	const notImportants = _allElems.filter((el) => {
-		if (!element.contains(el) && !el.contains(element)) {
-			return el;
+
+	const notImportants = allElems.filter((el) => !element.contains(el) && !el.contains(element));
+
+	const handleTabindexOn = (el) => {
+		if (!el.hasAttribute('data-original-tabindex')) {
+			if (el.hasAttribute('tabindex')) {
+				el.setAttribute('data-original-tabindex', el.getAttribute('tabindex'));
+			} else {
+				el.setAttribute('data-original-tabindex', 'none');
+			}
+			el.tabIndex = -1;
 		}
-	});
+		el.querySelectorAll('*').forEach(handleTabindexOn);
+	}
 
 	if (turn === 'on') {
 		notImportants.forEach((el) => {
 			el.setAttribute('aria-hidden', 'true');
 			el.setAttribute('is-sr-hidden', 'true');
-			if (el.hasAttribute('tabindex')) {
-				el.dataset.elOriginalTabIndex = el.getAttribute('tabindex');
-			}
-			el.tabIndex = -1;
-			el.querySelectorAll('*').forEach((child) => {
-				if (child.hasAttribute('tabindex')) {
-					child.dataset.originalTabIndex = child.getAttribute('tabindex');
-				}
-				child.tabIndex = -1;
-			});
+			handleTabindexOn(el);
 		});
 	}
 
 	if (turn === 'off') {
-		document.querySelectorAll('[is-sr-hidden]').forEach((el) => {
+		document.body.querySelectorAll('[tabindex="-1"]').forEach((el) => {
+			el.removeAttribute('tabindex');
+		});
+
+		document.body.querySelectorAll('[data-original-tabindex]').forEach((el) => {
+			const originalTabIndex = el.getAttribute('data-original-tabindex');
+			if (originalTabIndex === 'none') {
+				el.removeAttribute('tabindex');
+			} else if (originalTabIndex === '0') {
+				el.setAttribute('tabindex', '0');
+			} else if (originalTabIndex === '-1') {
+				el.setAttribute('tabindex', '-1');
+			}
+			el.removeAttribute('data-original-tabindex');
+		});
+
+		document.body.querySelectorAll('[is-sr-hidden]').forEach((el) => {
 			el.removeAttribute('is-sr-hidden');
 			el.removeAttribute('aria-hidden');
-			el.removeAttribute('tabindex')
-			el.tabIndex = el.dataset.elOriginalTabIndex;
-			delete el.dataset.elOriginalTabIndex;
-			el.querySelectorAll('*').forEach((child) => {
-				child.removeAttribute('tabindex')
-				child.tabIndex = child.dataset.originalTabIndex;
-				delete child.dataset.originalTabIndex;
-			});
 		});
 	}
 }
 
 function joinSplitedTexts() {
 	// Get all elements in the document
-	const elements = document.querySelectorAll('span, i, u, s, b, div, p').forEach(element => {
+	const elements = document.body.querySelectorAll('span, i, u, s, b, div, p').forEach(element => {
 		// Get the text nodes for the element
 		const textNodes = Array.from(element.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
 
@@ -170,36 +178,31 @@ function passiveRadio(radioGroup) {
 }
 
 function setHiddenExceptForThis(element, turn = 'on') {
-	var allElems = document.body.querySelectorAll('*:not([inert="true"])');
+	// Exclude elements with `script`, `style` tags and those already with `inert` attribute
+	const allElems = document.body.querySelectorAll('*:not(script):not(style):not([inert="true"])');
 
+	// Removing the `inert` attribute for all selected elements 
 	allElems.forEach(function (el) {
 		el.removeAttribute('inert');
-	})
+	});
 
-	var _allElems = [];
-	for (var i = 0; i < allElems.length; i++) {
-		_allElems.push(allElems[i]);
-	}
-
-	var notImportants = _allElems.filter(function (el) {
-		if (element.contains(el) === false && el.contains(element) === false) {
-			return el
-		}
-	})
-
+	// Filter out the provided `element` and its descendants
+	const notImportants = Array.from(allElems).filter(function (el) {
+		return !element.contains(el) && !el.contains(element);
+	});
 
 	if (turn === 'on') {
 		notImportants.forEach(function (el) {
 			el.setAttribute('inert', 'true');
 			el.setAttribute('is-sr-hidden', 'true');
-		})
+		});
 	}
 
 	if (turn === 'off') {
-		document.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+		document.body.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
 			el.removeAttribute('is-sr-hidden');
 			el.removeAttribute('inert');
-		})
+		});
 	}
 };
 
@@ -214,7 +217,7 @@ function announceForAccessibility(message) {
 			<p aria-live="polite" name="p_announceForAccessibility"></p>
 	</div>`;
 	const bodyElement = document.querySelector('body');
-	const dialogElements = document.querySelectorAll('[role="dialog"][aria-modal="true"], dialog');
+	const dialogElements = document.body.querySelectorAll('[role="dialog"][aria-modal="true"], dialog');
 
 	if (dialogElements.length > 0) {
 		dialogElements.forEach((element) => {
@@ -242,7 +245,7 @@ function announceForAccessibility(message) {
 }
 
 function removeAnnounceForAccessibility() {
-	let divElements = document.querySelectorAll("[name='div_announceForAccessibility']");
+	let divElements = document.body.querySelectorAll("[name='div_announceForAccessibility']");
 	divElements.forEach((element) => {
 		element.parentNode.removeChild(element);
 	});
@@ -304,7 +307,7 @@ function ariaPressed() {
 //wai-aria checkbox
 function ariaCheckbox() {
 	// Find all role="checkbox" elements with aria-checked attribute
-	const checkboxes = document.querySelectorAll('[role="checkbox"][aria-checked]');
+	const checkboxes = document.body.querySelectorAll('[role="checkbox"][aria-checked]');
 
 	// For each checkbox, if it is not an <a> or <button> element, add tabindex="0" attribute
 	for (const checkbox of checkboxes) {
@@ -343,7 +346,7 @@ function ariaCheckbox() {
 function screenReaderLive() {
 	var isAndroid = /(android)/i.test(navigator.userAgent);
 	var ua = navigator.userAgent.toLowerCase();
-	var btns = document.querySelectorAll('[screen-reader-live]');
+	var btns = document.body.querySelectorAll('[screen-reader-live]');
 	btns.forEach(function (btn) {
 		btn.addEventListener('click', function () {
 			if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
@@ -390,7 +393,7 @@ function announceForAutoComplete(message) {
 
 //aria-expanded
 function ariaExpanded() {
-	var expandButtons = document.querySelectorAll('[aria-expanded][aria-controls]');
+	var expandButtons = document.body.querySelectorAll('[aria-expanded][aria-controls]');
 	expandButtons.forEach(function (expandButton) {
 		expandedEvent(expandButton);
 	});
@@ -626,7 +629,7 @@ function bindKeyEvt(event) {
 //role button
 function ariaButton() {
 	// Get all elements with the role="button" attribute.
-	const buttons = document.querySelectorAll('[role="button"]');
+	const buttons = document.body.querySelectorAll('[role="button"]');
 
 	// For each button, add an event listener for the `keydown` event.
 	buttons.forEach((button) => {
@@ -646,7 +649,7 @@ function ariaButton() {
 
 //aria-hidden
 function ariaHidden() {
-	var hiddenButtons = document.querySelectorAll('[screen-reader-hidden]');
+	var hiddenButtons = document.body.querySelectorAll('[screen-reader-hidden]');
 	hiddenButtons.forEach(function (hiddenButton) {
 		checkHiddenEvent(hiddenButton);
 	});
@@ -744,7 +747,7 @@ function createElementsId(element, targetValue1, idName, targetValue2, ariaPrope
 //모바일에서의 링크 초점 분리 해결
 function focusTogetherForMobile() {
 	if (isMobile) {
-		document.querySelectorAll('a[href]').forEach((el, index) => {
+		document.body.querySelectorAll('a[href]').forEach((el, index) => {
 			const text = el.innerText;
 			el.setAttribute('aria-label', text);
 			el.querySelectorAll('*:not(img, h1, h2, h3, h4, h5, h6)').forEach((el, index) => {
@@ -752,11 +755,11 @@ function focusTogetherForMobile() {
 				el.setAttribute('aria-hidden', 'true');
 			});
 		});
-		document.querySelectorAll('p > span').forEach((el, index) => {
+		document.body.querySelectorAll('p > span').forEach((el, index) => {
 			el.setAttribute("role", "text");
 		});
 
-		document.querySelectorAll('p > span > span').forEach((el, index) => {
+		document.body.querySelectorAll('p > span > span').forEach((el, index) => {
 			el.setAttribute("role", "text");
 		});
 	};
@@ -764,7 +767,7 @@ function focusTogetherForMobile() {
 
 // radio
 function ariaRadio() {
-	var radioGroups = document.querySelectorAll('[role="radiogroup"]');
+	var radioGroups = document.body.querySelectorAll('[role="radiogroup"]');
 	radioGroups.forEach(function (radioGroup) {
 		var radioBox = radioGroup.querySelectorAll('[role="radio"]');
 		var firstRadio = radioBox[0];
@@ -871,7 +874,7 @@ function ariaRadio() {
 };
 //aria tab
 function ariaTab() {
-	var tablists = document.querySelectorAll('[role="tablist"]');
+	var tablists = document.body.querySelectorAll('[role="tablist"]');
 	tablists.forEach(function (tablist) {
 		var tabBox = tablist.querySelectorAll('[role="tab"]');
 		var firstTab = tabBox[0];
@@ -969,7 +972,7 @@ function ariaTab() {
 
 // waiAriaListBox
 var waiAriaListBox = function waiAriaListBox() {
-	var boxBtns = document.querySelectorAll('[aria-haspopup="listbox"]');
+	var boxBtns = document.body.querySelectorAll('[aria-haspopup="listbox"]');
 	boxBtns.forEach(function (boxBtn) {
 		var ariaListBox = document.querySelector('#' + boxBtn.getAttribute("aria-controls"));
 		var listOptions = ariaListBox.querySelectorAll('[role="option"]');
@@ -1122,7 +1125,7 @@ function radioAsButton(Container) {
 
 //dropdownmenu
 var waiAriaHasPopupMenu = function waiAriaHasPopupMenu() {
-	var haspops = document.querySelectorAll('[aria-haspopup="true"], [aria-haspopup="menu"]');
+	var haspops = document.body.querySelectorAll('[aria-haspopup="true"], [aria-haspopup="menu"]');
 	haspops.forEach(function (haspop) {
 		menuEvent(haspop)
 	})
@@ -1333,7 +1336,7 @@ function createIdForChildrenOf(
 			var mtObserver = new MutationObserver(MTO_Callback);
 
 			mtObserver.observe(target, MTO_ObserveInitOptions);
-			setInitializeAutoIdentifier(document.querySelectorAll("*"));
+			setInitializeAutoIdentifier(document.body.querySelectorAll("*"));
 		} else {
 			throw new Error("Target element not found. Please check that you entered the correct selector and try again.");
 		}
@@ -1402,8 +1405,8 @@ function setAsHeading(target, level) {
 /** @param {string} sectionHeader Section headings selector */
 /** @param {string} viewMoreLinks View More Link for section*/
 function setViewMoreLinkLabel(sectionHeaders, viewMoreLinks) {
-	const sectionHeaderElements = document.querySelectorAll(sectionHeaders);
-	const viewMoreLinkElements = document.querySelectorAll(viewMoreLinks);
+	const sectionHeaderElements = document.body.querySelectorAll(sectionHeaders);
+	const viewMoreLinkElements = document.body.querySelectorAll(viewMoreLinks);
 	sectionHeaderElements.forEach((e, i) => {
 		const vml = viewMoreLinkElements[i];
 		if (vml) vml.setAttribute('aria-label', `${e.innerText} ${vml.innerText}`)

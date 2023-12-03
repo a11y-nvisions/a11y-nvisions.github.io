@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "나눔스퀘어 Variable";
+  src: url("./NanumSquareNeo-Variable.woff2");
+}
+@font-face {
+  font-family: "나눔스퀘어 Light";
+  src: url("./NanumSquareNeoTTF-aLt.woff2");
+}
+@font-face {
+  font-family: "나눔스퀘어 Regular";
+  src: url("./NanumSquareNeoTTF-bRg.woff2");
+}
+@font-face {
+  font-family: "나눔스퀘어 Bold";
+  src: url("./NanumSquareNeoTTF-cBd.woff2");
+}
+@font-face {
+  font-family: "나눔스퀘어 Extra Bold";
+  src: url("./NanumSquareNeoTTF-dEb.woff2");
+}
+@font-face {
+  font-family: "나눔스퀘어 Heavy";
+  src: url("./NanumSquareNeoTTF-eHv.woff2");
+}
