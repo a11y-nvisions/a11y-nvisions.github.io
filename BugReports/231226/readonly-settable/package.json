@@ -1,0 +1,22 @@
+{
+  "name": "experimental",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rollup": "^4.9.1",
+    "shadow-root-get-selection-polyfill": "^1.0.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.5"
+  }
+}
