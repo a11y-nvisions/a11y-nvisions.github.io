@@ -1,6 +1,5 @@
 package com.example.accessibilitynode
 
-
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
@@ -22,6 +21,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 
 object AccessibilityKotlin {
+fun setAsContainer(view: View, containerTitle: String) {
+    ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat() {
+        override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfoCompat) {
+            super.onInitializeAccessibilityNodeInfo(host, info)
+            info.setContainerTitle(containerTitle)
+        }
+    })
+}
     data class CustomAction(val actionId: Int, val actionName: String, val actionHandler: () -> Unit)
 
     fun setCustomAction(view: View, vararg actions: CustomAction) {
@@ -146,40 +153,28 @@ object AccessibilityKotlin {
     }
 
     fun setAsRadioButton(view: View, isChecked: Boolean) {
-        ViewCompat.setAccessibilityDelegate(view, object : AccessibilityDelegateCompat() {
+        view.accessibilityDelegate = object : View.AccessibilityDelegate() {
             override fun onInitializeAccessibilityNodeInfo(
                 host: View,
-                info: AccessibilityNodeInfoCompat
+                info: AccessibilityNodeInfo
             ) {
                 super.onInitializeAccessibilityNodeInfo(host, info)
-
-                // If the host is a Button, apply special properties
-                if (host is Button) {
-                    info.roleDescription = "RadioButton"
-
-                    // Apply selected state, not checkable and isChecked based on the passed parameter
-                    host.isSelected = isChecked
-                    info.isCheckable = false // Since we are using isSelected
-                    info.isChecked = isChecked
-
-                    // If the button is checked or selected, make it not clickable
-                    if (info.isChecked || host.isSelected) {
-                        info.isEnabled = false
-                    }
+                info.className = RadioButton::class.java.name
+                info.isCheckable = true
+                if (view.isSelected) {
+                    info.isChecked = true
+                    info.isSelected = false
+                    info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK)
+                    info.isClickable = false
+                } else if (isChecked) {
+                    info.isChecked = true
+                    info.removeAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_CLICK)
+                    info.isClickable = false
                 } else {
-                    // For other view types, set as a normal RadioButton
-                    info.className = RadioButton::class.java.name
-                    info.isCheckable = true
-                    info.isChecked = view.isSelected
-
-                    // If the view is checked or selected, make it not clickable
-                    if (info.isChecked || view.isSelected) {
-                        info.isClickable = false
-                        info.removeAction(AccessibilityNodeInfoCompat.AccessibilityActionCompat.ACTION_CLICK)
-                    }
+                    info.isChecked = false
                 }
             }
-        })
+        }
     }
 
     fun setAsTab(view: View, isSelected: Boolean) {
