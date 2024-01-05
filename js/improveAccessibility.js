@@ -745,7 +745,7 @@ function createElementsId(element, targetValue1, idName, targetValue2, ariaPrope
 
 
 //모바일에서의 링크 초점 분리 해결
-function focusTogetherForMobile() {
+function focusTogetherForMobile(selector) {
 	// Function to check if the device is iOS
 	function isIOS() {
 		return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -798,6 +798,8 @@ function focusTogetherForMobile() {
 		});
 	});
 }
+
+
 // radio
 function ariaRadio() {
 	var radioGroups = document.body.querySelectorAll('[role="radiogroup"]');
