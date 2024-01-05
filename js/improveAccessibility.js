@@ -746,25 +746,58 @@ function createElementsId(element, targetValue1, idName, targetValue2, ariaPrope
 
 //모바일에서의 링크 초점 분리 해결
 function focusTogetherForMobile() {
-	if (isMobile) {
-		document.body.querySelectorAll('a[href]').forEach((el, index) => {
-			const text = el.innerText;
-			el.setAttribute('aria-label', text);
-			el.querySelectorAll('*:not(img, h1, h2, h3, h4, h5, h6)').forEach((el, index) => {
-				el.setAttribute('role', 'none');
-				el.setAttribute('aria-hidden', 'true');
+	// Function to check if the device is iOS
+	function isIOS() {
+		return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+	}
+
+	// Proceed only if the device is iOS
+	if (!isIOS()) {
+		return;
+	}
+
+	const rootElement = document.querySelector(selector);
+	if (!rootElement) {
+		console.warn('Element not found for the provided selector:', selector);
+		return;
+	}
+
+	rootElement.querySelectorAll('a[href]').forEach(anchor => {
+		// Gather text contents and img alt attributes
+		let textContents = [];
+
+		// Function to recursively gather text from an element
+		function gatherText(node) {
+			node.childNodes.forEach(child => {
+				if (child.nodeType === Node.TEXT_NODE) {
+					const text = child.textContent.trim();
+					if (text) {
+						textContents.push(text);
+					}
+				} else if (child.nodeType === Node.ELEMENT_NODE) {
+					// Check for img with alt attribute
+					if (child.tagName === 'IMG' && child.alt) {
+						textContents.push(child.alt);
+					}
+					gatherText(child);
+				}
 			});
-		});
-		document.body.querySelectorAll('p > span').forEach((el, index) => {
-			el.setAttribute("role", "text");
-		});
+		}
 
-		document.body.querySelectorAll('p > span > span').forEach((el, index) => {
-			el.setAttribute("role", "text");
-		});
-	};
-};
+		// Start gathering text from the anchor element
+		gatherText(anchor);
 
+		// Set aria-label on the anchor element
+		if (textContents.length > 0) {
+			anchor.setAttribute('aria-label', textContents.join(' '));
+		}
+
+		// Set aria-hidden on all child elements
+		anchor.querySelectorAll('*').forEach(child => {
+			child.setAttribute('aria-hidden', 'true');
+		});
+	});
+}
 // radio
 function ariaRadio() {
 	var radioGroups = document.body.querySelectorAll('[role="radiogroup"]');
