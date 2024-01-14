@@ -178,32 +178,34 @@ function passiveRadio(radioGroup) {
 }
 
 function setHiddenExceptForThis(element, turn = 'on') {
-	// Exclude elements with `script`, `style` tags and those already with `inert` attribute
-	const allElems = document.body.querySelectorAll('*:not(script):not(style):not([inert="true"])');
+    // Exclude elements with `script`, `style` tags and those already with `inert` attribute
+    const allElems = document.body.querySelectorAll('*:not(script):not(style):not([inert="true"])');
 
-	// Removing the `inert` attribute for all selected elements 
-	allElems.forEach(function (el) {
-		el.removeAttribute('inert');
-	});
+    // Removing the `inert` attribute for all selected elements 
+    allElems.forEach(function (el) {
+        el.removeAttribute('inert');
+    });
 
-	// Filter out the provided `element` and its descendants
-	const notImportants = Array.from(allElems).filter(function (el) {
-		return !element.contains(el) && !el.contains(element);
-	});
+    if (turn === 'on') {
+        // Filter out the provided `element` and its descendants
+        const notImportants = Array.from(allElems).filter(function (el) {
+            // Check if the element exists before calling `contains`
+            return element && !element.contains(el) && !el.contains(element);
+        });
 
-	if (turn === 'on') {
-		notImportants.forEach(function (el) {
-			el.setAttribute('inert', 'true');
-			el.setAttribute('is-sr-hidden', 'true');
-		});
-	}
+        notImportants.forEach(function (el) {
+            el.setAttribute('inert', 'true');
+            el.setAttribute('is-sr-hidden', 'true');
+        });
+    }
 
-	if (turn === 'off') {
-		document.body.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
-			el.removeAttribute('is-sr-hidden');
-			el.removeAttribute('inert');
-		});
-	}
+    if (turn === 'off') {
+        // Remove 'inert' and 'is-sr-hidden' from all elements with these attributes
+        document.body.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+            el.removeAttribute('is-sr-hidden');
+            el.removeAttribute('inert');
+        });
+    }
 };
 
 function announceForAccessibility(message) {
