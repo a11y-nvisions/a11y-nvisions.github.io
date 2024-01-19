@@ -6,7 +6,7 @@
  */
 function PopupFocusRepeater() {
     // aria-haspopup="dialog" 속성을 가진 모든 버튼을 찾습니다.
-    const buttons = document.querySelectorAll('button[aria-expanded][aria-haspopup="dialog"][aria-controls], [role="button"][aria-expanded][aria-haspopup="dialog"][aria-controls]');
+    const buttons = document.querySelectorAll('button[aria-expanded][aria-haspopup="dialog"][aria-controls], [role="button"][aria-expanded][aria-haspopup="dialog"][aria-controls], input[type="button"][aria-expanded][aria-haspopup="dialog"][aria-controls]');
     const wait = (mils = 500) => new Promise(resolve => setTimeout(resolve, mils));
     const isAndroid = /Android/i.test(navigator.userAgent);
 
