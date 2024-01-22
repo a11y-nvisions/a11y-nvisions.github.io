@@ -178,34 +178,34 @@ function passiveRadio(radioGroup) {
 }
 
 function setHiddenExceptForThis(element, turn = 'on') {
-    // Exclude elements with `script`, `style` tags and those already with `inert` attribute
-    const allElems = document.body.querySelectorAll('*:not(script):not(style):not([inert="true"])');
+	// Exclude elements with `script`, `style` tags and those already with `inert` attribute
+	const allElems = document.body.querySelectorAll('*:not(script):not(style):not([inert="true"])');
 
-    // Removing the `inert` attribute for all selected elements 
-    allElems.forEach(function (el) {
-        el.removeAttribute('inert');
-    });
+	// Removing the `inert` attribute for all selected elements 
+	allElems.forEach(function (el) {
+		el.removeAttribute('inert');
+	});
 
-    if (turn === 'on') {
-        // Filter out the provided `element` and its descendants
-        const notImportants = Array.from(allElems).filter(function (el) {
-            // Check if the element exists before calling `contains`
-            return element && !element.contains(el) && !el.contains(element);
-        });
+	if (turn === 'on') {
+		// Filter out the provided `element` and its descendants
+		const notImportants = Array.from(allElems).filter(function (el) {
+			// Check if the element exists before calling `contains`
+			return element && !element.contains(el) && !el.contains(element);
+		});
 
-        notImportants.forEach(function (el) {
-            el.setAttribute('inert', 'true');
-            el.setAttribute('is-sr-hidden', 'true');
-        });
-    }
+		notImportants.forEach(function (el) {
+			el.setAttribute('inert', 'true');
+			el.setAttribute('is-sr-hidden', 'true');
+		});
+	}
 
-    if (turn === 'off') {
-        // Remove 'inert' and 'is-sr-hidden' from all elements with these attributes
-        document.body.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
-            el.removeAttribute('is-sr-hidden');
-            el.removeAttribute('inert');
-        });
-    }
+	if (turn === 'off') {
+		// Remove 'inert' and 'is-sr-hidden' from all elements with these attributes
+		document.body.querySelectorAll('[is-sr-hidden]').forEach(function (el) {
+			el.removeAttribute('is-sr-hidden');
+			el.removeAttribute('inert');
+		});
+	}
 };
 
 function announceForAccessibility(message) {
@@ -911,102 +911,202 @@ function ariaRadio() {
 };
 //aria tab
 function ariaTab() {
-	var tablists = document.body.querySelectorAll('[role="tablist"]');
-	tablists.forEach(function (tablist) {
-		var tabBox = tablist.querySelectorAll('[role="tab"]');
-		var firstTab = tabBox[0];
-		var lastTab = tabBox[tabBox.length - 1];
-		var hasSelected = false;
-
-		var _loop = function _loop(i) {
-			if (tabBox[i].getAttribute("aria-selected") == "true") {
-				tabBox[i].tabIndex = 0;
-				hasSelected = true;
-			} else {
-				tabBox[i].tabIndex = -1;
+	const orphanTab = [...document.querySelectorAll(`[role="tab"]`)].filter(_ => !_.closest(`[role="tablist"]`));
+	if (orphanTab.length) {
+		console.warn(`%c[WAI-ARIA WARNING]\n%c[role="tablist"] 컨테이너가 아닌 요소 안에 [role="tab"] 요소가 있습니다.\n[role="tab"] 요소는 %c반드시 %c[role="tablist"] 컨테이너 안에 있어야 합니다.\n해당 요소:\n`,
+			"font-weight:bold; font-size:1.2rem;", "", "font-size:1rem; font-weight:bold; color:#cc7f68; vertical-align:middle;",
+			orphanTab, `\n\n해당 탭컨트롤은 [role="tablist"] 하위 요소가 아니므로 [role="button"]과 aria-current를 임시로 사용합니다. 이를 원치 않는다면 상위 요소에 [role="tablist"]를 적용하십시오.`);
+		orphanTab.forEach(tab => {
+			tab.role = "button";
+			tab.ariaCurrent = tab.ariaSelected;
+			/** @type {MutationCallback} */
+			const records = (records) => {
+				records.forEach(record => {
+					/** @type {HTMLElement} */
+					const target = record.target;
+					const newValue = () => target.getAttribute(record.attributeName ?? "");
+					switch (record.attributeName) {
+						case "aria-selected":
+							if (/(true|false)/.test(newValue())) {
+								target.ariaCurrent = newValue();
+							}
+							break;
+					}
+				})
 			}
+			const observer = new MutationObserver(records)
+			observer.observe(tab, { attributeFilter: ["aria-selected"], attributes: true });
+		});
+	}
 
-			tabBox[i].addEventListener("click", function (e) {
-				var target = e.currentTarget;
-				tabBox.forEach(function (tab) {
-					if (tab !== target) {
-						tab.setAttribute("aria-selected", false);
-						tab.tabIndex = -1;
-					}
-				});
-				target.setAttribute("aria-selected", true);
-				target.tabIndex = 0;
-			});
+	const tablists = document.querySelectorAll('[role="tablist"]');
+	tablists.forEach((tablist) => {
+		/** An arrow-function to get available tabs in tablist.
+		  * @returns {HTMLElement[]}
+		*/
+		const tabs = () => [...tablist.querySelectorAll('[role="tab"]:not([aria-disabled="true"],[aria-hidden="true"],inert,[disabled])')];
+		/** An arrow-function to get data-nav-cycling attribute.
+		 * When it is set as true, Users will be able to press Left arrow key to last tab from first tab, or press Right arrow key to first tab from last tab on the contrary, like just M철bius strip.
+		 */
+		const useNavigationCycling = () => tablist.dataset.navCycling === "true";
 
-			tabBox[i].addEventListener("keydown", function (e) {
-				var target = e.currentTarget;
-				if (!tablist.getAttribute("aria-orientation", "vertical")) {
-					if (e.keyCode === 37) {
-						// previous : left
-						if (tablist.getAttribute('data-mode', 'aria1.2')) {
-							if (target == firstTab) {
-								lastTab.focus();
-							} else {
-								tabBox[i - 1].focus();
-							}
-						} else {
-							target.setAttribute("aria-selected", false);
-							target.tabIndex = -1;
-							if (target == firstTab) {
-								lastTab.setAttribute("aria-selected", true);
-								lastTab.click();
-								lastTab.tabIndex = 0;
-								lastTab.focus();
-							} else {
-								tabBox[i - 1].setAttribute("aria-selected", true);
-								tabBox[i - 1].click();
-								tabBox[i - 1].tabIndex = 0;
-								tabBox[i - 1].focus();
-							}
-						}
-					} else if (e.keyCode === 39) {
-						if (tablist.getAttribute('data-mode', 'aria1.2')) {
-							// next : right,down
-							if (target == lastTab) {
-								firstTab.focus();
-							} else {
-								tabBox[i + 1].focus();
-							}
-						} else {
-							// next : right,down
-							target.setAttribute("aria-selected", false);
-							target.tabIndex = -1;
-							if (target == lastTab) {
-								firstTab.setAttribute("aria-selected", true);
-								firstTab.click();
-								firstTab.tabIndex = 0;
-								firstTab.focus();
-							} else {
-								tabBox[i + 1].setAttribute("aria-selected", true);
-								tabBox[i + 1].click();
-								tabBox[i + 1].tabIndex = 0;
-								tabBox[i + 1].focus();
-							}
-						}
-					} else if (e.keyCode === 32) {
-						// select: space
-						if (target.getAttribute("aria-selected") !== 'true') {
-							target.setAttribute("aria-selected", true);
-							target.click();
-						}
-					}
-				}
-				e.preventDefault
-			});
-		};
+		/** 
+		 * An arrow function to get data-mode attribute. When is is set as "aria1.2",  Tab won't be selected automatically when navigating tab by arrow keys. 
+		 * 
+		 * Users can be decide whether select tab right away or select later. User will be able to select them manually by Space or Enter key.
+		*/
+		const useAutomaticSelectionMode = () => tablist.dataset.mode !== "aria1.2";
 
-		for (var i = 0; i < tabBox.length; i++) {
-			_loop(i);
+		/** 
+		 * An arrow function to get index integer of a selected tab
+		 * If in tablist, there's no selected tab, it returns -1.
+		*/
+		const selected = () => tabs().findIndex(tabCtrl => tabCtrl.ariaSelected === "true");
+		const focusable = () => tabs().findIndex(tabCtrl => tabCtrl.classList.contains("focusable"));
+
+		/** 
+		 * An arrow function to command select or navigate the next tab.
+		 *
+		 * When `data-nav-cycling` attribute is true, It select or navigate first tab when next tab requested from last tab.
+		 *
+		 * For more information, see {@link useNavigationCycling}.
+		 *
+		 * When `data-mode` attribute is "aria1.2", navigate to requested tab without selection.
+		 *
+		 * For more information, see {@link useAutomaticSelectionMode}.
+		*/
+		const nextTab = () => {
+			const nextIndex = useAutomaticSelectionMode() ? selected() + 1 : focusable() + 1;
+
+			const index = nextIndex < tabs().length ? nextIndex : (
+				useNavigationCycling() ? 0 : tabs().length - 1
+			);
+
+			if (useAutomaticSelectionMode()) {
+				select(index);
+			} else {
+				navigate(index);
+			}
 		}
-		if (!hasSelected) tabBox[0].tabIndex = 0;
-	});
-};
 
+		/** 
+		 * An arrow function to command select or navigate the previous tab.
+		 * When `data-nav-cycling` attribute is true, It select or navigate last tab when previous tab requested from first tab.
+		 * 
+		 * For more information, see {@link useNavigationCycling}.
+		 * 
+		 * When `data-mode` attribute is `aria1.2`, navigate to requested tab without selection.
+		 * 
+		 * For more information, see {@link useAutomaticSelectionMode}.
+		*/
+		const previousTab = () => {
+			const previousIndex = useAutomaticSelectionMode() ? selected() - 1 : focusable() - 1;
+			const index = previousIndex > -1 ? previousIndex : (
+				useNavigationCycling() ? tabs().length - 1 : 0
+			);
+
+			if (useAutomaticSelectionMode()) {
+				select(index);
+			} else {
+				navigate(index);
+			}
+		}
+
+		const firstTab = () => {
+			if (useAutomaticSelectionMode()) {
+				select(0);
+			} else {
+				navigate(0);
+			}
+		}
+		const lastTab = () => {
+
+			if (useAutomaticSelectionMode()) {
+				select(tabs().length - 1);
+			} else {
+				navigate(tabs().length - 1);
+			}
+		}
+
+		/**
+		 * An arrow function to implement the keyboard navigation when using aria1.2 mode.
+		 * 
+		 * It will be called in from the {@link navigate} function basically.
+		 * 
+		 * @param {number} index
+		*/
+		const setFocusable = (index) => {
+			tabs().forEach((_, i) => _.classList.toggle("focusable", i === index));
+		}
+
+		/**
+		 * An arrow function to implement the keyboard navigation.
+		 * 
+		 * It will be called in from the select function basically.
+		 * 
+		 * It is also used alone from {@link nextTab} and {@link previousTab} command function.
+		 * @param {number} index
+		*/
+		const navigate = (index) => {
+			tabs()[index]?.focus();
+			setFocusable(index);
+		}
+
+		/**
+		 * An arrow function to implement the selection behavior.
+		 *
+		 * It is used from {@link nextTab} and {@link previousTab} command function basically.
+		 * 
+		 * And it also can be used alone when initializing default selection.
+		 * **DO NOT** set init parameter as true for other purposes than initialization.
+		 * The init parameter is intended to prevent inappropriate focus when page is loaded.
+		*/
+		const select = (index, init = false) => {
+			tabs().forEach((tabCtrl, ctrlIndex) => {
+
+				tabCtrl.tabIndex = ctrlIndex == index ? 0 : -1;
+				tabCtrl.ariaSelected = ctrlIndex == index;
+				setFocusable(index);
+				if (!init) {
+					navigate(index);
+				}
+			});
+		}
+
+		/* event setting */
+		tabs().forEach((tabCtrl, ctrlIndex) => {
+			tabCtrl.addEventListener("click", () => {
+				select(ctrlIndex);
+			});
+			tabCtrl.addEventListener('keydown', evt => {
+				switch (evt.code) {
+					case "ArrowLeft":
+					case "ArrowUp":
+						previousTab();
+						break;
+					case "ArrowRight":
+					case "ArrowDown":
+						nextTab();
+						break;
+					case "Home":
+						firstTab();
+						break;
+					case "End":
+						lastTab();
+						break;
+					case "Enter":
+					case "Space":
+						tabCtrl.click();
+						break;
+				}
+			});
+		});
+		//initialize default selection and modes.
+		select(selected() > -1 ? selected() : 0, true)
+		tablist.dataset.mode = useAutomaticSelectionMode() ? "aria1.1" : "aria1.2";
+		tablist.dataset.navCycling = useNavigationCycling();
+	});
+}
 // waiAriaListBox
 var waiAriaListBox = function waiAriaListBox() {
 	var boxBtns = document.body.querySelectorAll('[aria-haspopup="listbox"]');
