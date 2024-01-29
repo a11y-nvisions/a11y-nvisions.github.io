@@ -208,49 +208,70 @@ function setHiddenExceptForThis(element, turn = 'on') {
 	}
 };
 
+/**
+ * Announces a message for accessibility purposes using ARIA live regions.
+ * This function creates a visually hidden <p> element with the aria-live attribute
+ * and updates its text content with the provided message. It ensures that the message
+ * will be announced by screen readers.
+ * 
+ * @param {string} message - The message to be announced for accessibility.
+ */
 function announceForAccessibility(message) {
-	const style = `border: 0; padding: 0; margin: 0; position: absolute !important;
-			height: 1px; width: 1px; overflow: hidden;
-			clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);clip-path: inset(50%); white-space: nowrap;`.replaceAll(
-		/\n/g,
-		""
-	);
-	const html = `<div name="div_announceForAccessibility" style="${style}">
-			<p aria-live="polite" name="p_announceForAccessibility"></p>
-	</div>`;
-	const bodyElement = document.querySelector('body');
-	const dialogElements = document.body.querySelectorAll('[role="dialog"][aria-modal="true"], dialog');
+    const style = `border: 0; padding: 0; margin: 0; position: absolute !important;
+        height: 1px; width: 1px; overflow: hidden;
+        clip: rect(1px 1px 1px 1px); clip: rect(1px, 1px, 1px, 1px); clip-path: inset(50%); white-space: nowrap;`.replaceAll(
+        /\n/g,
+        ""
+    );
+    const html = `<div name="div_announceForAccessibility" style="${style}">
+        <p aria-live="polite" name="p_announceForAccessibility"></p>
+    </div>`;
+    const bodyElement = document.querySelector('body');
+    const dialogElements = document.body.querySelectorAll('[role="dialog"][aria-modal="true"], dialog');
 
-	if (dialogElements.length > 0) {
-		dialogElements.forEach((element) => {
-			element.insertAdjacentHTML("beforeend", html);
-			setTimeout(() => {
-				element.querySelector("[name='p_announceForAccessibility']").innerText = "";
-				setTimeout(() => {
-					element.querySelector("[name='p_announceForAccessibility']").innerText = message;
-				}, 200);
-			}, 200);
-		});
-	}
+    /**
+     * Appends the announcement HTML to the specified element and sets the message.
+     * It checks if the element already contains the required <p> element. If not, it
+     * adds the HTML and then sets the message.
+     * 
+     * @param {HTMLElement} element - The element to append the announcement HTML to.
+     */
+    function appendAndAnnounce(element) {
+        if (!element.querySelector("[name='p_announceForAccessibility']")) {
+            element.insertAdjacentHTML("beforeend", html);
+        }
+        setTimeout(() => {
+            const pElement = element.querySelector("[name='p_announceForAccessibility']");
+            pElement.innerText = "";
+            setTimeout(() => {
+                pElement.innerText = message;
+            }, 200);
+        }, 200);
+    }
 
-	if (bodyElement) {
-		bodyElement.insertAdjacentHTML("beforeend", html);
-		setTimeout(() => {
-			bodyElement.querySelector("[name='p_announceForAccessibility']").innerText = "";
-			setTimeout(() => {
-				bodyElement.querySelector("[name='p_announceForAccessibility']").innerText = message;
-			}, 200);
-		}, 200);
-	}
+    if (dialogElements.length > 0) {
+        dialogElements.forEach((element) => {
+            appendAndAnnounce(element);
+        });
+    }
 
-	setTimeout(removeAnnounceForAccessibility, 1000);
+    if (bodyElement) {
+        appendAndAnnounce(bodyElement);
+    }
+
+    setTimeout(removeAnnounceForAccessibility, 1000);
 }
 
+/**
+ * Removes all announcement HTML elements added by announceForAccessibility.
+ * This function is used to clean up the DOM by removing the visually hidden
+ * elements used for announcing messages.
+ */
 function removeAnnounceForAccessibility() {
-	let divElements = document.body.querySelectorAll("[name='div_announceForAccessibility']");
-	divElements.forEach((element) => {
-		element.parentNode.removeChild(element);
-	});
+    let divElements = document.body.querySelectorAll("[name='div_announceForAccessibility']");
+    divElements.forEach((element) => {
+        element.parentNode.removeChild(element);
+    });
 }
 
 function isMobile() {
