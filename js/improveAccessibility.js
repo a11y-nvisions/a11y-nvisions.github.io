@@ -650,9 +650,9 @@ function bindKeyEvt(event) {
 }
 
 //role button
-function ariaButton() {
-	// Get all elements with the role="button" attribute.
-	const buttons = document.body.querySelectorAll('[role="button"]');
+function ariaButton(container = document.body) {
+	// Get all elements with the role="button" attribute within the specified container.
+	const buttons = container.querySelectorAll('[role="button"]');
 
 	// For each button, add an event listener for the `keydown` event.
 	buttons.forEach((button) => {
